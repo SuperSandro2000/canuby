@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (C) 2018 Sandro Jäckel.  All rights reserved.
 #
 # This file is part of Canuby.
@@ -17,10 +19,10 @@
 require_relative 'util'
 
 ## Projects config
-Projects = {}
-Projects['googletest'] = {'url' => 'https://github.com/google/googletest', 'version' => '1.0.0'}
-Projects['dummy'] = {'url' => 'https://github.com/google/googletest', 'version' => '1.0.0'}
-Projects['dummy2'] = {'url' => 'https://github.com/google/googletest', 'version' => '1.0.0'}
+Projects = {}.freeze
+Projects['googletest'] = { 'url' => 'https://github.com/google/googletest', 'version' => '1.0.0' }
+Projects['dummy'] = { 'url' => 'https://github.com/google/googletest', 'version' => '1.0.0' }
+Projects['dummy2'] = { 'url' => 'https://github.com/google/googletest', 'version' => '1.0.0' }
 
 ## build tools config
 ENV['vcvars'] ||= '"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"'

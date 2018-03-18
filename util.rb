@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Copyright (C) 2018 Sandro Jäckel.  All rights reserved.
 #
 # This file is part of Canuby.
