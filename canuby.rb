@@ -18,22 +18,27 @@
 # along with Canuby.  If not, see <http://www.gnu.org/licenses/>.
 require_relative 'util'
 
+# supported colors on cmd Windows: bold, negative, black, red, green, yellow, blue, magenta, cyan, white
+puts '===== Welcome to Canuby! ====='.red
+
 ## Projects config
-Projects = {}.freeze
-Projects['googletest'] = { 'url' => 'https://github.com/google/googletest', 'version' => '1.0.0' }
-Projects['dummy'] = { 'url' => 'https://github.com/google/googletest', 'version' => '1.0.0' }
-Projects['dummy2'] = { 'url' => 'https://github.com/google/googletest', 'version' => '1.0.0' }
+Projects = { 'googletest' => { 'url' => 'https://github.com/google/googletest', 'version' => '1.0.0', 'outputs' => ['gtest.lib', 'gtest_main.lib'] }, \
+             'dummy' => { 'url' => 'https://github.com/google/googletest', 'version': '1.0.0', 'outputs' => ['gtest.lib'] }, \
+             'dummy2' => { 'url' => 'https://github.com/google/googletest', 'version' => '1.0.0', 'outputs' => ['gtest_main.lib'] } }
 
 ## build tools config
 ENV['vcvars'] ||= '"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"'
 ENV['rel_type'] ||= 'RelWithDebInfo'
 
+# Rake default task
 task default: :thirdparty
 
+# which tasks are executed if you specify none
 desc 'Prepare 3rdparty dependencies'
 task thirdparty: ['thirdparty:googletest', 'thirdparty:dummy']
 
-Projects.keys.each do |project|
+# generate tasks dynamically
+Projects.each_key do |project|
   namespace :thirdparty do
     Projects[project]['path'] = File.join(base_dir, project)
 
@@ -41,39 +46,30 @@ Projects.keys.each do |project|
     task "#{project}": "#{project}:staged"
 
     namespace project do
-      def outputs
-        ['gtest.lib', 'gtest_main.lib']
-      end
-
-      def build_outputs(project)
-        output_dir = File.join(Projects[project]['path'], 'build', 'googlemock', 'gtest', ENV['rel_type'])
-        outputs.collect { |f| File.join(output_dir, f) }
-      end
-
       task cloned: :init do
         git_clone(Projects[project]['url'], project) unless File.exist?(Projects[project]['path'])
       end
 
       task built: :cloned do
-        msbuild('googletest') unless build_outputs('googletest').all? { |f| File.exist?(f) }
+        msbuild(project) unless build_outputs(project).all? { |f| File.exist?(f) }
       end
 
       task staged: :built do
-        collect_stage('googletest') unless stage_outputs.all? { |f| File.exist?(f) }
+        collect_stage(project) unless stage_outputs(project).all? { |f| File.exist?(f) }
       end
 
-      desc 'Pull upstream googletest changes'
+      desc "Pull upstream #{project} changes"
       task :pull do
-        git_pull
+        git_pull(project)
       end
 
-      desc 'Build and stage googletest'
+      desc "Build and stage #{project}"
       task build_stage: :cloned do
-        msbuild('googletest')
-        collect_stage('googletest')
+        msbuild(project)
+        collect_stage(project)
       end
 
-      desc 'Pull, build and stage googletest'
+      desc "Pull, build and stage #{project}"
       task update: [:pull, :build_stage]
     end
   end

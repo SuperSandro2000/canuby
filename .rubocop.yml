@@ -13,5 +13,8 @@ Naming/ConstantName:
 Style/AsciiComments:
   AllowedChars: [ä]
 
+Style/MutableConstant:
+  Enabled: False
+
 Style/SymbolArray:
   EnforcedStyle: brackets
