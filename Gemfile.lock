@@ -2,12 +2,16 @@ GEM
   remote: https://rubygems.org/
   specs:
     rake (12.3.0)
+    term-ansicolor (1.6.0)
+      tins (~> 1.0)
+    tins (1.16.3)
 
 PLATFORMS
   x64-mingw32
 
 DEPENDENCIES
   rake
+  term-ansicolor (~> 1.6)
 
 BUNDLED WITH
    1.16.1
