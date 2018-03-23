@@ -1,0 +1,4 @@
+#!/usr/bin/env ruby
+
+require 'canubby'
+puts Canubby.main(ARGV[0])
