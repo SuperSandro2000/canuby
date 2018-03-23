@@ -22,9 +22,11 @@ require_relative 'util'
 puts '===== Welcome to Canuby! ====='.red
 
 ## Projects config
-Projects = { 'googletest' => { 'url' => 'https://github.com/google/googletest', 'version' => '1.0.0', 'outputs' => ['gtest.lib', 'gtest_main.lib'] }, \
-             'dummy' => { 'url' => 'https://github.com/google/googletest', 'version': '1.0.0', 'outputs' => ['gtest.lib'] }, \
-             'dummy2' => { 'url' => 'https://github.com/google/googletest', 'version' => '1.0.0', 'outputs' => ['gtest_main.lib'] } }
+Projects = {
+  'googletest' => { 'url' => 'https://github.com/google/googletest', 'version' => '1.0.0', 'outputs' => ['gtest.lib', 'gtest_main.lib'] }, \
+  'dummy' => { 'url' => 'https://github.com/google/googletest', 'version': '1.0.0', 'outputs' => ['gtest.lib'] }, \
+  'dummy2' => { 'url' => 'https://github.com/google/googletest', 'version' => '1.0.0', 'outputs' => ['gtest_main.lib'] }
+}
 
 ## build tools config
 ENV['vcvars'] ||= '"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"'
@@ -70,7 +72,7 @@ Projects.each_key do |project|
       end
 
       desc "Pull, build and stage #{project}"
-      task update: [:pull, :build_stage]
+      task update: %i[pull build_stage]
     end
   end
 end

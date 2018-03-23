@@ -34,7 +34,7 @@ end
 
 def build_outputs(project)
   output_dir = File.join(Projects[project]['path'], 'build', 'googlemock', 'gtest', ENV['rel_type'])
-  Projects[project]['outputs'].collect { |f| File.join(output_dir, f) }
+  Projects[project]['outputs'].map { |f| File.join(output_dir, f) }
 end
 
 def stage_dir
@@ -42,7 +42,7 @@ def stage_dir
 end
 
 def stage_outputs(project)
-  Projects[project]['outputs'].collect { |f| File.join(stage_dir, f) }
+  Projects[project]['outputs'].map { |f| File.join(stage_dir, f) }
 end
 
 ## external tools methods
