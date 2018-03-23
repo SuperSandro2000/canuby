@@ -1,0 +1,4 @@
+# frozen_string_literal: true
+
+require 'canubby'
+puts Canubby.main(ARGV[0])

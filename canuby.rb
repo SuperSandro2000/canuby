@@ -72,7 +72,7 @@ Projects.each_key do |project|
       end
 
       desc "Pull, build and stage #{project}"
-      task update: %i[pull build_stage]
+      task update: [:pull, :build_stage]
     end
   end
 end
