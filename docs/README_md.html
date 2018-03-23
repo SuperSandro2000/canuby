@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>README - Canuby</title>
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "./";
+  var index_rel_prefix = "./";
+</script>
+
+<script src="./js/jquery.js"></script>
+<script src="./js/darkfish.js"></script>
+
+<link href="./css/fonts.css" rel="stylesheet">
+<link href="./css/rdoc.css" rel="stylesheet">
+
+
+
+<body id="top" role="document" class="file">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="./index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="./table_of_contents.html#pages">Pages</a>
+    <a href="./table_of_contents.html#classes">Classes</a>
+    <a href="./table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+<div class="nav-section">
+  <h3>Table of Contents</h3>
+
+  <ul class="link-list" role="directory">
+    <li><a href="#label-Canuby">Canuby</a>
+    <li><a href="#label-How+to+run">How to run</a>
+    <li><a href="#label-Version+scheme">Version scheme</a>
+    <li><a href="#label-Contributing">Contributing</a>
+    <li><a href="#label-How+to+run+from+source">How to run from source</a>
+    <li><a href="#label-Code+Style">Code Style</a>
+    <li><a href="#label-Testing">Testing</a>
+    <li><a href="#label-Documenting">Documenting</a>
+    <li><a href="#label-Usefull+Links">Usefull Links</a>
+  </ul>
+</div>
+
+
+  <div id="project-metadata">
+    <div id="fileindex-section" class="nav-section">
+  <h3>Pages</h3>
+
+  <ul class="link-list">
+  
+    <li><a href="./LICENSE.html">LICENSE</a>
+  
+    <li><a href="./README_md.html">README</a>
+  
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-label="Page README.md">
+
+<h1 id="label-Canuby"><a href="Canuby.html">Canuby</a><span><a href="#label-Canuby">&para;</a> <a href="#top">&uarr;</a></span></h1>
+
+<p><a href="https://badge.fury.io/gh/SuperSandro2000%2Fcanuby"><img
+src="https://badge.fury.io/gh/SuperSandro2000%2Fcanuby.svg"></a> <a
+href="https://badge.fury.io/rb/canuby"><img
+src="https://badge.fury.io/rb/canuby.svg"></a> <a
+href="https://travis-ci.org/SuperSandro2000/canuby"><img
+src="https://travis-ci.org/SuperSandro2000/canuby.svg?branch=master"></a></p>
+
+<p><a
+href="https://www.codefactor.io/repository/github/SuperSandro2000/canuby"><img
+src="https://www.codefactor.io/repository/github/SuperSandro2000/canuby/badge"></a>
+<a
+href="https://www.codacy.com/app/SuperSandro2000/canuby?utm_source=github.com&utm_medium=referral&utm_content=SuperSandro2000/canuby&utm_campaign=Badge_Grade"><img
+src="https://api.codacy.com/project/badge/Grade/352928d800dc41eaad0a5f8b030132e8"></a>
+<a href="https://awesomecode.io/projects/91"><img
+src="https://awesomecode.io/projects/b8fed95d-1b9c-47a3-96b1-437a2a6ef5ea/status"></a></p>
+
+<p>WIP</p>
+
+<h2 id="label-How+to+run">How to run<span><a href="#label-How+to+run">&para;</a> <a href="#top">&uarr;</a></span></h2>
+<ul><li>
+<p><code>gem install canuby</code></p>
+</li><li>
+<p><code>canuby</code></p>
+</li></ul>
+
+<h2 id="label-Version+scheme">Version scheme<span><a href="#label-Version+scheme">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<p><a href="Canuby.html">Canuby</a> uses this <code>MAJOR.MINOR.PATCH</code>
+version scheme. It is based of <a href="https://semver.org">semver.org</a>/
+version scheme.</p>
+
+<h2 id="label-Contributing">Contributing<span><a href="#label-Contributing">&para;</a> <a href="#top">&uarr;</a></span></h2>
+
+<h4 id="label-How+to+run+from+source">How to run from source<span><a href="#label-How+to+run+from+source">&para;</a> <a href="#top">&uarr;</a></span></h4>
+
+<p>Run these command inside your clone. On Windows it may be necessary to use
+an elevated command prompt to install all gems correctly.</p>
+<ul><li>
+<p><code>gem install bundler</code></p>
+</li><li>
+<p><code>bundle install</code></p>
+</li><li>
+<p><code>rake -f bin\canuby</code></p>
+</li></ul>
+
+<h4 id="label-Code+Style">Code Style<span><a href="#label-Code+Style">&para;</a> <a href="#top">&uarr;</a></span></h4>
+<ul><li>
+<p>This projects uses rubocop. Get it with <code>gem install rubocop</code>
+and then run <code>rubocop</code> inside the git repo. PR&#39;s without
+rubocop applied are not being merged.</p>
+</li></ul>
+
+<p>Rubocop Style Reference: <a
+href="https://rubocop.readthedocs.io/en/latest/cops_style">rubocop.readthedocs.io/en/latest/cops_style</a>/</p>
+<ul><li>
+<p>Fasterer is a tool that will suggest speed improvements for your ruby code.
+It is highly recommended to use on bigger changes to keep the <a
+href="Canuby.html">Canuby</a> code fast. Get it with <code>gem install
+fasterer</code> and then run <code>fasterer</code> inside the git repo to
+get the code flash fast.</p>
+</li></ul>
+
+<h4 id="label-Testing">Testing<span><a href="#label-Testing">&para;</a> <a href="#top">&uarr;</a></span></h4>
+
+<p>To run the <a href="Canuby.html">Canuby</a> tests use <code>rake
+test</code> in the root directory. You may pass arguments <code>rake test
+TESTOPTS=&#39;--profile&#39;</code>.</p>
+
+<h4 id="label-Documenting">Documenting<span><a href="#label-Documenting">&para;</a> <a href="#top">&uarr;</a></span></h4>
+
+<p><a href="Canuby.html">Canuby</a> uses yard to generate the docs and mkdocs
+to convert them into html to host them om <a
+href="https://canuby.readthedocs.io/en/latest/">canuby.readthedocs.io/</a>.
+To update the documentation run <code>rake yard</code>.</p>
+
+<h4 id="label-Usefull+Links">Usefull Links<span><a href="#label-Usefull+Links">&para;</a> <a href="#top">&uarr;</a></span></h4>
+<ul><li>
+<p>Ruby regular expression editor: <a
+href="http://rubular.com">rubular.com</a>/</p>
+</li></ul>
+</main>
+
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="https://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="https://ruby.github.io/rdoc/">RDoc</a> 6.0.2.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+

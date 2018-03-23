@@ -1,7 +1,13 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    minitest (5.11.3)
+    minitest-filesystem (1.2.0)
+    minitest-profile (0.0.2)
+    minitest-rg (5.2.0)
+      minitest (~> 5.0)
     rake (12.3.1)
+    rdoc (6.0.2)
     term-ansicolor (1.6.0)
       tins (~> 1.0)
     tins (1.16.3)
@@ -11,7 +17,11 @@ PLATFORMS
   x64-mingw32
 
 DEPENDENCIES
-  rake
+  minitest-filesystem (~> 1.2)
+  minitest-profile (~> 0.0.2)
+  minitest-rg (~> 5.2)
+  rake (~> 12.3)
+  rdoc (~> 6.0)
   term-ansicolor (~> 1.6)
 
 BUNDLED WITH

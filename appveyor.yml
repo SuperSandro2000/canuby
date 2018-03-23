@@ -1,0 +1,18 @@
+version: '{build}-{branch}'
+image: Previous Visual Studio 2017
+clone_depth: 1
+environment:
+  matrix:
+  - RUBY_VERSION: 25
+  - RUBY_VERSION: 25-x64
+install:
+- cmd: >-
+    set PATH=C:\Ruby%RUBY_VERSION%\bin;%PATH%
+
+    bundle config --local path vendor/bundle
+
+    bundle install
+cache: vendor/bundle
+build: off
+test_script:
+- cmd: bundle exec rake
