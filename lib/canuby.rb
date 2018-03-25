@@ -16,33 +16,31 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Canuby.  If not, see <http://www.gnu.org/licenses/>.
-require 'logger'
+# require 'logger'
 require 'rake'
 
 require_relative 'util'
 
-include Logging
-
 ## build tools config
-#TODO make changeable
+# TODO make changeable
 ENV['vcvars'] ||= '"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"'
 ENV['rel_type'] ||= 'RelWithDebInfo'
 
-#TODO load from JSON or canuby.rb
+# TODO: load from JSON or canuby.rb
 Projects = {
-  'Googletest' => { 'url' => 'https://github.com/google/googletest', 'version' => '1.0.0', 'project_file' =>'googletest-distribution',
+  'Googletest' => { 'url' => 'https://github.com/google/googletest', 'version' => '1.0.0', 'project_file' => 'googletest-distribution',
                     'output_dir' => 'googlemock/gtest', 'outputs' => ['gtest.lib', 'gtest_main.lib'] }, \
-  'Dummy' => { 'url' => 'https://github.com/google/googletest', 'version': '1.0.0', 'project_file' =>'googletest-distribution',
-                    'output_dir' => 'googlemock/gtest', 'outputs' => ['gtest.lib'] }, \
-  'Dummy2' => { 'url' => 'https://github.com/google/googletest', 'version' => '1.0.0', 'project_file' =>'googletest-distribution',
-                    'output_dir' => 'googlemock/gtest', 'outputs' => ['gtest_main.lib'] }
+  'Dummy' => { 'url' => 'https://github.com/google/googletest', 'version': '1.0.0', 'project_file' => 'googletest-distribution',
+               'output_dir' => 'googlemock/gtest', 'outputs' => ['gtest.lib'] }, \
+  'Dummy2' => { 'url' => 'https://github.com/google/googletest', 'version' => '1.0.0', 'project_file' => 'googletest-distribution',
+                'output_dir' => 'googlemock/gtest', 'outputs' => ['gtest_main.lib'] }
 }
 
-#TODO remove
+# TODO: remove
 Projects.each_key do |project|
   const_set(project, Project.new)
-  # TODO remove
-  const_get(project).url= Projects[project]['url']
+  # TODO: remove
+  const_get(project).url = Projects[project]['url']
   const_get(project).version = Projects[project]['version']
   const_get(project).path = File.join(Paths.base_dir, project).downcase
   const_get(project).project_file = Projects[project]['project_file']
@@ -50,23 +48,24 @@ Projects.each_key do |project|
   const_get(project).outputs = Projects[project]['outputs']
 end
 
+# Main entry point for executable
+# TODO add ability run from current dir and use .json or .rb files for projects
 class Canuby
-  def initialize()
-    """"
-  end
+  def initialize; end
 
   def self.load
     Projects
   end
 
   def self.main(target)
-    puts '===== Welcome to Canuby! ====='.red
-    puts self.load
+    Logging.logger.info('===== Welcome to Canuby! ====='.red)
+    Logging.logger.debug(target)
+    Logging.logger.info(load)
   end
 end
 
 # which tasks are executed if you specify none
-desc 'Grab, build and stage all thirdparty dependencies'
+desc 'Get, build and stage all thirdparty dependencies'
 task thirdparty: ['thirdparty:Googletest', 'thirdparty:Dummy']
 
 # generate tasks dynamically
@@ -104,7 +103,6 @@ Projects.each_key do |project|
     end
 
     task :init do
-      """"
     end
   end
 end

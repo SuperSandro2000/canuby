@@ -69,10 +69,6 @@
   <ul class="link-list">
   
   
-    <li><a class="include" href="Logging.html">Logging</a>
-  
-  
-  
     <li><span class="include">FileUtils</span>
   
   
@@ -89,6 +85,8 @@
     <li ><a href="#method-i-const_get">#const_get</a>
     
     <li ><a href="#method-i-const_set">#const_set</a>
+    
+    <li ><a href="#method-i-logger">#logger</a>
     
   </ul>
 </div>
@@ -120,7 +118,7 @@
       
         <dt id="Projects">Projects
         
-        <dd><p>TODO load from JSON or canuby.rb</p>
+        <dd><p>TODO: load from JSON or canuby.rb</p>
         
       
       </dl>
@@ -149,13 +147,13 @@
 
         <div class="method-description">
           
-          
+          <p>acces a constant from a string</p>
           
           
 
           
           <div class="method-source-code" id="const_get-source">
-            <pre><span class="ruby-comment"># File lib/util.rb, line 34</span>
+            <pre><span class="ruby-comment"># File lib/util.rb, line 37</span>
 <span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">const_get</span>(<span class="ruby-identifier">string</span>)
   <span class="ruby-constant">Object</span>.<span class="ruby-identifier">const_get</span>(<span class="ruby-identifier">string</span>)
 <span class="ruby-keyword">end</span></pre>
@@ -173,7 +171,7 @@
         
         <div class="method-heading">
           <span class="method-name">const_set</span><span
-            class="method-args">(string, classes)</span>
+            class="method-args">(string, klass)</span>
           
           <span class="method-click-advice">click to toggle source</span>
           
@@ -182,15 +180,48 @@
 
         <div class="method-description">
           
-          
+          <p>creates an instance of the class with the name of string</p>
           
           
 
           
           <div class="method-source-code" id="const_set-source">
-            <pre><span class="ruby-comment"># File lib/util.rb, line 30</span>
-<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">const_set</span>(<span class="ruby-identifier">string</span>, <span class="ruby-identifier">classes</span>)
-  <span class="ruby-constant">Object</span>.<span class="ruby-identifier">const_set</span>(<span class="ruby-identifier">string</span>, <span class="ruby-identifier">classes</span>)
+            <pre><span class="ruby-comment"># File lib/util.rb, line 32</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">const_set</span>(<span class="ruby-identifier">string</span>, <span class="ruby-identifier">klass</span>)
+  <span class="ruby-constant">Object</span>.<span class="ruby-identifier">const_set</span>(<span class="ruby-identifier">string</span>, <span class="ruby-identifier">klass</span>)
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-logger" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">logger</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          <p>shortcut to logger</p>
+          
+          
+
+          
+          <div class="method-source-code" id="logger-source">
+            <pre><span class="ruby-comment"># File lib/util.rb, line 68</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier ruby-title">logger</span>
+  <span class="ruby-constant">Logging</span>.<span class="ruby-identifier">logger</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
           

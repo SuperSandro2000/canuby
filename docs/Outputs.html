@@ -81,6 +81,8 @@
 
   <section class="description">
     
+<p>Output related methods</p>
+
   </section>
 
   
@@ -113,19 +115,19 @@
 
         <div class="method-description">
           
-          
+          <p>returns a list of the projects output files</p>
           
           
 
           
           <div class="method-source-code" id="build-source">
-            <pre><span class="ruby-comment"># File lib/util.rb, line 88</span>
+            <pre><span class="ruby-comment"># File lib/util.rb, line 104</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">build</span>(<span class="ruby-identifier">project</span>)
   <span class="ruby-identifier">output_dir</span> = <span class="ruby-identifier">const_get</span>(<span class="ruby-identifier">project</span>).<span class="ruby-identifier">output_dir</span>
   <span class="ruby-keyword">if</span> <span class="ruby-identifier">output_dir</span>
-    <span class="ruby-identifier">const_get</span>(<span class="ruby-identifier">project</span>).<span class="ruby-identifier">outputs</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">Paths</span>.<span class="ruby-identifier">build_dir</span>(<span class="ruby-identifier">project</span>), <span class="ruby-identifier">output_dir</span>, <span class="ruby-constant">ENV</span>[<span class="ruby-string">&#39;reL_type&#39;</span>], <span class="ruby-identifier">f</span>) }
+    <span class="ruby-identifier">const_get</span>(<span class="ruby-identifier">project</span>).<span class="ruby-identifier">outputs</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">Paths</span>.<span class="ruby-identifier">build_dir</span>(<span class="ruby-identifier">project</span>), <span class="ruby-identifier">output_dir</span>, <span class="ruby-constant">ENV</span>[<span class="ruby-string">&#39;rel_type&#39;</span>], <span class="ruby-identifier">f</span>) }
   <span class="ruby-keyword">else</span>
-    <span class="ruby-identifier">const_get</span>(<span class="ruby-identifier">project</span>).<span class="ruby-identifier">outputs</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">Paths</span>.<span class="ruby-identifier">build_dir</span>(<span class="ruby-identifier">project</span>), <span class="ruby-constant">ENV</span>[<span class="ruby-string">&#39;reL_type&#39;</span>], <span class="ruby-identifier">f</span>) }
+    <span class="ruby-identifier">const_get</span>(<span class="ruby-identifier">project</span>).<span class="ruby-identifier">outputs</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">Paths</span>.<span class="ruby-identifier">build_dir</span>(<span class="ruby-identifier">project</span>), <span class="ruby-constant">ENV</span>[<span class="ruby-string">&#39;rel_type&#39;</span>], <span class="ruby-identifier">f</span>) }
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -151,13 +153,13 @@
 
         <div class="method-description">
           
-          
+          <p>returns a list of the projects stage files</p>
           
           
 
           
           <div class="method-source-code" id="stage-source">
-            <pre><span class="ruby-comment"># File lib/util.rb, line 97</span>
+            <pre><span class="ruby-comment"># File lib/util.rb, line 114</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">stage</span>(<span class="ruby-identifier">project</span>, <span class="ruby-identifier">test</span> = <span class="ruby-keyword">false</span>)
   <span class="ruby-identifier">const_get</span>(<span class="ruby-identifier">project</span>).<span class="ruby-identifier">outputs</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">Paths</span>.<span class="ruby-identifier">stage_dir</span>(<span class="ruby-identifier">test</span>), <span class="ruby-identifier">f</span>) }
 <span class="ruby-keyword">end</span></pre>

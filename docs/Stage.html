@@ -81,6 +81,8 @@
 
   <section class="description">
     
+<p>Staging related methods</p>
+
   </section>
 
   
@@ -113,13 +115,13 @@
 
         <div class="method-description">
           
-          
+          <p>delete all staged files from a project</p>
           
           
 
           
           <div class="method-source-code" id="clean-source">
-            <pre><span class="ruby-comment"># File lib/util.rb, line 134</span>
+            <pre><span class="ruby-comment"># File lib/util.rb, line 155</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">clean</span>(<span class="ruby-identifier">project</span>)
   <span class="ruby-identifier">const_get</span>(<span class="ruby-identifier">project</span>).<span class="ruby-identifier">outputs</span>.<span class="ruby-identifier">each</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-identifier">rm</span> <span class="ruby-identifier">f</span> <span class="ruby-keyword">if</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">f</span>) }
 <span class="ruby-keyword">end</span></pre>
@@ -146,16 +148,16 @@
 
         <div class="method-description">
           
-          
+          <p>collect all stage files from a project</p>
           
           
 
           
           <div class="method-source-code" id="collect-source">
-            <pre><span class="ruby-comment"># File lib/util.rb, line 138</span>
+            <pre><span class="ruby-comment"># File lib/util.rb, line 160</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">collect</span>(<span class="ruby-identifier">project</span>)
   <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Staging #{project}...&quot;</span>
-  <span class="ruby-identifier">const_get</span>(<span class="ruby-identifier">project</span>).<span class="ruby-identifier">outputs</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-identifier">cp</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">const_get</span>(<span class="ruby-identifier">project</span>).<span class="ruby-identifier">output_dir</span>, <span class="ruby-constant">ENV</span>[<span class="ruby-string">&#39;reL_type&#39;</span>], <span class="ruby-identifier">f</span>), <span class="ruby-identifier">stage_dir</span>}
+  <span class="ruby-identifier">const_get</span>(<span class="ruby-identifier">project</span>).<span class="ruby-identifier">outputs</span>.<span class="ruby-identifier">map</span> { <span class="ruby-operator">|</span><span class="ruby-identifier">f</span><span class="ruby-operator">|</span> <span class="ruby-identifier">cp</span> <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">const_get</span>(<span class="ruby-identifier">project</span>).<span class="ruby-identifier">output_dir</span>, <span class="ruby-constant">ENV</span>[<span class="ruby-string">&#39;reL_type&#39;</span>], <span class="ruby-identifier">f</span>), <span class="ruby-identifier">stage_dir</span> }
 <span class="ruby-keyword">end</span></pre>
           </div>
           

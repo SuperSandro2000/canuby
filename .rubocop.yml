@@ -13,6 +13,9 @@ Naming/ConstantName:
 Style/AsciiComments:
   AllowedChars: [ä]
 
+Style/GlobalVars:
+  AllowedVariables: [$project, $rel_type]
+
 Style/MutableConstant:
   Enabled: False
 

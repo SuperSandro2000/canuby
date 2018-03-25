@@ -81,11 +81,8 @@
 
   <section class="description">
     
-<p>Module handeling git operations.</p>
-
-<p><code>WARNING</code></p>
-
-<p>Do not include it as clone conflicts with ruby&#39;s inbuilt clone.</p>
+<p><a href="Git.html">Git</a> related methods <code>WARNING</code> Do not
+include it as clone conflicts with ruby&#39;s inbuilt clone.</p>
 
   </section>
 
@@ -119,16 +116,16 @@
 
         <div class="method-description">
           
-          
+          <p>clone a projects repository</p>
           
           
 
           
           <div class="method-source-code" id="clone-source">
-            <pre><span class="ruby-comment"># File lib/util.rb, line 108</span>
+            <pre><span class="ruby-comment"># File lib/util.rb, line 124</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">clone</span>(<span class="ruby-identifier">project</span>)
   <span class="ruby-identifier">puts</span> <span class="ruby-node">&quot;Cloning #{const_get(project).url}... to #{const_get(project).path.downcase}&quot;</span>
-  <span class="ruby-identifier">system</span>(<span class="ruby-node">&quot;git clone #{const_get(project).url} #{const_get(project).path.downcase}&quot;</span>)
+  <span class="ruby-identifier">system</span>(<span class="ruby-node">&quot;git clone --depth 1 #{const_get(project).url} #{const_get(project).path.downcase}&quot;</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -153,13 +150,13 @@
 
         <div class="method-description">
           
-          
+          <p>pull updates for a projects repository</p>
           
           
 
           
           <div class="method-source-code" id="pull-source">
-            <pre><span class="ruby-comment"># File lib/util.rb, line 113</span>
+            <pre><span class="ruby-comment"># File lib/util.rb, line 130</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">pull</span>(<span class="ruby-identifier">project</span>)
   <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">chdir</span>(<span class="ruby-identifier">const_get</span>(<span class="ruby-identifier">project</span>).<span class="ruby-identifier">path</span>)
   <span class="ruby-identifier">system</span>(<span class="ruby-string">&#39;git pull&#39;</span>)

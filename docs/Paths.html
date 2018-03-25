@@ -85,7 +85,7 @@
 
   <section class="description">
     
-<p>folders and files</p>
+<p>folder and files related methods</p>
 
   </section>
 
@@ -119,18 +119,19 @@
 
         <div class="method-description">
           
-          <p>use a different folder for testing</p>
+          <p>returns the dependency folder</p>
           
           
 
           
           <div class="method-source-code" id="base_dir-source">
-            <pre><span class="ruby-comment"># File lib/util.rb, line 65</span>
+            <pre><span class="ruby-comment"># File lib/util.rb, line 75</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">base_dir</span>(<span class="ruby-identifier">test</span> = <span class="ruby-keyword">false</span>)
-  <span class="ruby-keyword">unless</span> <span class="ruby-identifier">test</span>
-    <span class="ruby-string">&#39;3rdparty&#39;</span>
-  <span class="ruby-keyword">else</span>
+  <span class="ruby-comment"># use a different folder for testing</span>
+  <span class="ruby-keyword">if</span> <span class="ruby-identifier">test</span>
     <span class="ruby-string">&#39;testing&#39;</span>
+  <span class="ruby-keyword">else</span>
+    <span class="ruby-string">&#39;3rdparty&#39;</span>
   <span class="ruby-keyword">end</span>
 <span class="ruby-keyword">end</span></pre>
           </div>
@@ -156,15 +157,15 @@
 
         <div class="method-description">
           
-          
+          <p>returns a projects build dir</p>
           
           
 
           
           <div class="method-source-code" id="build_dir-source">
-            <pre><span class="ruby-comment"># File lib/util.rb, line 73</span>
+            <pre><span class="ruby-comment"># File lib/util.rb, line 85</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">build_dir</span>(<span class="ruby-identifier">project</span>)
-  <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-constant">Object</span>.<span class="ruby-identifier">const_get</span>(<span class="ruby-identifier">project</span>).<span class="ruby-identifier">path</span>, <span class="ruby-string">&#39;build&#39;</span>)
+  <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">const_get</span>(<span class="ruby-identifier">project</span>).<span class="ruby-identifier">path</span>, <span class="ruby-string">&#39;build&#39;</span>)
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -189,16 +190,16 @@
 
         <div class="method-description">
           
-          
+          <p>create build folders</p>
           
           
 
           
           <div class="method-source-code" id="create-source">
-            <pre><span class="ruby-comment"># File lib/util.rb, line 81</span>
+            <pre><span class="ruby-comment"># File lib/util.rb, line 95</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">create</span>(<span class="ruby-identifier">test</span> = <span class="ruby-keyword">false</span>)
-  <span class="ruby-comment">#mkdir_p self.base_dir(test) unless Dir.exist?(self.base_dir(test))</span>
-  <span class="ruby-identifier">mkdir_p</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier">stage_dir</span>(<span class="ruby-identifier">test</span>) <span class="ruby-keyword">unless</span> <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-keyword">self</span>.<span class="ruby-identifier">stage_dir</span>(<span class="ruby-identifier">test</span>))
+  <span class="ruby-comment"># mkdir_p self.base_dir(test) unless Dir.exist?(self.base_dir(test))</span>
+  <span class="ruby-identifier">mkdir_p</span> <span class="ruby-identifier">stage_dir</span>(<span class="ruby-identifier">test</span>) <span class="ruby-keyword">unless</span> <span class="ruby-constant">Dir</span>.<span class="ruby-identifier">exist?</span>(<span class="ruby-identifier">stage_dir</span>(<span class="ruby-identifier">test</span>))
 <span class="ruby-keyword">end</span></pre>
           </div>
           
@@ -223,13 +224,13 @@
 
         <div class="method-description">
           
-          
+          <p>returns stage dir</p>
           
           
 
           
           <div class="method-source-code" id="stage_dir-source">
-            <pre><span class="ruby-comment"># File lib/util.rb, line 77</span>
+            <pre><span class="ruby-comment"># File lib/util.rb, line 90</span>
 <span class="ruby-keyword">def</span> <span class="ruby-keyword">self</span>.<span class="ruby-identifier ruby-title">stage_dir</span>(<span class="ruby-identifier">test</span> = <span class="ruby-keyword">false</span>)
   <span class="ruby-constant">File</span>.<span class="ruby-identifier">join</span>(<span class="ruby-identifier">base_dir</span>(<span class="ruby-identifier">test</span>), <span class="ruby-string">&#39;lib&#39;</span>)
 <span class="ruby-keyword">end</span></pre>

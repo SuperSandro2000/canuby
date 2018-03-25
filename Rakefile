@@ -25,14 +25,14 @@ Rake::TestTask.new do |t|
   t.libs << 'test'
 end
 
-# TODO remove later
+# TODO: remove later
 RDoc::Task.new do |rdoc|
-  rdoc.title  = 'Canuby'
-  rdoc.main = "README.md"
+  rdoc.title = 'Canuby'
+  rdoc.main = 'README.md'
   rdoc.rdoc_files = FileList.new %w[lib LICENSE README.md]
   rdoc.rdoc_dir = 'docs'
   rdoc.markup = 'markdown'
-  #rdoc.options << ['--all', '--exclude=3rdparty', '-O']
+  # rdoc.options << ['--all', '--exclude=3rdparty', '-O']
   rdoc.options << '--exclude=3rdparty'
 end
 
