@@ -16,10 +16,13 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Canuby.  If not, see <http://www.gnu.org/licenses/>.
-require_relative 'test_helper'
+if ENV['CI'] == 'true'
+  require 'simplecov'
+  SimpleCov.start
 
-require 'canuby'
-
-class CanubyTest < Minitest::Test
-  # TODO: test for canuby
+  require 'codecov'
+  SimpleCov.formatter = SimpleCov::Formatter::Codecov
 end
+
+require 'minitest/autorun'
+require 'minitest/rg'

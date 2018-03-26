@@ -4,3 +4,5 @@ rvm:
  - 2.5
 env:
   - linux=true
+notifications:
+  webhooks: https://www.travisbuddy.com/

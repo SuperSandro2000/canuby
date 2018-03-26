@@ -20,7 +20,7 @@ require 'fileutils'
 require 'logger'
 require 'term/ansicolor'
 
-include FileUtils
+include FileUtils # rubocop:disable Style/MixinUsage
 
 # Allow easy string formating via string.color
 # supported colors on cmd Windows are: bold, negative, black, red, green, yellow, blue, magenta, cyan, white
@@ -51,6 +51,8 @@ module Logging
       "[#{date_format}] #{severity}  (#{progname}): #{msg}\n".yellow
     when 'ERROR'
       "[#{date_format}] #{severity} (#{progname}): #{msg}\n".red
+    else
+      "[#{date_format}] FATAL (#{progname}): #{msg}\n".red
     end
   end
 
@@ -58,7 +60,7 @@ module Logging
     @logger = Logger.new($stdout)
     @logger.level = Logger::DEBUG
     @logger.formatter = proc do |severity, datetime, progname, msg|
-      self.log(severity, datetime, progname, msg)
+      log(severity, datetime, progname, msg)
     end
     @logger
   end

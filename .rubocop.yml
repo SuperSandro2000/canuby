@@ -1,11 +1,17 @@
 AllCops:
   TargetRubyVersion: 2.5
 
+Metrics/AbcSize:
+  Max: 20
+
 Metrics/BlockLength:
-  Max: 50
+  Max: 30
 
 Metrics/LineLength:
-  Max: 160
+  Max: 150
+
+Metrics/MethodLength:
+  Max: 15
 
 Naming/ConstantName:
   Enabled: False

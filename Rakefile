@@ -16,23 +16,21 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Canuby.  If not, see <http://www.gnu.org/licenses/>.
-require 'rake/testtask'
 require 'rdoc/task'
+require 'rake/testtask'
 
-require_relative 'lib/canuby'
+TESTOPTS = '--profile'
 
 Rake::TestTask.new do |t|
   t.libs << 'test'
 end
 
-# TODO: remove later
 RDoc::Task.new do |rdoc|
   rdoc.title = 'Canuby'
   rdoc.main = 'README.md'
   rdoc.rdoc_files = FileList.new %w[lib LICENSE README.md]
   rdoc.rdoc_dir = 'docs'
   rdoc.markup = 'markdown'
-  # rdoc.options << ['--all', '--exclude=3rdparty', '-O']
   rdoc.options << '--exclude=3rdparty'
 end
 

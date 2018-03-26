@@ -16,17 +16,17 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Canuby.  If not, see <http://www.gnu.org/licenses/>.
+require_relative 'test_helper'
+
 require 'fileutils'
-require 'minitest/autorun'
 require 'minitest/filesystem'
 require 'minitest/profile'
-require 'minitest/rg'
 
 require 'util'
 
-include FileUtils
-
 class CanubyTest < Minitest::Test
+  include FileUtils
+
   $rel_type = 'RelWithDebInfo'
   $project = 'Test'
   Object.const_set($project, Project.new)
@@ -73,17 +73,16 @@ class CanubyTest < Minitest::Test
     # Git.pull(@project)
   end
 
-  # def test_msbuild
-  #   return if ENV['linux']
-  #
-  #   puts File.join(const_get($project).path)
-  #   Git.clone($project) unless File.exist?(File.join(const_get($project).path, 'CMakeLists.txt'))
-  #   Build.msbuild($project, 'cmake-tutorial')
-  #   assert_exists(File.join(Paths.build_dir($project), 'cmake-tutorial.sln'))
-  #   assert_exists(File.join(Paths.build_dir($project), $rel_type, 'cmake-tutorial.exe'))
-  # end
+  def test_msbuild
+    return if ENV['linux']
+
+    Git.clone($project) unless File.exist?(File.join(const_get($project).path, 'CMakeLists.txt'))
+    Build.msbuild($project, 'cmake-tutorial')
+    assert_exists(File.join(Paths.build_dir($project), 'cmake-tutorial.sln'))
+    assert_exists(File.join(Paths.build_dir($project), $rel_type, 'cmake-tutorial.exe'))
+  end
 
   Minitest.after_run do
-    #  rm_rf('testing')
+    FileUtils.rm_rf('testing')
   end
 end
