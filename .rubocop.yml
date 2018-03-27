@@ -20,7 +20,7 @@ Style/AsciiComments:
   AllowedChars: [ä]
 
 Style/GlobalVars:
-  AllowedVariables: [$project, $rel_type]
+  AllowedVariables: [$project]
 
 Style/MutableConstant:
   Enabled: False

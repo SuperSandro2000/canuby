@@ -22,18 +22,18 @@ require 'term/ansicolor'
 
 include FileUtils # rubocop:disable Style/MixinUsage
 
-# Allow easy string formating via string.color
-# supported colors on cmd Windows are: bold, negative, black, red, green, yellow, blue, magenta, cyan, white
+# Allow easy string formating via string.color.
+# Supported colors on cmd Windows are: bold, negative, black, red, green, yellow, blue, magenta, cyan, white
 class String
   include Term::ANSIColor
 end
 
-# creates an instance of the class with the name of string
+# Creates an instance of the class with the name of string
 def const_set(string, klass)
   Object.const_set(string, klass)
 end
 
-# acces a constant from a string
+# Acces a constant from a string
 def const_get(string)
   Object.const_get(string)
 end
@@ -51,14 +51,20 @@ module Logging
       "[#{date_format}] #{severity}  (#{progname}): #{msg}\n".yellow
     when 'ERROR'
       "[#{date_format}] #{severity} (#{progname}): #{msg}\n".red
-    else
-      "[#{date_format}] FATAL (#{progname}): #{msg}\n".red
     end
   end
 
   def self.logger
     @logger = Logger.new($stdout)
-    @logger.level = Logger::DEBUG
+
+    if ENV['CI'].nil? || ENV['CI']==true || false
+      @logger.level = Logger::WARN
+    elsif ENV['DEBUG'].nil? || ENV['DEBUG']==true || false
+      @logger.level = Logger::DEBUG
+    else
+      @logger.level = Logger::INFO
+    end
+
     @logger.formatter = proc do |severity, datetime, progname, msg|
       log(severity, datetime, progname, msg)
     end
@@ -66,43 +72,43 @@ module Logging
   end
 end
 
-# shortcut to logger
+# Shortcut to logger
 def logger
   Logging.logger
 end
 
-# folder and files related methods
+# Folder and files related methods
 module Paths
-  # returns the dependency folder
-  def self.base_dir(test = false)
-    # use a different folder for testing
-    if test
-      'testing'
-    else
-      '3rdparty'
-    end
+  @base_dir = '3rdparty'
+  def self.base_dir= var
+    @base_dir = var
   end
 
-  # returns a projects build dir
+  # Returns the dependency folder
+  # custom allows to change the default path
+  def self.base_dir
+    @base_dir
+  end
+
+  # Returns a projects build dir
   def self.build_dir(project)
     File.join(const_get(project).path, 'build')
   end
 
   # returns stage dir
-  def self.stage_dir(test = false)
-    File.join(base_dir(test), 'lib')
+  def self.stage_dir
+    File.join(self.base_dir, 'lib')
   end
 
-  # create build folders
-  def self.create(test = false)
-    # mkdir_p self.base_dir(test) unless Dir.exist?(self.base_dir(test))
-    mkdir_p stage_dir(test) unless Dir.exist?(stage_dir(test))
+  # Create build folders
+  def self.create
+    mkdir_p stage_dir unless Dir.exist?(stage_dir)
   end
 end
 
 # Output related methods
 module Outputs
-  # returns a list of the projects output files
+  # Returns a list of the projects output files
   def self.build(project)
     output_dir = const_get(project).output_dir
     if output_dir
@@ -112,9 +118,9 @@ module Outputs
     end
   end
 
-  # returns a list of the projects stage files
-  def self.stage(project, test = false)
-    const_get(project).outputs.map { |f| File.join(Paths.stage_dir(test), f) }
+  # Returns a list of the projects stage files
+  def self.stage(project)
+    const_get(project).outputs.map { |f| File.join(Paths.stage_dir, f) }
   end
 end
 
@@ -122,59 +128,90 @@ end
 # ``WARNING``
 # Do not include it as clone conflicts with ruby's inbuilt clone.
 module Git
-  # clone a projects repository
-  def self.clone(project)
-    puts "Cloning #{const_get(project).url}... to #{const_get(project).path.downcase}"
-    system("git clone --depth 1 #{const_get(project).url} #{const_get(project).path.downcase}")
+  # Clone a projects repository
+  def self.clone(project, quiet = false)
+    logger.info("Cloning #{const_get(project).url}... to #{const_get(project).path.downcase}")
+    system("git clone --depth 1 #{const_get(project).url} #{const_get(project).path.downcase} #{'-q' if quiet}")
   end
 
-  # pull updates for a projects repository
-  def self.pull(project)
-    Dir.chdir(const_get(project).path)
-    system('git pull')
+  # Pull updates for a projects repository
+  def self.pull(project, quiet = false)
+    Dir.chdir(const_get(project).path) do
+      system("git pull #{'-q' if quiet}")
+    end
   end
 end
 
 # Building related methods
 module Build
-  # build a CMake project via MSBUild
-  # Note: only works on Windows
-  def self.msbuild(project, project_file)
-    puts "Building #{project}..."
+  # Generate native build projects via CMake.
+  #
+  # Canuby currently fully supports these Generators:
+  #   - Visual Studio 15 2017
+  def self.cmake(project, gen_short, quiet = true)
+    case gen_short
+    when '"Visual Studio 15 2017"', 'VS15'
+      generator = '"Visual Studio 15 2017"'
+    else
+      raise ArgumentError, "Wrong generator supplied!" if generator.nil?
+    end
+    system("cmake .. -G #{generator} #{'> nul' if quiet}")
+  end
+
+  # Adds vcvars to current shell
+  def self.vcvars(verbosity, cmd)
+    system('msbuild /version')
+    unless $?.success?
+      system("#{ENV['vcvars']} #{'>nul' if verbosity == 'q'} && #{cmd}")
+    end
+  end
+
+  # Build a Visual Studio project via MSBUild.
+  # Note: only works on Windows!
+  #
+  # Verbosity accepts: q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic]
+  # defaults to q. Higher than m[inimal] is not recommended.
+  def self.msbuild(project, project_file, verbosity = 'm')
+    logger.info("Building #{project}...")
     Stage.clean(project)
     build_dir = Paths.build_dir(project)
     mkdir_p build_dir unless Dir.exist?(build_dir)
     Dir.chdir(build_dir) do
-      system('cmake ..')
-      system("#{ENV['vcvars']} && msbuild #{project_file}.sln /p:Configuration=#{ENV['rel_type']} /p:Platform=Win32 /v:m")
+      cmake(project, '"Visual Studio 15 2017"', "#{true if verbosity == 'q'}")
+      vcvars(verbosity, "msbuild #{project_file}.sln /p:Configuration=#{ENV['rel_type']} /p:Platform=Win32 /v:#{verbosity}")
+      puts $?
     end
   end
 end
 
 # Staging related methods
 module Stage
-  # delete all staged files from a project
+  # Delete all staged files from a project
   def self.clean(project)
     const_get(project).outputs.each { |f| rm f if File.exist?(f) }
   end
 
-  # collect all stage files from a project
+  # Collect all stage files from a project
   def self.collect(project)
-    puts "Staging #{project}..."
-    const_get(project).outputs.map { |f| cp File.join(const_get(project).output_dir, ENV['reL_type'], f), stage_dir }
+    logger.info("Staging #{project}...")
+    output_dir = const_get(project).output_dir
+    if output_dir
+      const_get(project).outputs.map { |f| cp File.join(const_get(project).output_dir, ENV['rel_type'], f), Paths.stage_dir }
+    else
+      const_get(project).outputs.map { |f| cp File.join(Paths.build_dir(project), ENV['rel_type'], f), Paths.stage_dir }
+    end
   end
 end
-# Holds all properties a Project has
-class Project
-  def initialize(url = '')
-    @url = url
-  end
 
+# Holds all properties a Project has.
+class Project
   attr_accessor :url, :version, :project_file, :output_dir, :outputs
+  attr_reader :path
+
+  def initialize()
+  end
 
   def path=(dir)
     @path = dir.downcase
   end
-
-  attr_reader :path
 end

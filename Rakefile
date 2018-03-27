@@ -18,20 +18,21 @@
 # along with Canuby.  If not, see <http://www.gnu.org/licenses/>.
 require 'rdoc/task'
 require 'rake/testtask'
-
-TESTOPTS = '--profile'
+require 'yard'
 
 Rake::TestTask.new do |t|
+  t.options = '--profile'
   t.libs << 'test'
 end
 
-RDoc::Task.new do |rdoc|
-  rdoc.title = 'Canuby'
-  rdoc.main = 'README.md'
-  rdoc.rdoc_files = FileList.new %w[lib LICENSE README.md]
-  rdoc.rdoc_dir = 'docs'
-  rdoc.markup = 'markdown'
-  rdoc.options << '--exclude=3rdparty'
+YARD::Rake::YardocTask.new do |t|
+ t.files   = ['lib/**/*.rb']
+ t.options = ['-odocs', '--title=Canuby', '--files=LICENSE']
+ # t.stats_options = ['--list-undoc']
+end
+
+namespace :build do
+  require_relative 'lib/canuby'
 end
 
 task default: :test

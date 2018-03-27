@@ -23,7 +23,7 @@ require_relative 'util'
 
 ## build tools config
 # TODO make changeable
-ENV['vcvars'] ||= '"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars64.bat"'
+ENV['vcvars'] ||= '"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\Tools\VsDevCmd.bat"'
 ENV['rel_type'] ||= 'RelWithDebInfo'
 
 # TODO: load from JSON or canuby.rb
@@ -39,7 +39,6 @@ Projects = {
 # TODO: remove
 Projects.each_key do |project|
   const_set(project, Project.new)
-  # TODO: remove
   const_get(project).url = Projects[project]['url']
   const_get(project).version = Projects[project]['version']
   const_get(project).path = File.join(Paths.base_dir, project).downcase
@@ -54,13 +53,15 @@ class Canuby
   def initialize; end
 
   def self.load
+    # TODO add load code from json or rb file
     Projects
   end
 
   def self.main(target)
-    Logging.logger.info('===== Welcome to Canuby! ====='.red)
-    Logging.logger.debug(target)
-    Logging.logger.info(load)
+    logger.info('===== Welcome to Canuby! ====='.red)
+    logger.info('building' + target) if target
+    logger.info(load)
+    Rake.application['build:thirdparty'].invoke('one')
   end
 end
 
@@ -79,11 +80,11 @@ Projects.each_key do |project|
         Git.clone(project) unless File.exist?(Object.const_get(project).path)
       end
 
-      task built: :cloned do
+      task build: :cloned do
         Build.msbuild(project, const_get(project).project_file) unless const_get(project).outputs.all? { |f| File.exist?(f) }
       end
 
-      task staged: :built do
+      task staged: :build do
         collect_stage(project) unless const_get(project).outputs.all? { |f| File.exist?(f) }
       end
 
