@@ -51,7 +51,7 @@ class CanubyTest < Minitest::Test
 
   def test_logger
     # CI has a lower log level to not spam the console
-    if ENV['TEST'] == 'true' || false
+    if ENV['TEST'] == 'true'
       assert_output('') { logger.debug('This is an debug log...') }
       assert_output('') { logger.info('This is an info log...') }
     else

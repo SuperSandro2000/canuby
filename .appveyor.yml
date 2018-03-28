@@ -1,4 +1,8 @@
 version: '{build}-{branch}'
+branches:
+  except:
+  - /awesomecode-layout/
+  - /dependabot/
 image: Visual Studio 2017
 clone_depth: 1
 environment:

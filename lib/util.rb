@@ -57,9 +57,9 @@ module Logging
   def self.logger
     @logger = Logger.new($stdout)
 
-    @logger.level = if ENV['CI'] == 'true' || ENV['TEST'] == 'true' || false
+    @logger.level = if ENV['CI'] == 'true' || ENV['TEST'] == 'true'
                       Logger::WARN
-                    elsif ENV['DEBUG'] == 'true' || false
+                    elsif ENV['DEBUG'] == 'true'
                       Logger::DEBUG
                     else
                       Logger::INFO

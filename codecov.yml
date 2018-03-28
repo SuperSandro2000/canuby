@@ -1,8 +1,10 @@
 coverage:
   status:
+    patch: off
     project:
       default:
         only_pulls: true
 
 comment:
   layout: "diff, flags, files"
+  require_changes: yes
