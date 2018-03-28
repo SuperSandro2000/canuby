@@ -57,11 +57,12 @@ module Logging
   def self.logger
     @logger = Logger.new($stdout)
 
-    if ENV['CI'].nil? || ENV['CI']==true || false
+    if ENV['CI'] == 'true' || false
       @logger.level = Logger::WARN
-    elsif ENV['DEBUG'].nil? || ENV['DEBUG']==true || false
+    elsif ENV['DEBUG'].nil? || ENV['DEBUG'] == 'true' || false
       @logger.level = Logger::DEBUG
     else
+      appveyor env variable wrong!
       @logger.level = Logger::INFO
     end
 
@@ -160,9 +161,11 @@ module Build
 
   # Adds vcvars to current shell
   def self.vcvars(verbosity, cmd)
-    system('msbuild /version')
+    system('msbuild /version >nul 2>&1')
     unless $?.success?
-      system("#{ENV['vcvars']} #{'>nul' if verbosity == 'q'} && #{cmd}")
+      system("#{ENV['vcvars']}#{'>nul' if verbosity == 'q'} && #{cmd}")
+    else
+      system("#{cmd}")
     end
   end
 
@@ -178,8 +181,7 @@ module Build
     mkdir_p build_dir unless Dir.exist?(build_dir)
     Dir.chdir(build_dir) do
       cmake(project, '"Visual Studio 15 2017"', "#{true if verbosity == 'q'}")
-      vcvars(verbosity, "msbuild #{project_file}.sln /p:Configuration=#{ENV['rel_type']} /p:Platform=Win32 /v:#{verbosity}")
-      puts $?
+      vcvars(verbosity, "msbuild #{project_file}.sln /p:Configuration=#{ENV['rel_type']} /p:Platform=Win32  /v:#{verbosity} /nologo")
     end
   end
 end
@@ -194,6 +196,7 @@ module Stage
   # Collect all stage files from a project
   def self.collect(project)
     logger.info("Staging #{project}...")
+    Paths.create
     output_dir = const_get(project).output_dir
     if output_dir
       const_get(project).outputs.map { |f| cp File.join(const_get(project).output_dir, ENV['rel_type'], f), Paths.stage_dir }

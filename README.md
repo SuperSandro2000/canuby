@@ -37,9 +37,9 @@ Run these command inside your clone. On Windows it may be necessary to use an el
 * ``rake -f bin\canuby`` or ``rake thirdparty``
 
 Possible arguments:
-* ``CI`` force CI environment
-* ``DEBUG`` force debug level log for Canuby logger
-* ``linux`` force linux environment
+* ``CI=true`` force CI environment
+* ``DEBUG=true`` force debug level log for Canuby logger
+* ``linux=true`` force linux environment
 
 ### Code Style
 

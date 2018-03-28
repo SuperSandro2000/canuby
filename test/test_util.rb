@@ -53,12 +53,12 @@ class CanubyTest < Minitest::Test
 
   def test_logger
     # CI has a lower log level to not spam the console
-    if ENV['CI'] || false
-      assert_output(/\[#{timestamp_regex}\] DEBUG \(\): This is an debug log...\n/) { logger.debug('This is an debug log...') }
-      assert_output(/\[#{timestamp_regex}\] INFO  \(\): This is an info log...\n/) { logger.info('This is an info log...') }
-    else
+    if ENV['CI'] == 'true' || false
       assert_output("") { logger.debug('This is an debug log...') }
       assert_output("") { logger.info('This is an info log...') }
+    else
+      assert_output(/\[#{timestamp_regex}\] DEBUG \(\): This is an debug log...\n/) { logger.debug('This is an debug log...') }
+      assert_output(/\[#{timestamp_regex}\] INFO  \(\): This is an info log...\n/) { logger.info('This is an info log...') }
     end
     assert_output(/\[#{timestamp_regex}\] WARN  \(\): This is an warn log...\n/) { logger.warn('This is an warn log...') }
     assert_output(/\[#{timestamp_regex}\] ERROR \(\): This is an error log...\n/) { logger.error('This is an error log...') }
@@ -94,7 +94,6 @@ class CanubyTest < Minitest::Test
   end
 
   def git_project(project)
-    # const_set(project, Project.new)
     const_get(project).path = File.join(Paths.base_dir, project)
     const_get(project).url = 'https://github.com/SuperSandro2000/canuby-cmake-test'
     Git.clone(project, true) unless File.exist?(File.join(const_get(project).path, 'CMakeLists.txt'))
@@ -121,6 +120,6 @@ class CanubyTest < Minitest::Test
   end
 
   Minitest.after_run do
-    # FileUtils.rm_rf('testing')
+    FileUtils.rm_rf('testing')
   end
 end
