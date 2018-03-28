@@ -40,12 +40,10 @@ class CanubyTest < Minitest::Test
   # Object.const_get('CMake_test').outputs = ['math.lib']
 
   # run ebfore each test
-  def setup
-  end
+  def setup; end
 
   # run after each test
-  def teardown
-  end
+  def teardown; end
 
   def timestamp_regex
     '[0-9]{2}-[0-9]{2}-[0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2},[0-9]{3}'
@@ -53,9 +51,9 @@ class CanubyTest < Minitest::Test
 
   def test_logger
     # CI has a lower log level to not spam the console
-    if ENV['CI'] == 'true' || false
-      assert_output("") { logger.debug('This is an debug log...') }
-      assert_output("") { logger.info('This is an info log...') }
+    if ENV['TEST'] == 'true' || false
+      assert_output('') { logger.debug('This is an debug log...') }
+      assert_output('') { logger.info('This is an info log...') }
     else
       assert_output(/\[#{timestamp_regex}\] DEBUG \(\): This is an debug log...\n/) { logger.debug('This is an debug log...') }
       assert_output(/\[#{timestamp_regex}\] INFO  \(\): This is an info log...\n/) { logger.info('This is an info log...') }
@@ -72,7 +70,7 @@ class CanubyTest < Minitest::Test
     assert_exists('testing', Paths.create)
   end
 
-  def test_output
+  def test_outputs
     rel_type = 'RelWithDebInfo'
 
     assert_equal([File.join(Paths.build_dir($project), rel_type, 'math.lib')], Outputs.build($project))
@@ -80,6 +78,8 @@ class CanubyTest < Minitest::Test
 
     const_get($project).output_dir = 'folder'
     assert_equal([File.join(Paths.build_dir($project), 'folder', rel_type, 'math.lib')], Outputs.build($project))
+    puts File.join(Paths.build_dir($project), 'folder', rel_type, 'math.lib')
+    puts Outputs.build($project)
   end
 
   def test_git
@@ -90,7 +90,7 @@ class CanubyTest < Minitest::Test
   end
 
   def test_cmake
-    assert_raises(ArgumentError){ Build.cmake('Test', 'invalid') }
+    assert_raises(ArgumentError) { Build.cmake('Test', 'invalid') }
   end
 
   def git_project(project)

@@ -57,14 +57,13 @@ module Logging
   def self.logger
     @logger = Logger.new($stdout)
 
-    if ENV['CI'] == 'true' || false
-      @logger.level = Logger::WARN
-    elsif ENV['DEBUG'].nil? || ENV['DEBUG'] == 'true' || false
-      @logger.level = Logger::DEBUG
-    else
-      appveyor env variable wrong!
-      @logger.level = Logger::INFO
-    end
+    @logger.level = if ENV['CI'] == 'true' || ENV['TEST'] == 'true' || false
+                      Logger::WARN
+                    elsif ENV['DEBUG'] == 'true' || false
+                      Logger::DEBUG
+                    else
+                      Logger::INFO
+                    end
 
     @logger.formatter = proc do |severity, datetime, progname, msg|
       log(severity, datetime, progname, msg)
@@ -81,7 +80,7 @@ end
 # Folder and files related methods
 module Paths
   @base_dir = '3rdparty'
-  def self.base_dir= var
+  def self.base_dir=(var)
     @base_dir = var
   end
 
@@ -98,7 +97,7 @@ module Paths
 
   # returns stage dir
   def self.stage_dir
-    File.join(self.base_dir, 'lib')
+    File.join(base_dir, 'lib')
   end
 
   # Create build folders
@@ -149,12 +148,12 @@ module Build
   #
   # Canuby currently fully supports these Generators:
   #   - Visual Studio 15 2017
-  def self.cmake(project, gen_short, quiet = true)
+  def self.cmake(gen_short, quiet = true)
     case gen_short
     when '"Visual Studio 15 2017"', 'VS15'
       generator = '"Visual Studio 15 2017"'
     else
-      raise ArgumentError, "Wrong generator supplied!" if generator.nil?
+      raise ArgumentError, 'Wrong generator supplied!' if generator.nil?
     end
     system("cmake .. -G #{generator} #{'> nul' if quiet}")
   end
@@ -162,10 +161,10 @@ module Build
   # Adds vcvars to current shell
   def self.vcvars(verbosity, cmd)
     system('msbuild /version >nul 2>&1')
-    unless $?.success?
-      system("#{ENV['vcvars']}#{'>nul' if verbosity == 'q'} && #{cmd}")
+    if $CHILD_STATUS.success?
+      system(cmd.to_s)
     else
-      system("#{cmd}")
+      system("#{ENV['vcvars']}#{'>nul' if verbosity == 'q'} && #{cmd}")
     end
   end
 
@@ -180,7 +179,7 @@ module Build
     build_dir = Paths.build_dir(project)
     mkdir_p build_dir unless Dir.exist?(build_dir)
     Dir.chdir(build_dir) do
-      cmake(project, '"Visual Studio 15 2017"', "#{true if verbosity == 'q'}")
+      cmake('"Visual Studio 15 2017"', (true if verbosity == 'q').to_s)
       vcvars(verbosity, "msbuild #{project_file}.sln /p:Configuration=#{ENV['rel_type']} /p:Platform=Win32  /v:#{verbosity} /nologo")
     end
   end
@@ -211,8 +210,7 @@ class Project
   attr_accessor :url, :version, :project_file, :output_dir, :outputs
   attr_reader :path
 
-  def initialize()
-  end
+  def initialize; end
 
   def path=(dir)
     @path = dir.downcase

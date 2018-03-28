@@ -16,7 +16,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Canuby.  If not, see <http://www.gnu.org/licenses/>.
-# require 'logger'
+require 'English'
 require 'rake'
 
 require_relative 'util'
@@ -53,7 +53,7 @@ class Canuby
   def initialize; end
 
   def self.load
-    # TODO add load code from json or rb file
+    # TODO: add load code from json or rb file
     Projects
   end
 

@@ -26,9 +26,9 @@ Rake::TestTask.new do |t|
 end
 
 YARD::Rake::YardocTask.new do |t|
- t.files   = ['lib/**/*.rb']
- t.options = ['-odocs', '--title=Canuby', '--files=LICENSE']
- # t.stats_options = ['--list-undoc']
+  t.files = ['lib/**/*.rb']
+  t.options = ['-odocs', '--title=Canuby', '--files=LICENSE']
+  # t.stats_options = ['--list-undoc']
 end
 
 namespace :build do
