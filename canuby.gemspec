@@ -16,9 +16,11 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Canuby.  If not, see <http://www.gnu.org/licenses/>.
+require_relative 'lib/canuby/version'
+
 Gem::Specification.new do |s|
   s.name        = 'canuby'
-  s.version     = '0.0.2'
+  s.version     =  Canuby::Version
   s.executables << 'canuby'
 
   s.date        = '2018-03-23'
@@ -42,8 +44,7 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '~> 2.5'
   s.required_rubygems_version = '~> 2.7.3'
 
-  s.add_dependency 'bundler', '~> 1.16'
+  s.add_dependency 'colorize', '~> 0.8.1'
   s.add_dependency 'rake', '~> 12.3'
-  s.add_dependency 'term-ansicolor', '~> 1.6'
-  s.add_dependency 'tins', '~> 1.16'
+  s.add_dependency 'win32console', '~> 1.3' if RUBY_PLATFORM =~ /win32/ || RUBY_PLATFORM =~ /mingw32/
 end

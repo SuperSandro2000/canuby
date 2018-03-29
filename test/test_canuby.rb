@@ -18,8 +18,8 @@
 # along with Canuby.  If not, see <http://www.gnu.org/licenses/>.
 require_relative 'test_helper'
 
-require 'canuby'
+# require_relative '../lib/canuby'
 
-class CanubyTest < Minitest::Test
-  # TODO: test for canuby
-end
+# class CanubyTest < Minitest::Test
+#   # TODO: test for canuby
+# end

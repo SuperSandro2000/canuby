@@ -16,23 +16,6 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Canuby.  If not, see <http://www.gnu.org/licenses/>.
-require 'rdoc/task'
-require 'rake/testtask'
-require 'yard'
-
-ENV['Testing'] ||= 'true'
-
-# # require_relative 'lib/canuby'
-
-Rake::TestTask.new do |t|
-  t.options = '--profile'
-  t.libs << 'test'
+module Canuby
+  Version = '0.0.2'
 end
-
-YARD::Rake::YardocTask.new do |t|
-  t.files = ['lib/**/*.rb']
-  t.options = ['-odocs', '--title=Canuby', '--files=LICENSE']
-  # t.stats_options = ['--list-undoc']
-end
-
-task default: :test

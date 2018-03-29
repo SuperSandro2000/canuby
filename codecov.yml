@@ -7,4 +7,3 @@ coverage:
 
 comment:
   layout: "diff, flags, files"
-  require_changes: yes

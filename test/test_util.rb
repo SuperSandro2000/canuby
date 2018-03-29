@@ -22,7 +22,8 @@ require 'fileutils'
 require 'minitest/filesystem'
 require 'minitest/profile'
 
-require 'util'
+require_relative '../lib/canuby/tasks'
+require_relative '../lib/canuby/util'
 
 class CanubyTest < Minitest::Test
   include FileUtils
@@ -51,15 +52,16 @@ class CanubyTest < Minitest::Test
 
   def test_logger
     # CI has a lower log level to not spam the console
-    if ENV['TEST'] == 'true'
-      assert_output('') { logger.debug('This is an debug log...') }
-      assert_output('') { logger.info('This is an info log...') }
+    if ENV['Testing'] == 'true'
+      assert_output('') { logger.debug('This is an debug log.') }
+      assert_output('') { logger.info('This is an info log.') }
     else
-      assert_output(/\[#{timestamp_regex}\] DEBUG \(\): This is an debug log...\n/) { logger.debug('This is an debug log...') }
-      assert_output(/\[#{timestamp_regex}\] INFO  \(\): This is an info log...\n/) { logger.info('This is an info log...') }
+      assert_output(/\[#{timestamp_regex}\] DEBUG \(\):debug log.\n/) { logger.debug('debug log.') } if ENV['DEBUG'] == true
+      assert_output(/\[\e\[0;35;49m#{timestamp_regex}\e\[0m\] \e\[0;33;49mINFO\e\[0m \(\): info log./) { logger.info('info log.') }
     end
-    assert_output(/\[#{timestamp_regex}\] WARN  \(\): This is an warn log...\n/) { logger.warn('This is an warn log...') }
-    assert_output(/\[#{timestamp_regex}\] ERROR \(\): This is an error log...\n/) { logger.error('This is an error log...') }
+    assert_output(/\[\e\[0;35;49m#{timestamp_regex}\e\[0m\] \e\[0;31;49mWARN\e\[0m  \(\): warn log./) { logger.warn('warn log.') }
+    assert_output(/\e\[0;31;49m\[\e\[0m\e\[0;31;49m#{timestamp_regex}\e\[0m\e\[0;31;49m\] ERROR \(\): error log.\e\[0m/) \
+                 { logger.error('error log.') }
   end
 
   def test_paths
@@ -78,8 +80,6 @@ class CanubyTest < Minitest::Test
 
     const_get($project).output_dir = 'folder'
     assert_equal([File.join(Paths.build_dir($project), 'folder', rel_type, 'math.lib')], Outputs.build($project))
-    puts File.join(Paths.build_dir($project), 'folder', rel_type, 'math.lib')
-    puts Outputs.build($project)
   end
 
   def test_git
@@ -94,6 +94,8 @@ class CanubyTest < Minitest::Test
   end
 
   def git_project(project)
+    const_set(project, Project.new)
+    const_get(project).outputs = ['math.lib']
     const_get(project).path = File.join(Paths.base_dir, project)
     const_get(project).url = 'https://github.com/SuperSandro2000/canuby-cmake-test'
     Git.clone(project, true) unless File.exist?(File.join(const_get(project).path, 'CMakeLists.txt'))
@@ -103,17 +105,14 @@ class CanubyTest < Minitest::Test
     return if ENV['linux']
 
     project = 'CMake_test'
-    const_set(project, Project.new)
-    const_get(project).outputs = ['math.lib']
     rel_type = 'RelWithDebInfo'
-
     git_project(project)
 
     Build.msbuild(project, 'cmake-test', 'q')
     assert_exists(File.join(Paths.build_dir(project), 'cmake-test.sln'))
     assert_exists(File.join(Paths.build_dir(project), rel_type, 'cmake-test.exe'))
 
-    Stage.collect(project)
+    Stage.collect(project, 'q')
     assert_exists(File.join(Paths.stage_dir, 'math.lib'))
     Stage.clean(project)
     refute_exists(File.join(Paths.build_dir(project), 'math.lib'))

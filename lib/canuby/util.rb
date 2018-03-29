@@ -16,17 +16,17 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Canuby.  If not, see <http://www.gnu.org/licenses/>.
+require 'colorize'
+require 'English'
 require 'fileutils'
 require 'logger'
-require 'term/ansicolor'
 
 include FileUtils # rubocop:disable Style/MixinUsage
 
-# Allow easy string formating via string.color.
-# Supported colors on cmd Windows are: bold, negative, black, red, green, yellow, blue, magenta, cyan, white
-class String
-  include Term::ANSIColor
-end
+## build tools config
+# TODO make changeable
+ENV['vcvars'] ||= '"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\Tools\VsDevCmd.bat"'
+ENV['rel_type'] ||= 'RelWithDebInfo'
 
 # Creates an instance of the class with the name of string
 def const_set(string, klass)
@@ -38,26 +38,32 @@ def const_get(string)
   Object.const_get(string)
 end
 
+# Add description to rake tasks that show up in help
+def add_desc(task, comment)
+  Rake.application[task].add_description(comment)
+end
+
 # Canuby's Logger
 module Logging
   def self.log(severity, datetime, progname, msg)
-    date_format = datetime.strftime('%d-%m-%Y %H:%M:%S,%L')
+    date_format = datetime.strftime('%d-%m-%Y %H:%M:%S,%L').magenta
+    # color needs to be set before \n or it will leak into the console
     case severity
     when 'DEBUG'
-      "[#{date_format}] #{severity} (#{progname}): #{msg}\n"
+      "[#{date_format}] #{severity} (#{progname}): #{msg}".cyan + "\n"
     when 'INFO'
-      "[#{date_format}] #{severity}  (#{progname}): #{msg}\n"
+      "[#{date_format}] #{severity.yellow} (#{progname}): #{msg}" + "\n"
     when 'WARN'
-      "[#{date_format}] #{severity}  (#{progname}): #{msg}\n".yellow
+      "[#{date_format}] #{severity.red}  (#{progname}): #{msg}" + "\n"
     when 'ERROR'
-      "[#{date_format}] #{severity} (#{progname}): #{msg}\n".red
+      "[#{date_format}] #{severity} (#{progname}): #{msg}".red + "\n"
     end
   end
 
   def self.logger
     @logger = Logger.new($stdout)
 
-    @logger.level = if ENV['CI'] == 'true' || ENV['TEST'] == 'true'
+    @logger.level = if ENV['CI'] == 'true' || ENV['Testing'] == 'true'
                       Logger::WARN
                     elsif ENV['DEBUG'] == 'true'
                       Logger::DEBUG
@@ -111,6 +117,8 @@ module Outputs
   # Returns a list of the projects output files
   def self.build(project)
     output_dir = const_get(project).output_dir
+    puts Paths.build_dir(project)
+    puts const_get(project).output_dir
     if output_dir
       const_get(project).outputs.map { |f| File.join(Paths.build_dir(project), output_dir, ENV['rel_type'], f) }
     else
@@ -130,7 +138,7 @@ end
 module Git
   # Clone a projects repository
   def self.clone(project, quiet = false)
-    logger.info("Cloning #{const_get(project).url}... to #{const_get(project).path.downcase}")
+    logger.info("Cloning #{const_get(project).url}... to #{const_get(project).path.downcase}") unless quiet
     system("git clone --depth 1 #{const_get(project).url} #{const_get(project).path.downcase} #{'-q' if quiet}")
   end
 
@@ -159,12 +167,13 @@ module Build
   end
 
   # Adds vcvars to current shell
-  def self.vcvars(verbosity, cmd)
+  def self.vcvars(_verbosity, cmd)
     system('msbuild /version >nul 2>&1')
     if $CHILD_STATUS.success?
       system(cmd.to_s)
     else
-      system("#{ENV['vcvars']}#{'>nul' if verbosity == 'q'} && #{cmd}")
+      puts("#{ENV['vcvars']} >nul && #{cmd}")
+      system("#{ENV['vcvars']} >nul && #{cmd}")
     end
   end
 
@@ -174,7 +183,7 @@ module Build
   # Verbosity accepts: q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic]
   # defaults to q. Higher than m[inimal] is not recommended.
   def self.msbuild(project, project_file, verbosity = 'm')
-    logger.info("Building #{project}...")
+    logger.info("Building #{project}...") unless verbosity == 'q'
     Stage.clean(project)
     build_dir = Paths.build_dir(project)
     mkdir_p build_dir unless Dir.exist?(build_dir)
@@ -193,14 +202,13 @@ module Stage
   end
 
   # Collect all stage files from a project
-  def self.collect(project)
-    logger.info("Staging #{project}...")
+  def self.collect(project, verbosity = 'm')
+    logger.info("Staging #{project}...") unless verbosity == 'q'
     Paths.create
-    output_dir = const_get(project).output_dir
-    if output_dir
-      const_get(project).outputs.map { |f| cp File.join(const_get(project).output_dir, ENV['rel_type'], f), Paths.stage_dir }
-    else
+    if const_get(project).output_dir.nil?
       const_get(project).outputs.map { |f| cp File.join(Paths.build_dir(project), ENV['rel_type'], f), Paths.stage_dir }
+    else
+      const_get(project).outputs.map { |f| cp File.join(const_get(project).output_dir, ENV['rel_type'], f), Paths.stage_dir }
     end
   end
 end

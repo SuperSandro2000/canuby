@@ -1,8 +1,33 @@
 language: ruby
 cache: bundler
 rvm:
- - 2.5
+- 2.5
 env:
-  - linux=true
+- linux=true
+jobs:
+  include:
+    matrix:
+      matrix:
+      - stage: gem release
+        rvm: 2.5
+        deploy:
+          provider: rubygems
+          gem: canuby
+          api_key:
+            secure: clyIJcfJvdJe0Ni68NXSqqfWBdetUOjPR6x+dCybbRUG2dVYb7BTgE7PLt4Rpy8Z9Wv2Ges/4A4iTpdY6oVEnxK0q7b2nMm/BJ4OR2CDKhe3WshScsl9NoZ2Pmi+2UIF9GH1duYhlRjrrPGfjOEoLhUss+SPJfv9sX/lZayG3lvyTlHiCNRkEhsn0BRBJZ/HwGPMQP7VrB4frv5ffQ9eIfW+hjOsSkZJ3b4vJBl76pbsMsL0LyNJI/mgD00AyyZSPmry64W05JoBCc6ZH/un3YDe8qmVd9r5HPF6mainNEk0Llt4nN4smOyZilIybKcyPW60LqgkJVyGlGwdWo2fI80bNdSNE5x0QUu01+m4ZMx+WduWOoFEmatW8XMwXg4KAwK5/LKQZZVAiPYSNSI/I/pDv5hEgGlP5gpjNZ95OBfwLrdRTbOvJ7+wODkghCRManfJnLbOf41NwhasiCZlrgEyGUYUgzPsZPnuvPryK1JhUpBiox286elAh6QhdNEkHbbIJjQjf/ASoXmoyS/X+q0p+lYSUAN7ogHzpKhPg1kZoZFdIdKzQtXk+HgITwNKs56td/xXrdSgaOz6nSpI/EXKFhkGqHu5zlnS3ohUD+sQlsi9DCc2eTDoA+saWK3V/ZRggVlGQnfRnaAg4brFGxfuQSEDkEprOX+DnPczKLg=
+          on:
+            branch: master
+            tags: true
+      - stage: github pages
+        rvm: 2.5
+        deploy:
+          provider: pages
+          github-token:
+            secure: fG3KqeXGNvT+s/44LBkSMV3nvaBV4/lmKp3xGV218kzdFKh3mBjZ3IXVOJeps3qJMp1IV/trzrnEMCPhCUbNyS6g1Xo8QKeDv3AMxGPRs83JHESpvu8Q29GLD57K+XXCpQnyQJdaIHSyIVe18kZRwubeO/is2JO/S8mpePDt3LFxI7KdytXymOcOXIS6AEnJtiC7IS6bx71YucrM3uZmDs46MI8Wlc4Yiqtecq5OcJQJmFEfV+XcoBlKBNkSDbJHhAVPzdeJfrXA6K+MgkcaVeA5gnYSb48gL143rNwzNWLg74REU9KvsMot9LumigZQHj8tB+yHE3lawVqQWlEYV3njXl2x98RL7eHo1IuN5vhZKusYl5dHmcv5CNXiWMWl+xMthhpL1O15tKPTsUiDKL3W3h0blK1OxSl8bzZBr5LJmkWVdQ4EtFsgOm+uLhkTjGuuzc1QjHE+DgrS60rOG52aPDD/bOr94M+0rHiC9PnyY+Uf7J9wZFy1tWo5EGfOO2sCKbYCpxS0oIFSGoNOmZwcgtUGeGTQLt6QXPXskbqi1diKAoxzlzwOD/pX3ZCRZAFBaShY4DkMb17DAnqSBPpGenkHQB9pEn+SW3Wof1H+y3JbMt9Irv8k+Bq95boawLuiBNfV3DG+ApVG3dBdJkbl8fGpcWabwnlEktLGNOU=
+          keep-history: true
+          local-dir: docs
+          script: bundle exec rake rerdoc
+          on:
+            branch: master
 notifications:
   webhooks: https://www.travisbuddy.com/

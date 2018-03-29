@@ -24,7 +24,5 @@ if ENV['CI'] == 'true'
   SimpleCov.formatter = SimpleCov::Formatter::Codecov
 end
 
-ENV['TEST'] ||= 'true'
-
 require 'minitest/autorun'
 require 'minitest/rg'
