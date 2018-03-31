@@ -16,16 +16,20 @@ jobs:
         on:
           branch: master
           tags: true
+
     - stage: github pages
+      script: bundle exec rake yard
       deploy:
         rvm: 2.5
-        provider: pages
+        provider:
+          - pages
         github-token:
           secure: $GITHUB_TOKEN
         keep-history: true
+        skip-cleanup: true
         local-dir: docs
-        script: bundle exec rake rerdoc
         on:
           branch: master
+
 notifications:
   webhooks: https://www.travisbuddy.com/
