@@ -35,9 +35,9 @@ module ArgParser
 
       parser.on('-t', '--target [Target]', 'Choose a target to build') do |t|
         target = if t.to_s.match?(/^thirdparty:/)
-                           t
-                         else
-                           "thirdparty:#{t}"
+                   t
+                 else
+                   "thirdparty:#{t}"
                          end
       end
 

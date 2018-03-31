@@ -24,7 +24,7 @@ require_relative 'argparser'
 require_relative 'util'
 
 # skip if run trough rake or bundler
-if File.basename($0) != 'rake' && ENV['Testing'] != 'true' && File.exist?($options.yml_file)
+if File.basename($PROGRAM_NAME) != 'rake' && ENV['Testing'] != 'true' && File.exist?($options.yml_file)
   $options = ArgParser.parse(ARGV) unless defined? $options
   $projects = YAML.load_file($options.yml_file)
 else

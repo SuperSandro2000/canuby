@@ -23,10 +23,10 @@ require 'rake'
 # and these modes: bold, underline(light gray background), swap (swap background and letter color) and hide
 # Background colors are editable with on_color. eg: .blue.on_red
 # WIN32OLE.connect("winmgmts://#{Socket.gethostname}/root/cimv2").InstancesOf("Win32_OperatingSystem").each{ |os| puts "#{os.version} #{!(os.version =~ /^10./).nil?}"
-if RUBY_PLATFORM =~ /mingw32/
+if RUBY_PLATFORM.match?(/mingw32/)
   require 'socket'
   require 'win32ole'
-  if WIN32OLE.connect("winmgmts://#{Socket.gethostname}/root/cimv2").InstancesOf("Win32_OperatingSystem").each{ |os| puts !(os.version =~ /^10.0./).nil?}
+  if WIN32OLE.connect("winmgmts://#{Socket.gethostname}/root/cimv2").InstancesOf('Win32_OperatingSystem').each { |os| puts !(os.version =~ /^10.0./).nil? }
     begin
       puts 1
       require 'Win32/Console/ANSI'

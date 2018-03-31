@@ -16,15 +16,15 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Canuby.  If not, see <http://www.gnu.org/licenses/>.
-lib = File.expand_path("../lib", __FILE__)
+lib = File.expand_path('lib', __dir__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'canuby/version'
 
 Gem::Specification.new do |spec|
-  spec.name           = 'canuby'
-  spec.version        =  Canuby::Version
+  spec.name = 'canuby'
+  spec.version = Canuby::Version
   spec.authors        = ["Sandro J\xC3\xA4ckel"]
-  spec.email          = ["sandro.jaeckel@gmail.com"]
+  spec.email          = ['sandro.jaeckel@gmail.com']
 
   spec.summary        = 'Canuby build tool'
   spec.description    = 'Canuby is a modular and very flexible dependency manager that can download,
@@ -41,9 +41,9 @@ Gem::Specification.new do |spec|
   spec.files          = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(test|spec|features)/})
   end
-  spec.bindir         = "exe"
+  spec.bindir         = 'exe'
   spec.executables    = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
-  spec.require_paths  = ["lib"]
+  spec.require_paths  = ['lib']
 
   spec.required_ruby_version = '~> 2.5'
   spec.required_rubygems_version = '~> 2.7.3'
@@ -51,11 +51,11 @@ Gem::Specification.new do |spec|
   spec.add_dependency 'colorize', '~> 0.8.1'
   spec.add_dependency 'rake', '~> 12.3'
 
-  spec.add_development_dependency "bundler", "~> 1.16"
-  spec.add_development_dependency "minitest", "~> 5.11"
-  spec.add_development_dependency "minitest-filesystem", "~> 1.2"
-  spec.add_development_dependency "minitest-profile", "~> 0.0.2"
-  spec.add_development_dependency "minitest--", "~> 5.2"
-  spec.add_development_dependency "rake", "~> 12.3"
+  spec.add_development_dependency 'bundler', '~> 1.16'
+  spec.add_development_dependency 'minitest', '~> 5.11'
+  spec.add_development_dependency 'minitest-filesystem', '~> 1.2'
+  spec.add_development_dependency 'minitest-profile', '~> 0.0.2'
+  spec.add_development_dependency 'minitest-rg', '~> 5.2'
+  spec.add_development_dependency 'rake', '~> 12.3'
   spec.add_development_dependency 'yard', '~> 0.9.12'
 end

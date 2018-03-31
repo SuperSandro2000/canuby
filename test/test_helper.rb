@@ -16,7 +16,7 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Canuby.  If not, see <http://www.gnu.org/licenses/>.
-$LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
+$LOAD_PATH.unshift File.expand_path('../lib', __dir__)
 
 if ENV['CI'] == 'true'
   require 'simplecov'

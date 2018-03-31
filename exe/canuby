@@ -19,4 +19,4 @@
 # along with Canuby.  If not, see <http://www.gnu.org/licenses/>.
 require_relative '../lib/canuby'
 
-Canuby.main()
+Canuby.main
