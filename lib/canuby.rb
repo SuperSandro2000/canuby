@@ -23,7 +23,7 @@ require 'rake'
 # and these modes: bold, underline(light gray background), swap (swap background and letter color) and hide
 # Background colors are editable with on_color. eg: .blue.on_red
 begin
-  require 'Win32/Console/ANSI' if RUBY_PLATFORM =~ /win32/ || RUBY_PLATFORM =~ /mingw32/
+  require 'Win32/Console/ANSI' if RUBY_PLATFORM =~ /mingw32/
 rescue LoadError
   raise 'You must gem install win32console to use color on Windows'
 end

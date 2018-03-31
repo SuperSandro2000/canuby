@@ -9,4 +9,6 @@ gem 'minitest-rg', '~> 5.2'
 gem 'rake', '~> 12.3'
 gem 'yard', '~> 0.9.12'
 
-gem 'win32console', '~> 1.3' if RUBY_PLATFORM =~ /win32/ || RUBY_PLATFORM =~ /mingw32/
+install_if -> { RUBY_PLATFORM =~ /mingw32/ } do
+  gem 'win32console', '~> 1.3'
+end

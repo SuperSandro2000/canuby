@@ -12,7 +12,6 @@
 [![CodeFactor](https://www.codefactor.io/repository/github/SuperSandro2000/canuby/badge)](https://www.codefactor.io/repository/github/SuperSandro2000/canuby)
 [![AwesomeCode Status](https://awesomecode.io/projects/b8fed95d-1b9c-47a3-96b1-437a2a6ef5ea/status)](https://awesomecode.io/projects/91)
 [![Codecov](https://img.shields.io/codecov/c/github/SuperSandro2000/canuby.svg)](https://codecov.io/gh/SuperSandro2000/canuby)
-[![Known Vulnerabilities](https://snyk.io/test/github/supersandro2000/canuby/badge.svg?targetFile=Gemfile.lock)](https://snyk.io/test/github/supersandro2000/canuby?targetFile=Gemfile.lock)
 [![Inline docs](http://inch-ci.org/github/SuperSandro2000/canuby.svg?branch=master&style=shields)](http://inch-ci.org/github/SuperSandro2000/canuby)
 
 WIP
