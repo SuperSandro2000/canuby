@@ -88,35 +88,40 @@ src="http://inch-ci.org/github/SuperSandro2000/canuby.svg?branch=master&style=sh
 
 <p>WIP</p>
 
-<h3 id="label-How+to+run">How to run</h3>
+<h2 id="label-How+to+run">How to run</h2>
 <ul><li>
 <p><code>gem install canuby</code></p>
 </li><li>
 <p><code>canuby</code></p>
 </li></ul>
 
-<h2 id="label-Contributing">Contributing</h2>
+<h3 id="label-Note">Note</h3>
 
-<h3 id="label-Version+scheme">Version scheme</h3>
+<p>Some rake task have longer descriptions and are only complettly readable if
+you use <code>rake -T | cat</code> or <code>rake -D</code></p>
+
+<p>On Windows version older than 10 (like Windows 7 or Windows 8) you may need
+to install the <code>win32console</code> gem to show colors correctly. To
+do that run: <code>gem install win32console</code>.</p>
+
+<h4 id="label-Version+scheme">Version scheme</h4>
 
 <p>Canuby uses this <code>MAJOR.MINOR.PATCH</code> version scheme. It is based
 of <a href="https://semver.org">semver.org</a>/ version scheme.</p>
 
-<h3 id="label-How+to+run+from+source">How to run from source</h3>
+<h2 id="label-How+to+run+from+source">How to run from source</h2>
 
-<p>Run these command inside your clone. On Windows it may be necessary to use
-an elevated command prompt to install all gems correctly.</p>
-<ul><li>
-<p><code>gem install bundler</code></p>
-</li><li>
-<p><code>bundle install</code></p>
-</li><li>
-<p><code>rake -f bin\canuby</code> or <code>rake thirdparty</code></p>
-</li></ul>
+<p>To use canuby from source run these command inside your cloned repository.
+On Windows it may be necessary to use an elevated command prompt to install
+all gems correctly. * <code>gem install bundler</code> * <code>ruby
+bin/setup</code> * <code>ruby exe/canuby</code> or <code>rake -f
+exe\canuby</code> or <code>rake thirdparty</code></p>
 
 <p>Possible arguments: * <code>CI=true</code> force CI environment *
 <code>DEBUG=true</code> force debug level log for Canuby logger *
 <code>linux=true</code> force linux environment</p>
+
+<h2 id="label-Contributing">Contributing</h2>
 
 <h3 id="label-Code+Style">Code Style</h3>
 <ul><li>
@@ -136,8 +141,7 @@ fast. Get it with <code>gem install fasterer</code> and then run
 
 <h3 id="label-Testing">Testing</h3>
 
-<p>To run the Canuby tests use <code>rake test</code> in the root directory.
-You may pass arguments <code>rake test TESTOPTS=&#39;--profile&#39;</code>.</p>
+<p>To run the Canuby tests use <code>rake test</code> in the root directory.</p>
 
 <h3 id="label-Documenting">Documenting</h3>
 
@@ -154,7 +158,7 @@ href="http://rubular.com">rubular.com</a>/</p>
 </div></div>
 
       <div id="footer">
-  Generated on Sat Mar 31 11:28:10 2018 by
+  Generated on Sat Mar 31 15:33:27 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.12 (ruby-2.5.1).
 </div>
