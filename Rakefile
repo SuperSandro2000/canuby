@@ -16,13 +16,13 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Canuby.  If not, see <http://www.gnu.org/licenses/>.
-require 'rdoc/task'
+require "bundler/gem_tasks"
 require 'rake/testtask'
 require 'yard'
 
 ENV['Testing'] ||= 'true'
 
-# # require_relative 'lib/canuby'
+require_relative 'lib/canuby/tasks'
 
 Rake::TestTask.new do |t|
   t.options = '--profile'

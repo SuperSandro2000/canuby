@@ -16,30 +16,36 @@
 
 WIP
 
-### How to run
+## How to run
 
 * ``gem install canuby``
 * ``canuby``
 
-## Contributing
+### Note
 
-### Version scheme
+Some rake task have longer descriptions and are only complettly readable if you use ``rake -T | cat`` or `` rake -D``
+
+On Windows version older than 10 (like Windows 7 or Windows 8) you may need to install the ``win32console`` gem to show colors correctly.
+To do that run: ``gem install win32console``.
+
+#### Version scheme
 
 Canuby uses this ``MAJOR.MINOR.PATCH`` version scheme.
 It is based of https://semver.org/ version scheme.
 
-### How to run from source
+## How to run from source
 
-Run these command inside your clone. On Windows it may be necessary to use an elevated command prompt to install all gems correctly.
-
+To use canuby from source run these command inside your cloned repository. On Windows it may be necessary to use an elevated command prompt to install all gems correctly.
 * ``gem install bundler``
-* ``bundle install``
-* ``rake -f bin\canuby`` or ``rake thirdparty``
+* ``ruby bin/setup``
+* ``ruby exe/canuby`` or ``rake -f exe\canuby`` or ``rake thirdparty``
 
 Possible arguments:
 * ``CI=true`` force CI environment
 * ``DEBUG=true`` force debug level log for Canuby logger
 * ``linux=true`` force linux environment
+
+## Contributing
 
 ### Code Style
 
@@ -52,7 +58,7 @@ Possible arguments:
 
 ### Testing
 
-To run the Canuby tests use ``rake test`` in the root directory. You may pass arguments ``rake test TESTOPTS='--profile'``.
+To run the Canuby tests use ``rake test`` in the root directory.
 
 
 ### Documenting

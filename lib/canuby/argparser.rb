@@ -29,9 +29,6 @@ module ArgParser
     options.yml_file = 'canuby.yml'
 
     parser = OptionParser.new do |parser|
-      if ARGV.delete '--profile'
-      end
-
       parser.banner = "\n#{'Canuby'.cyan} build tool"
       parser.separator 'Usage: canuby [options]'
       parser.separator "\n\nBuild options:"

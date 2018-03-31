@@ -16,6 +16,8 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Canuby.  If not, see <http://www.gnu.org/licenses/>.
+$LOAD_PATH.unshift File.expand_path("../../lib", __FILE__)
+
 if ENV['CI'] == 'true'
   require 'simplecov'
   SimpleCov.start
@@ -25,4 +27,6 @@ if ENV['CI'] == 'true'
 end
 
 require 'minitest/autorun'
+require 'minitest/filesystem'
+require 'minitest/profile'
 require 'minitest/rg'

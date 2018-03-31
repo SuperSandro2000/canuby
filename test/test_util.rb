@@ -16,14 +16,12 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Canuby.  If not, see <http://www.gnu.org/licenses/>.
-require_relative 'test_helper'
+require 'test_helper'
 
 require 'fileutils'
-require 'minitest/filesystem'
-require 'minitest/profile'
 
-require_relative '../lib/canuby/tasks'
-require_relative '../lib/canuby/util'
+require 'canuby/tasks'
+require 'canuby/util'
 
 class CanubyTest < Minitest::Test
   include FileUtils
@@ -45,6 +43,10 @@ class CanubyTest < Minitest::Test
 
   # run after each test
   def teardown; end
+
+  def test_version
+    refute_nil ::Canuby::Version
+  end
 
   def timestamp_regex
     '[0-9]{2}-[0-9]{2}-[0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2},[0-9]{3}'
