@@ -78,7 +78,7 @@
   
   <dl>
     <dt>Defined in:</dt>
-    <dd>lib/util.rb</dd>
+    <dd>lib/canuby/util.rb</dd>
   </dl>
   
 </div>
@@ -193,16 +193,16 @@ ruby&#39;s inbuilt clone.</p>
       <pre class="lines">
 
 
-133
-134
-135
-136</pre>
+140
+141
+142
+143</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/util.rb', line 133</span>
+      <pre class="code"><span class="info file"># File 'lib/canuby/util.rb', line 140</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_clone'>clone</span><span class='lparen'>(</span><span class='id identifier rubyid_project'>project</span><span class='comma'>,</span> <span class='id identifier rubyid_quiet'>quiet</span> <span class='op'>=</span> <span class='kw'>false</span><span class='rparen'>)</span>
-  <span class='id identifier rubyid_logger'><span class='object_link'><a href="top-level-namespace.html#logger-instance_method" title="#logger (method)">logger</a></span></span><span class='period'>.</span><span class='id identifier rubyid_info'>info</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Cloning </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_const_get'><span class='object_link'><a href="top-level-namespace.html#const_get-instance_method" title="#const_get (method)">const_get</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_project'>project</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_url'>url</span><span class='embexpr_end'>}</span><span class='tstring_content'>... to </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_const_get'><span class='object_link'><a href="top-level-namespace.html#const_get-instance_method" title="#const_get (method)">const_get</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_project'>project</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_logger'><span class='object_link'><a href="top-level-namespace.html#logger-instance_method" title="#logger (method)">logger</a></span></span><span class='period'>.</span><span class='id identifier rubyid_info'>info</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Cloning </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_const_get'><span class='object_link'><a href="top-level-namespace.html#const_get-instance_method" title="#const_get (method)">const_get</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_project'>project</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_url'>url</span><span class='embexpr_end'>}</span><span class='tstring_content'>... to </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_const_get'><span class='object_link'><a href="top-level-namespace.html#const_get-instance_method" title="#const_get (method)">const_get</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_project'>project</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='id identifier rubyid_quiet'>quiet</span>
   <span class='id identifier rubyid_system'>system</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>git clone --depth 1 </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_const_get'><span class='object_link'><a href="top-level-namespace.html#const_get-instance_method" title="#const_get (method)">const_get</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_project'>project</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_url'>url</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_const_get'><span class='object_link'><a href="top-level-namespace.html#const_get-instance_method" title="#const_get (method)">const_get</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_project'>project</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span><span class='period'>.</span><span class='id identifier rubyid_downcase'>downcase</span><span class='embexpr_end'>}</span><span class='tstring_content'> </span><span class='embexpr_beg'>#{</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>-q</span><span class='tstring_end'>&#39;</span></span> <span class='kw'>if</span> <span class='id identifier rubyid_quiet'>quiet</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -236,14 +236,14 @@ ruby&#39;s inbuilt clone.</p>
       <pre class="lines">
 
 
-139
-140
-141
-142
-143</pre>
+146
+147
+148
+149
+150</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/util.rb', line 139</span>
+      <pre class="code"><span class="info file"># File 'lib/canuby/util.rb', line 146</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_pull'>pull</span><span class='lparen'>(</span><span class='id identifier rubyid_project'>project</span><span class='comma'>,</span> <span class='id identifier rubyid_quiet'>quiet</span> <span class='op'>=</span> <span class='kw'>false</span><span class='rparen'>)</span>
   <span class='const'>Dir</span><span class='period'>.</span><span class='id identifier rubyid_chdir'>chdir</span><span class='lparen'>(</span><span class='id identifier rubyid_const_get'><span class='object_link'><a href="top-level-namespace.html#const_get-instance_method" title="#const_get (method)">const_get</a></span></span><span class='lparen'>(</span><span class='id identifier rubyid_project'>project</span><span class='rparen'>)</span><span class='period'>.</span><span class='id identifier rubyid_path'>path</span><span class='rparen'>)</span> <span class='kw'>do</span>
@@ -260,9 +260,9 @@ ruby&#39;s inbuilt clone.</p>
 </div>
 
       <div id="footer">
-  Generated on Wed Mar 28 12:10:57 2018 by
+  Generated on Sat Mar 31 11:28:10 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.12 (ruby-2.5.0).
+  0.9.12 (ruby-2.5.1).
 </div>
 
     </div>
