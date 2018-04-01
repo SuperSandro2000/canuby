@@ -22,13 +22,11 @@ require 'rake'
 # Supported colors on cmd Windows are: black, red, green, yellow, blue, magenta, cyan, white
 # and these modes: bold, underline(light gray background), swap (swap background and letter color) and hide
 # Background colors are editable with on_color. eg: .blue.on_red
-# WIN32OLE.connect("winmgmts://#{Socket.gethostname}/root/cimv2").InstancesOf("Win32_OperatingSystem").each{ |os| puts "#{os.version} #{!(os.version =~ /^10./).nil?}"
 if RUBY_PLATFORM.match?(/mingw32/)
   require 'socket'
   require 'win32ole'
-  if WIN32OLE.connect("winmgmts://#{Socket.gethostname}/root/cimv2").InstancesOf('Win32_OperatingSystem').each { |os| puts !(os.version =~ /^10.0./).nil? }
+  if WIN32OLE.connect("winmgmts://#{Socket.gethostname}/root/cimv2").InstancesOf('Win32_OperatingSystem').each { |os| !(os.version =~ /^10.0./).nil? }
     begin
-      puts 1
       require 'Win32/Console/ANSI'
     rescue LoadError
       puts 'You must gem install win32console to use color on Windows'
@@ -36,20 +34,22 @@ if RUBY_PLATFORM.match?(/mingw32/)
   end
 end
 
-require_relative 'canuby/argparser'
-require_relative 'canuby/util'
+require 'canuby/argparser'
+require 'canuby/config'
+require 'canuby/util'
 
+# Main entry point
 module Canuby
   def self.main
+    # Config.load
     $options = ArgParser.parse(ARGV)
-    logger.info("===== #{'Welcome to Canuby!'.green} =====".blue)
+    logger.info("===== #{'Welcome to Canuby!'.green} =====".green)
+    logger.debug('Running in debug mode.')
 
-    # Rake.add_rakelib 'canuby/tasks'
-    require_relative 'canuby/tasks'
-
+    require 'canuby/tasks'
     Rake.application[$options.target.to_s].invoke
-    File.write('canuby.yml', $projects.to_yaml)
 
-    logger.info("===========  #{'Done'.green}  ===========".blue)
+    Config.write
+    logger.info("===========  #{'Done'.green}  ===========".green)
   end
 end

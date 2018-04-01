@@ -20,36 +20,24 @@ require 'English'
 require 'fileutils'
 require 'yaml'
 
-require_relative 'argparser'
-require_relative 'util'
+require 'canuby/argparser'
+require 'canuby/config'
+require 'canuby/util'
 
-# skip if run trough rake or bundler
-if File.basename($PROGRAM_NAME) != 'rake' && ENV['Testing'] != 'true' && File.exist?($options.yml_file)
-  $options = ArgParser.parse(ARGV) unless defined? $options
-  $projects = YAML.load_file($options.yml_file)
-else
-  $projects = {
-    'Googletest' => { 'url' => 'https://github.com/google/googletest', 'version' => '1.0.0', 'project_file' => 'googletest-distribution',
-                      'output_dir' => 'googlemock/gtest', 'outputs' => ['gtest.lib', 'gtest_main.lib'] }, \
-    'Dummy' => { 'url' => 'https://github.com/google/googletest', 'version' => '1.0.0', 'project_file' => 'googletest-distribution',
-                 'output_dir' => 'googlemock/gtest', 'outputs' => ['gtest.lib'] }, \
-    'Dummy2' => { 'url' => 'https://github.com/google/googletest', 'version' => '1.0.0', 'project_file' => 'googletest-distribution',
-                  'output_dir' => 'googlemock/gtest', 'outputs' => ['gtest_main.lib'] }
-  }
-end
+Config.load
 
-$projects.each_key do |project|
+$options.projects.each_key do |project|
   const_set(project, Project.new)
-  const_get(project).url = $projects[project]['url']
-  const_get(project).version = $projects[project]['version']
+  const_get(project).url = $options.projects[project]['url']
+  const_get(project).version = $options.projects[project]['version']
   const_get(project).path = File.join(Paths.base_dir, project).downcase
-  const_get(project).project_file = $projects[project]['project_file']
-  const_get(project).output_dir = File.join(const_get(project).path, 'build', $projects[project]['output_dir'])
-  const_get(project).outputs = $projects[project]['outputs']
+  const_get(project).project_file = $options.projects[project]['project_file']
+  const_get(project).output_dir = File.join(const_get(project).path, 'build', $options.projects[project]['output_dir'])
+  const_get(project).outputs = $options.projects[project]['outputs']
 end
 
 default_build = []
-$projects.each_key do |project|
+$options.projects.each_key do |project|
   default_build.push("thirdparty:#{project}")
 end
 
@@ -57,7 +45,7 @@ task thirdparty: default_build
 add_desc('thirdparty', 'Get, build and stage all thirdparty dependencies')
 
 # generate tasks dynamically
-$projects.each_key do |project|
+$options.projects.each_key do |project|
   namespace :thirdparty do
     task "#{project}": "#{project}:staged"
     add_desc(project, "Prepare #{project}")

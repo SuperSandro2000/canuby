@@ -16,10 +16,9 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Canuby.  If not, see <http://www.gnu.org/licenses/>.
-require 'test_helper'
-
 require 'fileutils'
 
+require 'test_helper'
 require 'canuby/tasks'
 require 'canuby/util'
 
@@ -35,21 +34,23 @@ class CanubyTest < Minitest::Test
   Object.const_get($project).output_dir = ''
   Object.const_get($project).outputs = ['math.lib']
 
-  # Object.const_set('CMake_test', Project.new)
-  # Object.const_get('CMake_test').outputs = ['math.lib']
-
-  # run ebfore each test
   def setup; end
 
-  # run after each test
   def teardown; end
 
   def test_version
-    refute_nil ::Canuby::Version
+    refute_nil ::Canuby::VERSION
   end
 
-  def timestamp_regex
-    '[0-9]{2}-[0-9]{2}-[0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2},[0-9]{3}'
+  def timestamp_regex(color = 'white')
+    case color
+    when 'white'
+      '[0-9]{2}-[0-9]{2}-[0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2},[0-9]{3}'
+    when 'magenta'
+      '\e\[0;35;49m\[[0-9]{2}-[0-9]{2}-[0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2},[0-9]{3}\]\e\[0m'
+    when 'red'
+      '\e\[0;31;49m\[[0-9]{2}-[0-9]{2}-[0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2},[0-9]{3}\]\e\[0m'
+    end
   end
 
   def test_logger
@@ -58,12 +59,11 @@ class CanubyTest < Minitest::Test
       assert_output('') { logger.debug('This is an debug log.') }
       assert_output('') { logger.info('This is an info log.') }
     else
-      assert_output(/\[#{timestamp_regex}\] DEBUG \(\):debug log.\n/) { logger.debug('debug log.') } if ENV['DEBUG'] == true
-      assert_output(/\[\e\[0;35;49m#{timestamp_regex}\e\[0m\] \e\[0;33;49mINFO\e\[0m \(\): info log./) { logger.info('info log.') }
+      assert_output(/\[#{timestamp_regex('white')}\] DEBUG \(\):debug log.\n/) { logger.debug('debug log.') } if ENV['DEBUG'] == true
+      assert_output(/#{timestamp_regex('magenta')} \e\[0;33;49mINFO\e\[0m  \(\): info log./) { logger.info('info log.') }
     end
-    assert_output(/\[\e\[0;35;49m#{timestamp_regex}\e\[0m\] \e\[0;31;49mWARN\e\[0m  \(\): warn log./) { logger.warn('warn log.') }
-    assert_output(/\e\[0;31;49m\[\e\[0m\e\[0;31;49m#{timestamp_regex}\e\[0m\e\[0;31;49m\] ERROR \(\): error log.\e\[0m/) \
-                 { logger.error('error log.') }
+    assert_output(/#{timestamp_regex('magenta')} \e\[0;31;49mWARN\e\[0m  \(\): warn log./) { logger.warn('warn log.') }
+    assert_output(/#{timestamp_regex('red')}\e\[0;31;49m ERROR \(\): error log.\e\[0m/) { logger.error('error log.') }
   end
 
   def test_paths

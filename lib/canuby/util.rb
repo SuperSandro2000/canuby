@@ -20,6 +20,7 @@ require 'colorize'
 require 'English'
 require 'fileutils'
 require 'logger'
+require 'open3'
 
 include FileUtils # rubocop:disable Style/MixinUsage
 
@@ -46,17 +47,17 @@ end
 # Canuby's Logger
 module Logging
   def self.log(severity, datetime, progname, msg)
-    date_format = datetime.strftime('%d-%m-%Y %H:%M:%S,%L').magenta
+    date_format = "[#{datetime.strftime('%d-%m-%Y %H:%M:%S,%L')}]".magenta
     # color needs to be set before \n or it will leak into the console
     case severity
     when 'DEBUG'
-      "[#{date_format}] #{severity} (#{progname}): #{msg}".cyan + "\n"
+      "#{date_format} #{severity} (#{progname}): #{msg}".cyan + "\n"
     when 'INFO'
-      "[#{date_format}] #{severity.yellow} (#{progname}): #{msg}" + "\n"
+      "#{date_format} #{severity.yellow}  (#{progname}): #{msg}" + "\n"
     when 'WARN'
-      "[#{date_format}] #{severity.red}  (#{progname}): #{msg}" + "\n"
+      "#{date_format} #{severity.red}  (#{progname}): #{msg}" + "\n"
     when 'ERROR'
-      "[#{date_format}] #{severity} (#{progname}): #{msg}".red + "\n"
+      "#{date_format} #{severity} (#{progname}): #{msg}".red + "\n"
     end
   end
 
@@ -117,8 +118,6 @@ module Outputs
   # Returns a list of the projects output files
   def self.build(project)
     output_dir = const_get(project).output_dir
-    puts Paths.build_dir(project)
-    puts const_get(project).output_dir
     if output_dir
       const_get(project).outputs.map { |f| File.join(Paths.build_dir(project), output_dir, ENV['rel_type'], f) }
     else
@@ -156,40 +155,47 @@ module Build
   #
   # Canuby currently fully supports these Generators:
   #   - Visual Studio 15 2017
-  def self.cmake(gen_short, quiet = true)
+  def self.cmake(gen_short)
     case gen_short
     when '"Visual Studio 15 2017"', 'VS15'
       generator = '"Visual Studio 15 2017"'
     else
       raise ArgumentError, 'Wrong generator supplied!' if generator.nil?
     end
-    system("cmake .. -G #{generator} #{'> nul' if quiet}")
+    begin
+      Open3.popen2("cmake .. -G #{generator}") do |_stdin, stdout, _status_thread|
+        stdout.each_line { |line| logger.debug(line.delete("\n")) }
+      end
+    rescue StandardError
+      raise StandardError, 'Do you have CMake installed?'
+    end
   end
 
-  # Adds vcvars to current shell
-  def self.vcvars(_verbosity, cmd)
-    system('msbuild /version >nul 2>&1')
-    if $CHILD_STATUS.success?
-      system(cmd.to_s)
-    else
-      puts("#{ENV['vcvars']} >nul && #{cmd}")
-      system("#{ENV['vcvars']} >nul && #{cmd}")
+  # Run command trough vcvars
+  def self.vcvars(cmd)
+    Open3.popen2("#{ENV['vcvars']} && #{cmd}") do |_stdin, stdout, _status_thread|
+      stdout.each_line { |line| logger.debug(line.delete("\n")) }
     end
+  rescue StandardError
+    raise StandardError, "Do you have Visual Studio installed? #{stdout}"
   end
 
   # Build a Visual Studio project via MSBUild.
   # Note: only works on Windows!
   #
+  # Verbosity controlls the msbuild verbosity not if it is printed to console.
+  # To show the actual output in console run canuby with the debug flag.
+  #
   # Verbosity accepts: q[uiet], m[inimal], n[ormal], d[etailed], and diag[nostic]
   # defaults to q. Higher than m[inimal] is not recommended.
   def self.msbuild(project, project_file, verbosity = 'm')
-    logger.info("Building #{project}...") unless verbosity == 'q'
+    logger.info("Building #{project}...")
     Stage.clean(project)
     build_dir = Paths.build_dir(project)
     mkdir_p build_dir unless Dir.exist?(build_dir)
     Dir.chdir(build_dir) do
-      cmake('"Visual Studio 15 2017"', (true if verbosity == 'q').to_s)
-      vcvars(verbosity, "msbuild #{project_file}.sln /p:Configuration=#{ENV['rel_type']} /p:Platform=Win32  /v:#{verbosity} /nologo")
+      cmake('"Visual Studio 15 2017"')
+      vcvars("msbuild #{project_file}.sln /p:Configuration=#{ENV['rel_type']} /p:Platform=Win32  /v:#{verbosity} /nologo")
     end
   end
 end

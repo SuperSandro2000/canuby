@@ -19,37 +19,42 @@
 require 'ostruct'
 require 'optparse'
 
-require_relative 'version'
+require 'canuby/version'
 
 # Parses command line arguments
 module ArgParser
   def self.parse(args)
     options = OpenStruct.new
+    options.config_version = Canuby::CONFIG_VERSION
     options.target = 'thirdparty'
     options.yml_file = 'canuby.yml'
 
-    parser = OptionParser.new do |parser|
-      parser.banner = "\n#{'Canuby'.cyan} build tool"
-      parser.separator 'Usage: canuby [options]'
-      parser.separator "\n\nBuild options:"
+    parser = OptionParser.new do |opts|
+      opts.banner = "\n"
+      opts.separator 'Usage: canuby [options]'
+      opts.separator "\nBuild options:"
 
-      parser.on('-t', '--target [Target]', 'Choose a target to build') do |t|
-        target = if t.to_s.match?(/^thirdparty:/)
-                   t
-                 else
-                   "thirdparty:#{t}"
+      opts.on('-t', '--target [Target]', 'Choose a target to build') do |t|
+        options.target = if t.to_s.match?(/^thirdparty:/)
+                           t
+                         else
+                           "thirdparty:#{t}"
                          end
       end
 
-      parser.separator "\nOther @options:"
-      parser.on('-c', '--config', 'Use a custom config file.') do
+      opts.separator "\nOther @options:"
+      opts.on('-c', '--config', 'Use a custom config file.') do
         Rake.application.tasks.each do |c|
-          yml_file = c
+          options.yml_file = c
         end
       end
 
-      parser.on('-l', '--list', 'List all available targets') do
-        require_relative 'tasks'
+      opts.on('-d', '--debug', 'Show debug log in console.') do
+        ENV['DEBUG'] = 'true'
+      end
+
+      opts.on('-l', '--list', 'List all available targets') do
+        require 'canuby/tasks'
         Rake.application.tasks.each do |t|
           # puts "#{t}".sub /:[a-z]{0,}$/, ''
           # puts "#{t}".match /^[A-z]{0,}:[A-z1-9]{0,}/
@@ -58,25 +63,49 @@ module ArgParser
         exit
       end
 
-      parser.on('--list-all', 'List all available tasks') do
+      opts.on('--list-all', 'List all available tasks') do
         Rake.application.tasks.each do |t|
           puts t
         end
         exit
       end
 
-      parser.separator "\n"
-      parser.on_tail('-h', '--help', 'Show this help message') do
-        puts parser
+      opts.separator "\n"
+      opts.on_tail('-h', '--help', 'Show this help message') do
+        puts opts
         exit
       end
 
-      parser.on_tail('-v', '--version', 'Show version') do
-        puts Canuby::Version
+      opts.on_tail('-v', '--version', 'Show version') do
+        puts Canuby::VERSION
         exit
       end
     end
-    parser.parse!(args)
+    begin
+      parser.parse!(args)
+    rescue OptionParser::InvalidOption => e
+      logger.error('Canuby does not understand that argument. We just assume it belongs to ruby.')
+      logger.error(e)
+      if File.basename($PROGRAM_NAME) == 'ruby'
+        exit 1
+      end
+    end
+    options
+  end
+
+  def self.min(args)
+    options = OpenStruct.new
+    options.config_version = Canuby::CONFIG_VERSION
+    options.target = 'thirdparty'
+    options.yml_file = 'canuby.yml'
+
+    parser = OptionParser.new do |opts|
+      opts.on('-c', '--config', 'Use a custom config file.') do
+        Rake.application.tasks.each do |c|
+          options.yml_file = c
+        end
+      end
+    end
     options
   end
 end

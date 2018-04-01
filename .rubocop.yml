@@ -1,29 +1,20 @@
+inherit_from: .rubocop_todo.yml
+
 AllCops:
   TargetRubyVersion: 2.5
-
-Metrics/AbcSize:
-  Max: 30
-
-Metrics/BlockLength:
-  Max: 30
 
 Metrics/LineLength:
   Max: 150
 
-Metrics/MethodLength:
-  Max: 15
-
-Naming/ConstantName:
-  Enabled: False
-
 Style/AsciiComments:
   AllowedChars: [ä]
 
-Style/GlobalVars:
-  AllowedVariables: [$project]
+Style/Documentation:
+  Exclude:
+    - 'test/**/*'
 
-Style/MutableConstant:
-  Enabled: False
+Style/GlobalVars:
+  AllowedVariables: [$project, $options]
 
 Style/SymbolArray:
   EnforcedStyle: brackets

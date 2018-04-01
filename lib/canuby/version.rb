@@ -17,5 +17,6 @@
 # You should have received a copy of the GNU General Public License
 # along with Canuby.  If not, see <http://www.gnu.org/licenses/>.
 module Canuby
-  Version = '0.0.2'
+  VERSION = '0.0.2'
+  CONFIG_VERSION = '1'
 end

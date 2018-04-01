@@ -22,7 +22,7 @@ require 'canuby/version'
 
 Gem::Specification.new do |spec|
   spec.name = 'canuby'
-  spec.version = Canuby::Version
+  spec.version = Canuby::VERSION
   spec.authors        = ["Sandro J\xC3\xA4ckel"]
   spec.email          = ['sandro.jaeckel@gmail.com']
 

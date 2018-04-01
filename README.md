@@ -2,6 +2,7 @@
 
 [![Travis](https://img.shields.io/travis/SuperSandro2000/canuby.svg?logo=travis&label=Travis&maxAge=1200)](https://travis-ci.org/SuperSandro2000/canuby)
 [![Appveyor](https://img.shields.io/appveyor/ci/SuperSandro2000/canuby.svg?logo=appveyor&label=Appveyor&maxAge=1200)](https://ci.appveyor.com/project/SuperSandro2000/canuby)
+[![GitHub Downloads](https://img.shields.io/badge/Canuby-doc-brightgreen.svg?logo=github&maxAge=1200)](https://github.com/SuperSandro2000/canuby/releases)
 ![GitHub repo size in bytes](https://img.shields.io/github/repo-size/SuperSandro2000/canuby.svg?logo=github&label=Repo%20size&maxAge=1200)
 
 [![Rubygems Version](https://img.shields.io/gem/v/canuby.svg?logo=data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz48IURPQ1RZUEUgc3ZnIFBVQkxJQyAiLS8vVzNDLy9EVEQgU1ZHIDEuMS8vRU4iICJodHRwOi8vd3d3LnczLm9yZy9HcmFwaGljcy9TVkcvMS4xL0RURC9zdmcxMS5kdGQiPjxzdmcgdmVyc2lvbj0iMS4xIiBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIgeD0iMHB4IiB5PSIwcHgiIHZpZXdCb3g9IjAgMCAyMDAgMjAwIiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDAgMCAyMDAgMjAwIiB4bWw6c3BhY2U9InByZXNlcnZlIj48ZyBpZD0iTG9nbyI+PHBvbHlnb24gZmlsbD0iIzAxMDEwMSIgcG9pbnRzPSI2OC44LDY5LjkgNjguNyw2OS44IDQ2LjUsOTIgMTAwLjQsMTQ1LjggMTIyLjYsMTIzLjcgMTU0LjMsOTIgMTMyLjEsNjkuOCAxMzIuMSw2OS43IDY4LjcsNjkuNyAiLz48cGF0aCBmaWxsPSIjMDEwMTAxIiBkPSJNMTAwLjIsMTAuNmwtNzguNSw0NXY5MGw3OC41LDQ1bDc4LjUtNDV2LTkwTDEwMC4yLDEwLjZ6IE0xNjMuNywxMzdsLTYzLjUsMzYuNkwzNi43LDEzN1Y2NGw2My41LTM2LjZMMTYzLjcsNjRWMTM3eiIvPjwvZz48L3N2Zz4=&colorB=d21e1e&label=Gem%20Version&maxAge=1200)](https://rubygems.org/gems/canuby)
@@ -40,9 +41,11 @@ To use canuby from source run these command inside your cloned repository. On Wi
 * ``ruby bin/setup``
 * ``ruby exe/canuby`` or ``rake -f exe\canuby`` or ``rake thirdparty``
 
-Possible arguments:
+To get a full list of all arguments invoke canuby with the ``-h`` flag.
+
+Environment variables Canuby makes use of:
 * ``CI=true`` force CI environment
-* ``DEBUG=true`` force debug level log for Canuby logger
+* ``DEBUG=true`` show debug information
 * ``linux=true`` force linux environment
 
 ## Contributing
