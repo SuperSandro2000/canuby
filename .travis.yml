@@ -1,14 +1,16 @@
 language: ruby
 cache: bundler
-rvm:
-- 2.5
 env:
-- linux=true
+  - linux=true
+rvm:
+  - 2.3
+  - 2.5
 before_install:
   - gem install bundler
 jobs:
   include:
-    - stage: test
+    - stage: deploy rubygem
+      rvm: 2.5
       deploy:
         provider: rubygems
         gem: canuby
@@ -19,8 +21,8 @@ jobs:
 
     - stage: github pages
       script: bundle exec rake yard
+      rvm: 2.5
       deploy:
-        rvm: 2.5
         provider:
           - pages
         github-token:
