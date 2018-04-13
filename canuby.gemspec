@@ -28,7 +28,7 @@ Gem::Specification.new do |spec|
 
   spec.summary        = 'Canuby build tool'
   spec.description    = 'Canuby is a modular and very flexible dependency manager that can download,
-                      build and stage dependencies from multiple languages and build tools.'
+                         build and stage dependencies from multiple languages and build tools.'
   spec.homepage       = 'https://github.com/SuperSandro2000/canuby'
   spec.metadata       = {
     'bug_tracker_uri' => 'https://github.com/SuperSandro2000/canuby/issues',
@@ -56,6 +56,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'minitest-filesystem', '~> 1.2'
   spec.add_development_dependency 'minitest-profile', '~> 0.0.2'
   spec.add_development_dependency 'minitest-rg', '~> 5.2'
-  spec.add_development_dependency 'rake', '~> 12.3'
   spec.add_development_dependency 'yard', '~> 0.9.12'
 end

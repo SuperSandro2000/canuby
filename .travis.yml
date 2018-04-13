@@ -9,24 +9,34 @@ before_install:
   - gem install bundler
 jobs:
   include:
-    - stage: deploy rubygem
+    - stage: deploy github release
       rvm: 2.5
       deploy:
-        provider: rubygems
-        gem: canuby
-        api_key: $RUBYGEMS_API_KEY
+        provider: releases
+        api_key: $GITHUB_TOKEN
+        prerelease: true
+        name: Cnauby v$TRAVIS_TAG
+        skip_cleanup: true
         on:
           branch: master
           tags: true
+
+    # - stage: deploy rubygem
+    #   rvm: 2.5
+    #   deploy:
+    #     provider: rubygems
+    #     gem: canuby
+    #     api_key: $RUBYGEMS_API_KEY
+    #     on:
+    #       branch: master
+    #       tags: true
 
     - stage: github pages
       script: bundle exec rake yard
       rvm: 2.5
       deploy:
-        provider:
-          - pages
-        github-token:
-          secure: $GITHUB_TOKEN
+        provider: pages
+        github-token: $GITHUB_TOKEN
         keep-history: true
         skip-cleanup: true
         local-dir: docs
