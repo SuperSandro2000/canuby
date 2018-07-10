@@ -49,10 +49,6 @@ module ArgParser
         end
       end
 
-      opts.on('-d', '--debug', 'Show debug log in console.') do
-        ENV['DEBUG'] = 'true'
-      end
-
       opts.on('-l', '--list', 'List all available targets') do
         require 'canuby/tasks'
         Rake.application.tasks.each do |t|
@@ -70,13 +66,17 @@ module ArgParser
         exit
       end
 
+      opts.on('-v','--verbose', 'Be more verbose and show debug information in console') do
+        ENV['VERBOSE'] = 'true'
+      end
+
       opts.separator "\n"
       opts.on_tail('-h', '--help', 'Show this help message') do
         puts opts
         exit
       end
 
-      opts.on_tail('-v', '--version', 'Show version') do
+      opts.on_tail('--version', 'Show version') do
         puts Canuby::VERSION
         exit
       end

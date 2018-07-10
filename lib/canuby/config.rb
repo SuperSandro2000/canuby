@@ -21,6 +21,10 @@ require 'yaml'
 require 'canuby/argparser'
 
 # Canuby's Config utility to read and write canuby.yml files
+#
+# Structure:
+# projects => name =>
+# url, version, build_tool, project_file, output_dir, outputs
 module Config
   def self.load
     # skip if run trough rake or bundler
@@ -29,11 +33,14 @@ module Config
       $options = OpenStruct.new(args.to_h.merge!(YAML.load_file(args.yml_file)))
     else
       default = { 'projects' => {
-        'Googletest' => { 'url' => 'https://github.com/google/googletest', 'version' => '1.0.0', 'project_file' => 'googletest-distribution',
+        'Googletest' => { 'url' => 'https://github.com/google/googletest', 'version' => '1.0.0',
+                          'build_tool' => 'msbuild', 'project_file' => 'googletest-distribution',
                           'output_dir' => 'googlemock/gtest', 'outputs' => ['gtest.lib', 'gtest_main.lib'] }, \
-        'Dummy' => { 'url' => 'https://github.com/google/googletest', 'version' => '1.0.0', 'project_file' => 'googletest-distribution',
+        'Dummy' => { 'url' => 'https://github.com/google/googletest', 'version' => '1.0.0',
+                     'build_tool' => 'msbuild', 'project_file' => 'googletest-distribution',
                      'output_dir' => 'googlemock/gtest', 'outputs' => ['gtest.lib'] }, \
-        'Dummy2' => { 'url' => 'https://github.com/google/googletest', 'version' => '1.0.0', 'project_file' => 'googletest-distribution',
+        'Dummy2' => { 'url' => 'https://github.com/google/googletest', 'version' => '1.0.0',
+                      'build_tool' => 'msbuild', 'project_file' => 'googletest-distribution',
                       'output_dir' => 'googlemock/gtest', 'outputs' => ['gtest_main.lib'] }
       } }
       $options = OpenStruct.new(args.to_h.merge!(default))

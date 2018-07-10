@@ -18,5 +18,5 @@
 # along with Canuby.  If not, see <http://www.gnu.org/licenses/>.
 module Canuby
   VERSION = '0.0.2'
-  CONFIG_VERSION = '1'
+  CONFIG_VERSION = '0'
 end
