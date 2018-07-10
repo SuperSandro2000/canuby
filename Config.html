@@ -83,7 +83,18 @@
   
 </div>
 
+<h2>Overview</h2><div class="docstring">
+  <div class="discussion">
+    
+<p>Canuby&#39;s Config utility to read and write canuby.yml files</p>
 
+
+  </div>
+</div>
+<div class="tags">
+  
+
+</div>
 
 
 
@@ -166,7 +177,6 @@
       <pre class="lines">
 
 
-24
 25
 26
 27
@@ -182,10 +192,11 @@
 37
 38
 39
-40</pre>
+40
+41</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/canuby/config.rb', line 24</span>
+      <pre class="code"><span class="info file"># File 'lib/canuby/config.rb', line 25</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_load'>load</span>
   <span class='comment'># skip if run trough rake or bundler
@@ -224,17 +235,17 @@
       <pre class="lines">
 
 
-42
 43
 44
 45
 46
 47
 48
-49</pre>
+49
+50</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/canuby/config.rb', line 42</span>
+      <pre class="code"><span class="info file"># File 'lib/canuby/config.rb', line 43</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span>
   <span class='id identifier rubyid_write_config'>write_config</span> <span class='op'>=</span> <span class='gvar'>$options</span><span class='period'>.</span><span class='id identifier rubyid_to_h'>to_h</span>
@@ -254,9 +265,9 @@
 </div>
 
       <div id="footer">
-  Generated on Fri Apr 13 19:54:56 2018 by
+  Generated on Tue Jul 10 11:14:18 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
-  0.9.12 (ruby-2.5.1).
+  0.9.14 (ruby-2.5.1).
 </div>
 
     </div>
