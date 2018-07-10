@@ -25,7 +25,7 @@ require 'rake'
 if RUBY_PLATFORM.match?(/mingw32/)
   require 'socket'
   require 'win32ole'
-  if WIN32OLE.connect("winmgmts://#{Socket.gethostname}/root/cimv2").InstancesOf('Win32_OperatingSystem').each { |os| !(os.version =~ /^10.0./).nil? }
+  if WIN32OLE.connect("winmgmts://#{Socket.gethostname}/root/cimv2").InstancesOf('Win32_OperatingSystem').each { |os| (os.version !~ /^10.0./).nil? }
     begin
       require 'Win32/Console/ANSI'
     rescue LoadError

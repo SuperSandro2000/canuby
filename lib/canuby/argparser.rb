@@ -86,20 +86,17 @@ module ArgParser
     rescue OptionParser::InvalidOption => e
       logger.error('Canuby does not understand that argument. We just assume it belongs to ruby.')
       logger.error(e)
-      if File.basename($PROGRAM_NAME) == 'ruby'
-        exit 1
-      end
     end
     options
   end
 
-  def self.min(args)
+  def self.min(_args)
     options = OpenStruct.new
     options.config_version = Canuby::CONFIG_VERSION
     options.target = 'thirdparty'
     options.yml_file = 'canuby.yml'
 
-    parser = OptionParser.new do |opts|
+    OptionParser.new do |opts|
       opts.on('-c', '--config', 'Use a custom config file.') do
         Rake.application.tasks.each do |c|
           options.yml_file = c

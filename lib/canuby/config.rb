@@ -20,6 +20,7 @@ require 'yaml'
 
 require 'canuby/argparser'
 
+# Canuby's Config utility to read and write canuby.yml files
 module Config
   def self.load
     # skip if run trough rake or bundler
