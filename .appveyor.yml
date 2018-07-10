@@ -10,7 +10,6 @@ environment:
   CODECOV_TOKEN:
     secure: r66Lh7iDg795JZIxxUjAmvNO23oRuqxahwLvnAn2L66/r+RBHGUA82wevXHEPq+N
   matrix:
-  - RUBY_VERSION: 23
   - RUBY_VERSION: 25
   - RUBY_VERSION: 25-x64
 install:

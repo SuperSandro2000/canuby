@@ -3,7 +3,6 @@ cache: bundler
 env:
   - linux=true
 rvm:
-  - 2.3
   - 2.5
 before_install:
   - gem install bundler
