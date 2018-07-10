@@ -25,19 +25,21 @@ require 'canuby/config'
 require 'canuby/util'
 
 Config.load
+# TODO
+# Config.check
 
-$options.projects.each_key do |project|
+$build_options.projects.each_key do |project|
   const_set(project, Project.new)
-  const_get(project).url = $options.projects[project]['url']
-  const_get(project).version = $options.projects[project]['version']
+  const_get(project).url = $build_options.projects[project]['url']
+  const_get(project).version = $build_options.projects[project]['version']
   const_get(project).path = File.join(Paths.base_dir, project).downcase
-  const_get(project).project_file = $options.projects[project]['project_file']
-  const_get(project).output_dir = File.join(const_get(project).path, 'build', $options.projects[project]['output_dir'])
-  const_get(project).outputs = $options.projects[project]['outputs']
+  const_get(project).project_file = $build_options.projects[project]['project_file']
+  const_get(project).output_dir = File.join(const_get(project).path, 'build', $build_options.projects[project]['output_dir'])
+  const_get(project).outputs = $build_options.projects[project]['outputs']
 end
 
 default_build = []
-$options.projects.each_key do |project|
+$build_options.projects.each_key do |project|
   default_build.push("thirdparty:#{project}")
 end
 
@@ -45,7 +47,7 @@ task thirdparty: default_build
 add_desc('thirdparty', 'Get, build and stage all thirdparty dependencies')
 
 # generate tasks dynamically
-$options.projects.each_key do |project|
+$build_options.projects.each_key do |project|
   namespace :thirdparty do
     task "#{project}": "#{project}:staged"
     add_desc(project, "Prepare #{project}")

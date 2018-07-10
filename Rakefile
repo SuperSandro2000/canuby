@@ -20,7 +20,7 @@ require 'bundler/gem_tasks'
 require 'rake/testtask'
 require 'yard'
 
-ENV['Testing'] ||= 'true'
+ENV['Testing'] = 'true'
 
 require_relative 'lib/canuby/tasks'
 

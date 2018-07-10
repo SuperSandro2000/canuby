@@ -34,6 +34,12 @@ module ArgParser
       opts.separator 'Usage: canuby [options]'
       opts.separator "\nBuild options:"
 
+      opts.on('-c', '--config', 'Use a custom config file.') do
+        Rake.application.tasks.each do |c|
+          options.yml_file = c
+        end
+      end
+
       opts.on('-t', '--target [Target]', 'Choose a target to build') do |t|
         options.target = if t.to_s.match?(/^thirdparty:/)
                            t
@@ -43,10 +49,13 @@ module ArgParser
       end
 
       opts.separator "\nOther @options:"
-      opts.on('-c', '--config', 'Use a custom config file.') do
-        Rake.application.tasks.each do |c|
-          options.yml_file = c
-        end
+
+      opts.on('--check-config', 'Checks if the config is valid.') do
+        ENV['check_config'] = 'true'
+      end
+
+      opts.on('--ignore-config-file', 'Ignore the config file.') do
+        ENV['ignore_config_file'] = 'true'
       end
 
       opts.on('-l', '--list', 'List all available targets') do
@@ -56,18 +65,18 @@ module ArgParser
           # puts "#{t}".match /^[A-z]{0,}:[A-z1-9]{0,}/
           puts t.to_s.yellow + ' ' * (45 - t.to_s.length) + t.comment.to_s unless t.comment.nil?
         end
-        exit
+        exit 0
       end
 
       opts.on('--list-all', 'List all available tasks') do
         Rake.application.tasks.each do |t|
           puts t
         end
-        exit
+        exit 0
       end
 
-      opts.on('-v','--verbose', 'Be more verbose and show debug information in console') do
-        ENV['VERBOSE'] = 'true'
+      opts.on('-v', '--verbose', 'Be more verbose and show debug information in console') do
+        ENV['DEBUG'] = 'true'
       end
 
       opts.separator "\n"

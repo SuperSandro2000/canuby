@@ -31,3 +31,14 @@ require 'minitest/autorun'
 require 'minitest/filesystem'
 require 'minitest/profile'
 require 'minitest/rg'
+
+def timestamp_regex(color = 'white')
+  case color
+  when 'white'
+    '[0-9]{2}-[0-9]{2}-[0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2},[0-9]{3}'
+  when 'magenta'
+    '\e\[0;35;49m\[[0-9]{2}-[0-9]{2}-[0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2},[0-9]{3}\]\e\[0m'
+  when 'red'
+    '\e\[0;31;49m\[[0-9]{2}-[0-9]{2}-[0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2},[0-9]{3}\]\e\[0m'
+  end
+end

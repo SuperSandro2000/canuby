@@ -42,14 +42,19 @@ require 'canuby/util'
 module Canuby
   def self.main
     # Config.load
-    $options = ArgParser.parse(ARGV)
+    $build_options = ArgParser.parse(ARGV)
     logger.info("===== #{'Welcome to Canuby!'.green} =====".green)
     logger.debug('Running in debug mode.')
 
-    require 'canuby/tasks'
-    Rake.application[$options.target.to_s].invoke
+    if ENV['check_config']
+      Config.load
+      Config.check
+    else
+      require 'canuby/tasks'
+      Rake.application[$build_options.target.to_s].invoke
 
-    Config.write
+      Config.write
+    end
     logger.info("===========  #{'Done'.green}  ===========".green)
   end
 end

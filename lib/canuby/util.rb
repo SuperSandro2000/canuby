@@ -26,8 +26,8 @@ include FileUtils # rubocop:disable Style/MixinUsage
 
 ## build tools config
 # TODO make changeable
-ENV['vcvars'] ||= '"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\Tools\VsDevCmd.bat"'
-ENV['rel_type'] ||= 'RelWithDebInfo'
+ENV['vcvars'] = '"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\Tools\VsDevCmd.bat"'
+ENV['rel_type'] = 'RelWithDebInfo'
 
 # Creates an instance of the class with the name of string
 def const_set(string, klass)
