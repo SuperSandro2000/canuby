@@ -1,5 +1,0 @@
-DuplicateMethodCall:
-  max_calls: 2
-
-UncommunicativeVariableName:
-  accept: ['f']

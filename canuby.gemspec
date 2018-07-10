@@ -45,7 +45,7 @@ Gem::Specification.new do |spec|
   spec.executables    = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths  = ['lib']
 
-  spec.required_ruby_version = '~> 2.3'
+  spec.required_ruby_version = '~> 2.5'
   spec.required_rubygems_version = '~> 2.7.3'
 
   spec.add_dependency 'colorize', '~> 0.8.1'
@@ -56,5 +56,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'minitest-filesystem', '~> 1.2'
   spec.add_development_dependency 'minitest-profile', '~> 0.0.2'
   spec.add_development_dependency 'minitest-rg', '~> 5.2'
-  spec.add_development_dependency 'yard', '~> 0.9.12'
+  spec.add_development_dependency 'yard', '~> 0.9'
 end
