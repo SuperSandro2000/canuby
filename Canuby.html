@@ -129,7 +129,7 @@ href="http://www.gnu.org/licenses">www.gnu.org/licenses</a>/&gt;.</p>
         <dt id="CONFIG_VERSION-constant" class="">CONFIG_VERSION =
           
         </dt>
-        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>1</span><span class='tstring_end'>&#39;</span></span></pre></dd>
+        <dd><pre class="code"><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>0</span><span class='tstring_end'>&#39;</span></span></pre></dd>
       
     </dl>
   
@@ -205,21 +205,31 @@ href="http://www.gnu.org/licenses">www.gnu.org/licenses</a>/&gt;.</p>
 51
 52
 53
-54</pre>
+54
+55
+56
+57
+58
+59</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/canuby.rb', line 43</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_main'>main</span>
   <span class='comment'># Config.load
-</span>  <span class='gvar'>$options</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="ArgParser.html" title="ArgParser (module)">ArgParser</a></span></span><span class='period'>.</span><span class='id identifier rubyid_parse'><span class='object_link'><a href="ArgParser.html#parse-class_method" title="ArgParser.parse (method)">parse</a></span></span><span class='lparen'>(</span><span class='const'>ARGV</span><span class='rparen'>)</span>
+</span>  <span class='gvar'>$build_options</span> <span class='op'>=</span> <span class='const'><span class='object_link'><a href="ArgParser.html" title="ArgParser (module)">ArgParser</a></span></span><span class='period'>.</span><span class='id identifier rubyid_parse'><span class='object_link'><a href="ArgParser.html#parse-class_method" title="ArgParser.parse (method)">parse</a></span></span><span class='lparen'>(</span><span class='const'>ARGV</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_logger'><span class='object_link'><a href="top-level-namespace.html#logger-instance_method" title="#logger (method)">logger</a></span></span><span class='period'>.</span><span class='id identifier rubyid_info'>info</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>===== </span><span class='embexpr_beg'>#{</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Welcome to Canuby!</span><span class='tstring_end'>&#39;</span></span><span class='period'>.</span><span class='id identifier rubyid_green'>green</span><span class='embexpr_end'>}</span><span class='tstring_content'> =====</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_green'>green</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_logger'><span class='object_link'><a href="top-level-namespace.html#logger-instance_method" title="#logger (method)">logger</a></span></span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Running in debug mode.</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
 
-  <span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>canuby/tasks</span><span class='tstring_end'>&#39;</span></span>
-  <span class='const'>Rake</span><span class='period'>.</span><span class='id identifier rubyid_application'>application</span><span class='lbracket'>[</span><span class='gvar'>$options</span><span class='period'>.</span><span class='id identifier rubyid_target'>target</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_invoke'>invoke</span>
+  <span class='kw'>if</span> <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>check_config</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
+    <span class='const'><span class='object_link'><a href="Config.html" title="Config (module)">Config</a></span></span><span class='period'>.</span><span class='id identifier rubyid_load'><span class='object_link'><a href="Config.html#load-class_method" title="Config.load (method)">load</a></span></span>
+    <span class='const'><span class='object_link'><a href="Config.html" title="Config (module)">Config</a></span></span><span class='period'>.</span><span class='id identifier rubyid_check'><span class='object_link'><a href="Config.html#check-class_method" title="Config.check (method)">check</a></span></span>
+  <span class='kw'>else</span>
+    <span class='id identifier rubyid_require'>require</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>canuby/tasks</span><span class='tstring_end'>&#39;</span></span>
+    <span class='const'>Rake</span><span class='period'>.</span><span class='id identifier rubyid_application'>application</span><span class='lbracket'>[</span><span class='gvar'>$build_options</span><span class='period'>.</span><span class='id identifier rubyid_target'>target</span><span class='period'>.</span><span class='id identifier rubyid_to_s'>to_s</span><span class='rbracket'>]</span><span class='period'>.</span><span class='id identifier rubyid_invoke'>invoke</span>
 
-  <span class='const'><span class='object_link'><a href="Config.html" title="Config (module)">Config</a></span></span><span class='period'>.</span><span class='id identifier rubyid_write'><span class='object_link'><a href="Config.html#write-class_method" title="Config.write (method)">write</a></span></span>
+    <span class='const'><span class='object_link'><a href="Config.html" title="Config (module)">Config</a></span></span><span class='period'>.</span><span class='id identifier rubyid_write'><span class='object_link'><a href="Config.html#write-class_method" title="Config.write (method)">write</a></span></span>
+  <span class='kw'>end</span>
   <span class='id identifier rubyid_logger'><span class='object_link'><a href="top-level-namespace.html#logger-instance_method" title="#logger (method)">logger</a></span></span><span class='period'>.</span><span class='id identifier rubyid_info'>info</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>===========  </span><span class='embexpr_beg'>#{</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Done</span><span class='tstring_end'>&#39;</span></span><span class='period'>.</span><span class='id identifier rubyid_green'>green</span><span class='embexpr_end'>}</span><span class='tstring_content'>  ===========</span><span class='tstring_end'>&quot;</span></span><span class='period'>.</span><span class='id identifier rubyid_green'>green</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
@@ -232,7 +242,7 @@ href="http://www.gnu.org/licenses">www.gnu.org/licenses</a>/&gt;.</p>
 </div>
 
       <div id="footer">
-  Generated on Tue Jul 10 11:14:18 2018 by
+  Generated on Wed Jul 11 16:29:38 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.14 (ruby-2.5.1).
 </div>
