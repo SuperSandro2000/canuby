@@ -99,17 +99,17 @@ href="https://awesomecode.io/projects/b8fed95d-1b9c-47a3-96b1-437a2a6ef5ea/statu
 
 <h3 id="label-Note">Note</h3>
 
-<p>Some rake task have longer descriptions and are only complettly readable if
-you use <code>rake -T | cat</code> or <code>rake -D</code></p>
+<p>Some rake tasks have longer descriptions and are only complettly readable
+if you use <code>rake -T | cat</code> or <code>rake -D</code></p>
 
 <p>On Windows version older than 10 (like Windows 7 or Windows 8) you may need
 to install the <code>win32console</code> gem to show colors correctly. To
-do that run: <code>gem install win32console</code>.</p>
+do that run in an elevated prompt: <code>gem install win32console</code>.</p>
 
 <h4 id="label-Version+scheme">Version scheme</h4>
 
 <p>Canuby uses this <code>MAJOR.MINOR.PATCH</code> version scheme. It is based
-of <a href="https://semver.org">semver.org</a>/ version scheme.</p>
+on <a href="https://semver.org">semver.org</a>/ version scheme.</p>
 
 <h2 id="label-How+to+run+from+source">How to run from source</h2>
 
@@ -119,20 +119,24 @@ all gems correctly. * <code>gem install bundler</code> * <code>ruby
 bin/setup</code> * <code>ruby exe/canuby</code> or <code>rake -f
 exe\canuby</code> or <code>rake thirdparty</code></p>
 
-<p>To get a full list of all arguments invoke canuby with the <code>-h</code>
-flag.</p>
+<p>To get a full list of all arguments invoke canuby with the
+<code>--help</code> flag.</p>
 
 <p>Environment variables Canuby makes use of: * <code>CI=true</code> force CI
 environment * <code>DEBUG=true</code> show debug information *
 <code>linux=true</code> force linux environment</p>
 
+<p>Exampleto force linux environment: <code>ruby exe/canuby linux=true</code></p>
+
 <h2 id="label-Contributing">Contributing</h2>
 
 <h3 id="label-Code+Style">Code Style</h3>
 <ul><li>
-<p>This projects uses rubocop. Get it with <code>gem install rubocop</code>
-and then run <code>rubocop</code> inside the git repo. PR&#39;s without
-rubocop applied are not being merged.</p>
+<p>This project uses rubocop. Get it with <code>gem install rubocop</code> and
+then run <code>rubocop --auto-correct</code> inside the git repo to fix all
+formating problems automatically. More sever code style violations may need
+some manual attention. PR&#39;s without rubocop applied are not being
+merged.</p>
 </li></ul>
 
 <p>Rubocop Style Reference: <a
@@ -141,7 +145,8 @@ href="https://rubocop.readthedocs.io/en/latest/cops_style">rubocop.readthedocs.i
 <p>Fasterer is a tool that will suggest speed improvements for your ruby code.
 It is highly recommended to use on bigger changes to keep the Canuby code
 fast. Get it with <code>gem install fasterer</code> and then run
-<code>fasterer</code> inside the git repo to get the code flash fast.</p>
+<code>fasterer</code> inside the git repo to get the code flash fast.
+<strong>Note</strong> Currently not working correctly for unknown reasons.</p>
 </li></ul>
 
 <h3 id="label-Testing">Testing</h3>
@@ -153,7 +158,8 @@ fast. Get it with <code>gem install fasterer</code> and then run
 <p>Canuby uses yardoc to generate the docs. They are available here <a
 href="https://github.com/SuperSandro2000/canuby/releases"><img
 src="https://img.shields.io/badge/Canuby-doc-brightgreen.svg?logo=github&maxAge=1200"></a>.
-To update the documentation run <code>rake yard</code>.</p>
+To update the documentation manually run <code>rake yard</code>. Travis
+updates the online documentation automatically.</p>
 
 <h3 id="label-Usefull+Links">Usefull Links</h3>
 <ul><li>
@@ -163,7 +169,7 @@ href="http://rubular.com">rubular.com</a>/</p>
 </div></div>
 
       <div id="footer">
-  Generated on Wed Jul 11 17:19:16 2018 by
+  Generated on Wed Jul 11 17:45:47 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.14 (ruby-2.5.1).
 </div>
