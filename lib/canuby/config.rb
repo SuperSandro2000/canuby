@@ -36,11 +36,11 @@ module Config
       migrate(yaml_file[:config_version], Canuby::CONFIG_VERSION)
       $build_options = OpenStruct.new(args.to_h.merge!(yaml_file))
     else
-      load_default
+      load_default(args)
     end
   end
 
-  def self.load_default
+  def self.load_default(args)
     default = { 'projects' => {
       'Googletest' => { 'url' => 'https://github.com/google/googletest', 'version' => '1.0.0', \
                         'build_tool' => 'msbuild', 'project_file' => 'googletest-distribution',
