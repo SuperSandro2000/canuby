@@ -33,22 +33,26 @@ module Config
     logger.debug("Ignoring config file #{ENV['ignore_config_file']}")
     if ENV['Testing'] != 'true' && ENV['ignore_config_file'] != 'true' && File.exist?(args.yml_file)
       yaml_file = YAML.load_file(args.yml_file)
-      migrate(yaml_file[:config_version], Canuby::CONFIG_VERSION) if yaml_file[:config_version] != Canuby::CONFIG_VERSION
-      $build_options = OpenStruct.new(args.to_h.merge!(yaml_file)) unless ENV['ignore_config_file']
+      migrate(yaml_file[:config_version], Canuby::CONFIG_VERSION)
+      $build_options = OpenStruct.new(args.to_h.merge!(yaml_file))
     else
-      default = { 'projects' => {
-        'Googletest' => { 'url' => 'https://github.com/google/googletest', 'version' => '1.0.0', \
-                          'build_tool' => 'msbuild', 'project_file' => 'googletest-distribution',
-                          'output_dir' => 'googlemock/gtest', 'outputs' => ['gtest.lib', 'gtest_main.lib'] }, \
-        'Dummy' => { 'url' => 'https://github.com/google/googletest', 'version' => '1.0.0',
-                     'build_tool' => 'msbuild', 'project_file' => 'googletest-distribution',
-                     'output_dir' => 'googlemock/gtest', 'outputs' => ['gtest.lib'] }, \
-        'Dummy2' => { 'url' => 'https://github.com/google/googletest', 'version' => '1.0.0',
-                      'build_tool' => 'msbuild', 'project_file' => 'googletest-distribution',
-                      'output_dir' => 'googlemock/gtest', 'outputs' => ['gtest_main.lib'] }
-      } }
-      $build_options = OpenStruct.new(args.to_h.merge!(default))
+      load_default
     end
+  end
+
+  def self.load_default
+    default = { 'projects' => {
+      'Googletest' => { 'url' => 'https://github.com/google/googletest', 'version' => '1.0.0', \
+                        'build_tool' => 'msbuild', 'project_file' => 'googletest-distribution',
+                        'output_dir' => 'googlemock/gtest', 'outputs' => ['gtest.lib', 'gtest_main.lib'] }, \
+      'Dummy' => { 'url' => 'https://github.com/google/googletest', 'version' => '1.0.0',
+                   'build_tool' => 'msbuild', 'project_file' => 'googletest-distribution',
+                   'output_dir' => 'googlemock/gtest', 'outputs' => ['gtest.lib'] }, \
+      'Dummy2' => { 'url' => 'https://github.com/google/googletest', 'version' => '1.0.0',
+                    'build_tool' => 'msbuild', 'project_file' => 'googletest-distribution',
+                    'output_dir' => 'googlemock/gtest', 'outputs' => ['gtest_main.lib'] }
+    } }
+    $build_options = OpenStruct.new(args.to_h.merge!(default))
   end
 
   def self.check
@@ -67,8 +71,16 @@ module Config
   end
 
   def self.migrate(from_version, to_version)
-    # TODO
+    return unless from_version != to_version
     logger.info("Migrating from #{from_version} to #{to_version}")
+    case from_version
+    when 0
+      logger.warn('No compatibility gurantied!')
+    # TODO
+    when 1
+      logger.error('TODO')
+      # TODO
+    end
   end
 
   def self.write
