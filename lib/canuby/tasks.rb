@@ -21,26 +21,31 @@ require 'fileutils'
 require 'yaml'
 
 require 'canuby/argparser'
+require 'canuby/build'
 require 'canuby/config'
-require 'canuby/util'
+require "canuby/git"
+require 'canuby/outputs'
+require 'canuby/paths'
+require 'canuby/project'
 
 Config.load
-# TODO
-# Config.check
+Config.check(true)
 
-$build_options.projects.each_key do |project|
+# Paths.base_dir = ENV[base_dir] unless ENV[base_dir].nil?
+
+$options.projects.each_key do |project|
   const_set(project, Project.new)
-  const_get(project).url = $build_options.projects[project]['url']
-  const_get(project).version = $build_options.projects[project]['version']
-  const_get(project).build_tool = $build_options.projects[project]['build_tool']
+  const_get(project).url = $options.projects[project]['url']
+  const_get(project).version = $options.projects[project]['version']
+  const_get(project).build_tool = $options.projects[project]['build_tool']
   const_get(project).path = File.join(Paths.base_dir, project).downcase
-  const_get(project).project_file = $build_options.projects[project]['project_file']
-  const_get(project).output_dir = File.join(const_get(project).path, 'build', $build_options.projects[project]['output_dir'])
-  const_get(project).outputs = $build_options.projects[project]['outputs']
+  const_get(project).project_file = $options.projects[project]['project_file']
+  const_get(project).output_dir = File.join(const_get(project).path, 'build', $options.projects[project]['output_dir'])
+  const_get(project).outputs = $options.projects[project]['outputs']
 end
 
 default_build = []
-$build_options.projects.each_key do |project|
+$options.projects.each_key do |project|
   default_build.push("thirdparty:#{project}")
 end
 
@@ -48,7 +53,7 @@ task thirdparty: default_build
 add_desc('thirdparty', 'Get, build and stage all thirdparty dependencies')
 
 # generate tasks dynamically
-$build_options.projects.each_key do |project|
+$options.projects.each_key do |project|
   namespace :thirdparty do
     task "#{project}": "#{project}:staged"
     add_desc(project, "Prepare #{project}")
@@ -59,7 +64,7 @@ $build_options.projects.each_key do |project|
       end
 
       task build: :cloned do
-        Build.msbuild(project, const_get(project).project_file) unless Outputs.stage(project).all? { |f| File.exist?(f) }
+        build(project) unless Outputs.stage(project).all? { |f| File.exist?(f) }
       end
 
       task staged: :build do
@@ -72,11 +77,7 @@ $build_options.projects.each_key do |project|
       add_desc("#{project}:pull", "Pull upstream #{project} changes")
 
       task build_stage: :cloned do
-        if const_get(project).build_tool == 'msbuild'
-          Build.msbuild(project, const_get(project).project_file)
-        else
-          logger.error("#{const_get(project).build_tool} isn't implemented yet")
-        end
+        build(project)
         Stage.collect(project)
       end
       add_desc("#{project}:build_stage", "Build and stage #{project}")

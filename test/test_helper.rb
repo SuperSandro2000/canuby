@@ -32,6 +32,24 @@ require 'minitest/filesystem'
 require 'minitest/profile'
 require 'minitest/rg'
 
+# require 'canuby/argparser'
+# $options = ArgParser.parse(ARGV)
+# puts 'options paths'
+# puts $options
+# puts ENV['Testing']
+
+require 'canuby/paths'
+require 'canuby/project'
+
+Paths.base_dir = 'testing'
+$project = 'Test'
+Object.const_set($project, Project.new)
+Object.const_get($project).url = 'https://github.com/SuperSandro2000/canuby-cmake-test'
+Object.const_get($project).version = '1.7.10'
+Object.const_get($project).path = File.join(Paths.base_dir, $project)
+Object.const_get($project).output_dir = ''
+Object.const_get($project).outputs = ['math.lib']
+
 def timestamp_regex(color = 'white')
   case color
   when 'white'

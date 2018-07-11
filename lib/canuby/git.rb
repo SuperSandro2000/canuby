@@ -16,22 +16,21 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Canuby.  If not, see <http://www.gnu.org/licenses/>.
-require 'bundler/gem_tasks'
-require 'rake/testtask'
-require 'yard'
 
-ENV['Testing'] = 'true'
+# Git related methods
+# ``WARNING``
+# Do not include it as clone conflicts with ruby's inbuilt clone.
+module Git
+  # Clone a projects repository
+  def self.clone(project, quiet = false)
+    logger.info("Cloning #{const_get(project).url}... to #{const_get(project).path.downcase}") unless quiet
+    system("git clone --depth 1 #{const_get(project).url} #{const_get(project).path.downcase} #{'-q' if quiet}")
+  end
 
-Rake::TestTask.new do |t|
-  t.options = '--profile'
-  t.libs << "lib"
-  t.libs << 'test'
+  # Pull updates for a projects repository
+  def self.pull(project, quiet = false)
+    Dir.chdir(const_get(project).path) do
+      system("git pull #{'-q' if quiet}")
+    end
+  end
 end
-
-YARD::Rake::YardocTask.new do |t|
-  t.files = ['lib/**/*.rb']
-  t.options = ['-odocs', '--title=Canuby', '--files=LICENSE']
-  # t.stats_options = ['--list-undoc']
-end
-
-task default: :test

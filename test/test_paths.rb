@@ -16,22 +16,14 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Canuby.  If not, see <http://www.gnu.org/licenses/>.
-require 'bundler/gem_tasks'
-require 'rake/testtask'
-require 'yard'
+require 'test_helper'
 
-ENV['Testing'] = 'true'
+class CanubyTest < Minitest::Test
+  def test_paths
+    assert_equal(Paths.base_dir, 'testing')
+    assert_equal(File.join(Paths.base_dir, 'test', 'build'), Paths.build_dir($project))
+    assert_equal(File.join(Paths.base_dir, 'lib'), Paths.stage_dir)
 
-Rake::TestTask.new do |t|
-  t.options = '--profile'
-  t.libs << "lib"
-  t.libs << 'test'
+    assert_exists('testing', Paths.create)
+  end
 end
-
-YARD::Rake::YardocTask.new do |t|
-  t.files = ['lib/**/*.rb']
-  t.options = ['-odocs', '--title=Canuby', '--files=LICENSE']
-  # t.stats_options = ['--list-undoc']
-end
-
-task default: :test

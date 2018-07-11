@@ -16,22 +16,13 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Canuby.  If not, see <http://www.gnu.org/licenses/>.
-require 'bundler/gem_tasks'
-require 'rake/testtask'
-require 'yard'
+require "canuby/build/cmake"
+require "canuby/build/msbuild"
 
-ENV['Testing'] = 'true'
-
-Rake::TestTask.new do |t|
-  t.options = '--profile'
-  t.libs << "lib"
-  t.libs << 'test'
+def build(project)
+  if const_get(project).build_tool == 'msbuild'
+    Build.msbuild(project, const_get(project).project_file)
+  else
+    logger.error("#{const_get(project).build_tool} isn't implemented yet")
+  end
 end
-
-YARD::Rake::YardocTask.new do |t|
-  t.files = ['lib/**/*.rb']
-  t.options = ['-odocs', '--title=Canuby', '--files=LICENSE']
-  # t.stats_options = ['--list-undoc']
-end
-
-task default: :test

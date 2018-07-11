@@ -22,6 +22,8 @@ WIP
 * ``gem install canuby``
 * ``canuby``
 
+To get a full list of all arguments invoke canuby with the ``--help`` flag.
+
 ### Note
 
 Some rake tasks have longer descriptions and are only complettly readable if you use ``rake -T | cat`` or `` rake -D``
@@ -36,14 +38,17 @@ It is based on https://semver.org/ version scheme.
 
 ## How to run from source
 
-To use canuby from source run these command inside your cloned repository. On Windows it may be necessary to use an elevated command prompt to install all gems correctly.
+To install all required gems including bundler and setup your repository run those commands. On Windows it may be necessary to use an elevated command prompt to install all gems correctly.
 * ``gem install bundler``
 * ``ruby bin/setup``
-* ``ruby exe/canuby`` or ``rake -f exe\canuby`` or ``rake thirdparty``
 
-To get a full list of all arguments invoke canuby with the ``--help`` flag.
+To use canuby from source run one of those commands inside your cloned repository.
+* ``bundler exec canuby`` or ``ruby exe/canuby``
 
-Environment variables Canuby makes use of:
+To install the gem from source run ``rake install``.
+
+
+Some Environment variables Canuby makes use of that are usefull for debuging:
 * ``CI=true`` force CI environment
 * ``DEBUG=true`` show debug information
 * ``linux=true`` force linux environment

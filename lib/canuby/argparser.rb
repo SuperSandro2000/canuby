@@ -19,6 +19,7 @@
 require 'ostruct'
 require 'optparse'
 
+require 'canuby/util'
 require 'canuby/version'
 
 # Parses command line arguments
@@ -26,6 +27,7 @@ module ArgParser
   def self.parse(args)
     options = OpenStruct.new
     options.config_version = Canuby::CONFIG_VERSION
+    options.base_dir = '3rdparty'
     options.target = 'thirdparty'
     options.yml_file = 'canuby.yml'
 
@@ -40,7 +42,11 @@ module ArgParser
         end
       end
 
-      opts.on('-t', '--target [Target]', 'Choose a target to build') do |t|
+      opts.on('-d', '--dir [directory]', 'Specify a working directory') do |dir|
+        options.base_dir = dir
+      end
+
+      opts.on('-t', '--target [target]', 'Choose a target to build') do |t|
         options.target = if t.to_s.match?(/^thirdparty:/)
                            t
                          else
@@ -50,33 +56,24 @@ module ArgParser
 
       opts.separator "\nOther @options:"
 
-      opts.on('--check-config', 'Checks if the config is valid.') do
-        ENV['check_config'] = 'true'
+      opts.on('--check-config', 'Checks only if the config is valid.') do
+        options.only_check_config = true
       end
 
       opts.on('--ignore-config-file', 'Ignore the config file.') do
-        ENV['ignore_config_file'] = 'true'
+        options.ignore_config_file = true
       end
 
       opts.on('-l', '--list', 'List all available targets') do
-        require 'canuby/tasks'
-        Rake.application.tasks.each do |t|
-          # puts "#{t}".sub /:[a-z]{0,}$/, ''
-          # puts "#{t}".match /^[A-z]{0,}:[A-z1-9]{0,}/
-          puts t.to_s.yellow + ' ' * (45 - t.to_s.length) + t.comment.to_s unless t.comment.nil?
-        end
-        exit 0
+        options.list = true
       end
 
       opts.on('--list-all', 'List all available tasks') do
-        Rake.application.tasks.each do |t|
-          puts t
-        end
-        exit 0
+        options.list_all = true
       end
 
       opts.on('-v', '--verbose', 'Be more verbose and show debug information in console') do
-        ENV['DEBUG'] = 'true'
+        options.debug = true
       end
 
       opts.separator "\n"
@@ -93,8 +90,13 @@ module ArgParser
     begin
       parser.parse!(args)
     rescue OptionParser::InvalidOption => e
-      logger.error('Canuby does not understand that argument. We just assume it belongs to ruby.')
-      logger.error(e)
+      puts __FILE__
+      if File.basename(__FILE__) == 'Rakefile' || e.to_s.split(': ')[1] == '--profile'
+        return
+      else
+        logger.error('Canuby does not understand that argument. We just assume it belongs to ruby.')
+        logger.error(e)
+      end
     end
     options
   end

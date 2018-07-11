@@ -16,22 +16,38 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Canuby.  If not, see <http://www.gnu.org/licenses/>.
-require 'bundler/gem_tasks'
-require 'rake/testtask'
-require 'yard'
+include FileUtils # rubocop:disable Style/MixinUsage
 
-ENV['Testing'] = 'true'
+# Folder and files related methods
+module Paths
+  require 'canuby/argparser'
+  $options = ArgParser.parse(ARGV)
+  
+  # defaults to 3rdparty
+  @base_dir = $options.base_dir.to_s
+  # @base_dir = 'testing'
+  def self.base_dir=(var)
+    @base_dir = var
+  end
 
-Rake::TestTask.new do |t|
-  t.options = '--profile'
-  t.libs << "lib"
-  t.libs << 'test'
+  # Returns the dependency folder
+  # custom allows to change the default path
+  def self.base_dir
+    @base_dir
+  end
+
+  # Returns a projects build dir
+  def self.build_dir(project)
+    File.join(const_get(project).path, 'build')
+  end
+
+  # returns stage dir
+  def self.stage_dir
+    File.join(base_dir, 'lib')
+  end
+
+  # Create build folders
+  def self.create
+    mkdir_p stage_dir unless Dir.exist?(stage_dir)
+  end
 end
-
-YARD::Rake::YardocTask.new do |t|
-  t.files = ['lib/**/*.rb']
-  t.options = ['-odocs', '--title=Canuby', '--files=LICENSE']
-  # t.stats_options = ['--list-undoc']
-end
-
-task default: :test

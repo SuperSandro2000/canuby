@@ -41,20 +41,35 @@ require 'canuby/util'
 # Main entry point
 module Canuby
   def self.main
-    # Config.load
-    $build_options = ArgParser.parse(ARGV)
+    $options = ArgParser.parse(ARGV)
     logger.info("===== #{'Welcome to Canuby!'.green} =====".green)
     logger.debug('Running in debug mode.')
+    logger.debug($options)
 
-    if ENV['check_config']
+    if $options.only_check_config
       Config.load
       Config.check
+
+    elsif $options.list
+      require 'canuby/tasks'
+      Rake.application.tasks.each do |t|
+        # puts "#{t}".sub /:[a-z]{0,}$/, ''
+        # puts "#{t}".match /^[A-z]{0,}:[A-z1-9]{0,}/
+        puts t.to_s.yellow + ' ' * (45 - t.to_s.length) + t.comment.to_s unless t.comment.nil?
+      end
+
+    elsif $options.list_all
+      require 'canuby/tasks'
+      Rake.application.tasks.each do |t|
+        puts t
+      end
+
     else
       require 'canuby/tasks'
-      Rake.application[$build_options.target.to_s].invoke
-
+      Rake.application[$options.target.to_s].invoke
       Config.write
     end
+
     logger.info("===========  #{'Done'.green}  ===========".green)
   end
 end

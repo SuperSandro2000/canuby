@@ -30,11 +30,11 @@ module Config
   def self.load
     # skip if run trough rake or bundler
     args = ArgParser.min(ARGV)
-    logger.debug("Ignoring config file #{ENV['ignore_config_file']}")
-    if ENV['Testing'] != 'true' && ENV['ignore_config_file'] != 'true' && File.exist?(args.yml_file)
+    logger.debug("Ignoring config file #{$options.ignore_config_file}")
+    if ENV['Testing'] != 'true' && $options.ignore_config_file != 'true' && File.exist?(args.yml_file)
       yaml_file = YAML.load_file(args.yml_file)
       migrate(yaml_file[:config_version], Canuby::CONFIG_VERSION)
-      $build_options = OpenStruct.new(args.to_h.merge!(yaml_file))
+      $options = OpenStruct.new(args.to_h.merge!(yaml_file))
     else
       load_default(args)
     end
@@ -52,18 +52,18 @@ module Config
                     'build_tool' => 'msbuild', 'project_file' => 'googletest-distribution',
                     'output_dir' => 'googlemock/gtest', 'outputs' => ['gtest_main.lib'] }
     } }
-    $build_options = OpenStruct.new(args.to_h.merge!(default))
+    $options = OpenStruct.new(args.to_h.merge!(default))
   end
 
-  def self.check
-    invalid('Missing projects key') unless $build_options.respond_to? :projects
-    invalid('Missing project value') unless $build_options.projects.key?($build_options.projects.keys[0])
-    $build_options.projects.each_key do |project|
+  def self.check(quiet = false)
+    invalid('Missing projects key') unless $options.respond_to? :projects
+    invalid('Missing project value') unless $options.projects.key?($options.projects.keys[0])
+    $options.projects.each_key do |project|
       %w[url version build_tool project_file output_dir outputs].each_entry do |key|
-        invalid("#{project} misses #{key} key") unless $build_options.projects[project.to_s].key?(key)
+        invalid("#{project} misses #{key} key") unless $options.projects[project.to_s].key?(key)
       end
     end
-    logger.warn('Config is valid!')
+    logger.warn('Config is valid!') unless quiet
   end
 
   def self.invalid(option)
@@ -84,7 +84,7 @@ module Config
   end
 
   def self.write
-    write_config = $build_options.to_h
+    write_config = $options.to_h
     [:target, :yml_file].each do |key|
       write_config.delete(key)
     end

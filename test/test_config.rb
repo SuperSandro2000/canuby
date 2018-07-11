@@ -22,17 +22,21 @@ require 'canuby/config'
 require 'canuby/util'
 
 class CanubyTest < Minitest::Test
-  ENV['ignore_config_file'] = 'true'
+  # require 'canuby/argparser'
+  # $options = ArgParser.parse()
+  $options = OpenStruct.new('base_dir' => "testing",)
+
+  $options.ignore_config_file = true
 
   def test_empty_config
     build_options = {}
-    $build_options = OpenStruct.new(build_options)
+    $options = OpenStruct.new(build_options)
     assert_raises(StandardError) { Config.check }
   end
 
   def test_almost_empty_config
     build_options = { 'projects' => '' }
-    $build_options = OpenStruct.new(build_options)
+    $options = OpenStruct.new(build_options)
     assert_raises(StandardError) { Config.check }
   end
 
@@ -40,7 +44,7 @@ class CanubyTest < Minitest::Test
     build_options = { 'projects' => {
       'Googletest' => {}
     } }
-    $build_options = OpenStruct.new(build_options)
+    $options = OpenStruct.new(build_options)
     assert_raises(StandardError) { Config.check }
   end
 
@@ -51,7 +55,7 @@ class CanubyTest < Minitest::Test
                         'output_dir' => 'googlemock/gtest', 'outputs' => ['gtest.lib', 'gtest_main.lib'] }, \
       'Dummy' => {}
     } }
-    $build_options = OpenStruct.new(build_options)
+    $options = OpenStruct.new(build_options)
     assert_raises(StandardError) { Config.check }
   end
 
@@ -67,7 +71,7 @@ class CanubyTest < Minitest::Test
                     'build_tool' => 'msbuild', 'project_file' => 'googletest-distribution',
                     'output_dir' => 'googlemock/gtest', 'outputs' => ['gtest_main.lib'] }
     } }
-    $build_options = OpenStruct.new(build_options)
+    $options = OpenStruct.new(build_options)
     assert_output(/#{timestamp_regex('magenta')} \e\[0;31;49mWARN\e\[0m  \(\): Config is valid!/) { Config.check }
   end
 end
