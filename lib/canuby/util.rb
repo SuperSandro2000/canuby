@@ -221,7 +221,7 @@ end
 
 # Holds all properties a Project has.
 class Project
-  attr_accessor :url, :version, :project_file, :output_dir, :outputs
+  attr_accessor :url, :version, :build_tool, :project_file, :output_dir, :outputs
   attr_reader :path
 
   def initialize; end

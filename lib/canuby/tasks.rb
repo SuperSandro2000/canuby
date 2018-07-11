@@ -32,6 +32,7 @@ $build_options.projects.each_key do |project|
   const_set(project, Project.new)
   const_get(project).url = $build_options.projects[project]['url']
   const_get(project).version = $build_options.projects[project]['version']
+  const_get(project).build_tool = $build_options.projects[project]['build_tool']
   const_get(project).path = File.join(Paths.base_dir, project).downcase
   const_get(project).project_file = $build_options.projects[project]['project_file']
   const_get(project).output_dir = File.join(const_get(project).path, 'build', $build_options.projects[project]['output_dir'])
@@ -71,7 +72,11 @@ $build_options.projects.each_key do |project|
       add_desc("#{project}:pull", "Pull upstream #{project} changes")
 
       task build_stage: :cloned do
-        Build.msbuild(project, const_get(project).project_file)
+        if const_get(project).build_tool == 'msbuild'
+          Build.msbuild(project, const_get(project).project_file)
+        else
+          logger.error("#{const_get(project).build_tool} isn't implemented yet")
+        end
         Stage.collect(project)
       end
       add_desc("#{project}:build_stage", "Build and stage #{project}")
