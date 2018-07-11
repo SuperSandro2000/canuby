@@ -17,6 +17,7 @@
 # You should have received a copy of the GNU General Public License
 # along with Canuby.  If not, see <http://www.gnu.org/licenses/>.
 require 'bundler/gem_tasks'
+require 'fileutils'
 require 'rake/testtask'
 require 'yard'
 
@@ -29,6 +30,8 @@ Rake::TestTask.new do |t|
 end
 
 YARD::Rake::YardocTask.new do |t|
+  FileUtils.makedirs('docs')
+  FileUtils.touch('docs/.nojekyll')
   t.files = ['lib/**/*.rb']
   t.options = ['-odocs', '--title=Canuby', '--files=LICENSE']
   # t.stats_options = ['--list-undoc']
