@@ -24,15 +24,15 @@ WIP
 
 ### Note
 
-Some rake task have longer descriptions and are only complettly readable if you use ``rake -T | cat`` or `` rake -D``
+Some rake tasks have longer descriptions and are only complettly readable if you use ``rake -T | cat`` or `` rake -D``
 
 On Windows version older than 10 (like Windows 7 or Windows 8) you may need to install the ``win32console`` gem to show colors correctly.
-To do that run: ``gem install win32console``.
+To do that run in an elevated prompt: ``gem install win32console``.
 
 #### Version scheme
 
 Canuby uses this ``MAJOR.MINOR.PATCH`` version scheme.
-It is based of https://semver.org/ version scheme.
+It is based on https://semver.org/ version scheme.
 
 ## How to run from source
 
@@ -41,22 +41,24 @@ To use canuby from source run these command inside your cloned repository. On Wi
 * ``ruby bin/setup``
 * ``ruby exe/canuby`` or ``rake -f exe\canuby`` or ``rake thirdparty``
 
-To get a full list of all arguments invoke canuby with the ``-h`` flag.
+To get a full list of all arguments invoke canuby with the ``--help`` flag.
 
 Environment variables Canuby makes use of:
 * ``CI=true`` force CI environment
 * ``DEBUG=true`` show debug information
 * ``linux=true`` force linux environment
 
+Exampleto force linux environment: ``ruby exe/canuby linux=true``
+
 ## Contributing
 
 ### Code Style
 
-* This projects uses rubocop. Get it with ``gem install rubocop`` and then run ``rubocop`` inside the git repo. PR's without rubocop applied are not being merged.
+* This project uses rubocop. Get it with ``gem install rubocop`` and then run ``rubocop --auto-correct`` inside the git repo to fix all formating problems automatically. More sever code style violations may need some manual attention. PR's without rubocop applied are not being merged.
 
   Rubocop Style Reference: https://rubocop.readthedocs.io/en/latest/cops_style/
 
-* Fasterer is a tool that will suggest speed improvements for your ruby code. It is highly recommended to use on bigger changes to keep the Canuby code fast. Get it with ``gem install fasterer`` and then run ``fasterer`` inside the git repo to get the code flash fast.
+* Fasterer is a tool that will suggest speed improvements for your ruby code. It is highly recommended to use on bigger changes to keep the Canuby code fast. Get it with ``gem install fasterer`` and then run ``fasterer`` inside the git repo to get the code flash fast. **Note** Currently not working correctly for unknown reasons.
 
 
 ### Testing
@@ -66,7 +68,7 @@ To run the Canuby tests use ``rake test`` in the root directory.
 
 ### Documenting
 
-Canuby uses yardoc to generate the docs. They are available here [![GitHub Downloads](https://img.shields.io/badge/Canuby-doc-brightgreen.svg?logo=github&maxAge=1200)](https://github.com/SuperSandro2000/canuby/releases). To update the documentation run ``rake yard``.
+Canuby uses yardoc to generate the docs. They are available here  [![GitHub Downloads](https://img.shields.io/badge/Canuby-doc-brightgreen.svg?logo=github&maxAge=1200)](https://github.com/SuperSandro2000/canuby/releases). To update the documentation manually run ``rake yard``. Travis updates the online documentation automatically.
 
 
 ### Usefull Links
