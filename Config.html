@@ -181,6 +181,28 @@ project_file, output_dir, outputs</p>
         <li class="public ">
   <span class="summary_signature">
     
+      <a href="#load_default-class_method" title="load_default (class method)">.<strong>load_default</strong>(args)  &#x21d2; Object </a>
+    
+
+    
+  </span>
+  
+  
+  
+  
+  
+  
+  
+
+  
+    <span class="summary_desc"><div class='inline'></div></span>
+  
+</li>
+
+      
+        <li class="public ">
+  <span class="summary_signature">
+    
       <a href="#migrate-class_method" title="migrate (class method)">.<strong>migrate</strong>(from_version, to_version)  &#x21d2; Object </a>
     
 
@@ -246,19 +268,19 @@ project_file, output_dir, outputs</p>
       <pre class="lines">
 
 
-54
-55
-56
-57
 58
 59
 60
 61
 62
-63</pre>
+63
+64
+65
+66
+67</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/canuby/config.rb', line 54</span>
+      <pre class="code"><span class="info file"># File 'lib/canuby/config.rb', line 58</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_check'>check</span>
   <span class='id identifier rubyid_invalid'>invalid</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Missing projects key</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='gvar'>$build_options</span><span class='period'>.</span><span class='id identifier rubyid_respond_to?'>respond_to?</span> <span class='symbol'>:projects</span>
@@ -312,12 +334,12 @@ project_file, output_dir, outputs</p>
       <pre class="lines">
 
 
-65
-66
-67</pre>
+69
+70
+71</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/canuby/config.rb', line 65</span>
+      <pre class="code"><span class="info file"># File 'lib/canuby/config.rb', line 69</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_invalid'>invalid</span><span class='lparen'>(</span><span class='id identifier rubyid_option'>option</span><span class='rparen'>)</span>
   <span class='id identifier rubyid_raise'>raise</span> <span class='const'>StandardError</span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&quot;</span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_option'>option</span><span class='embexpr_end'>}</span><span class='tstring_content'>. Canuby can&#39;t continue</span><span class='tstring_end'>&quot;</span></span>
@@ -353,18 +375,7 @@ project_file, output_dir, outputs</p>
 38
 39
 40
-41
-42
-43
-44
-45
-46
-47
-48
-49
-50
-51
-52</pre>
+41</pre>
     </td>
     <td>
       <pre class="code"><span class="info file"># File 'lib/canuby/config.rb', line 30</span>
@@ -375,22 +386,63 @@ project_file, output_dir, outputs</p>
   <span class='id identifier rubyid_logger'><span class='object_link'><a href="top-level-namespace.html#logger-instance_method" title="#logger (method)">logger</a></span></span><span class='period'>.</span><span class='id identifier rubyid_debug'>debug</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Ignoring config file </span><span class='embexpr_beg'>#{</span><span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ignore_config_file</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
   <span class='kw'>if</span> <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Testing</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>!=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>true</span><span class='tstring_end'>&#39;</span></span> <span class='op'>&amp;&amp;</span> <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ignore_config_file</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='op'>!=</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>true</span><span class='tstring_end'>&#39;</span></span> <span class='op'>&amp;&amp;</span> <span class='const'>File</span><span class='period'>.</span><span class='id identifier rubyid_exist?'>exist?</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_yml_file'>yml_file</span><span class='rparen'>)</span>
     <span class='id identifier rubyid_yaml_file'>yaml_file</span> <span class='op'>=</span> <span class='const'>YAML</span><span class='period'>.</span><span class='id identifier rubyid_load_file'>load_file</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_yml_file'>yml_file</span><span class='rparen'>)</span>
-    <span class='id identifier rubyid_migrate'>migrate</span><span class='lparen'>(</span><span class='id identifier rubyid_yaml_file'>yaml_file</span><span class='lbracket'>[</span><span class='symbol'>:config_version</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="Canuby.html" title="Canuby (module)">Canuby</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Canuby.html#CONFIG_VERSION-constant" title="Canuby::CONFIG_VERSION (constant)">CONFIG_VERSION</a></span></span><span class='rparen'>)</span> <span class='kw'>if</span> <span class='id identifier rubyid_yaml_file'>yaml_file</span><span class='lbracket'>[</span><span class='symbol'>:config_version</span><span class='rbracket'>]</span> <span class='op'>!=</span> <span class='const'><span class='object_link'><a href="Canuby.html" title="Canuby (module)">Canuby</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Canuby.html#CONFIG_VERSION-constant" title="Canuby::CONFIG_VERSION (constant)">CONFIG_VERSION</a></span></span>
-    <span class='gvar'>$build_options</span> <span class='op'>=</span> <span class='const'>OpenStruct</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_to_h'>to_h</span><span class='period'>.</span><span class='id identifier rubyid_merge!'>merge!</span><span class='lparen'>(</span><span class='id identifier rubyid_yaml_file'>yaml_file</span><span class='rparen'>)</span><span class='rparen'>)</span> <span class='kw'>unless</span> <span class='const'>ENV</span><span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>ignore_config_file</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span>
+    <span class='id identifier rubyid_migrate'>migrate</span><span class='lparen'>(</span><span class='id identifier rubyid_yaml_file'>yaml_file</span><span class='lbracket'>[</span><span class='symbol'>:config_version</span><span class='rbracket'>]</span><span class='comma'>,</span> <span class='const'><span class='object_link'><a href="Canuby.html" title="Canuby (module)">Canuby</a></span></span><span class='op'>::</span><span class='const'><span class='object_link'><a href="Canuby.html#CONFIG_VERSION-constant" title="Canuby::CONFIG_VERSION (constant)">CONFIG_VERSION</a></span></span><span class='rparen'>)</span>
+    <span class='gvar'>$build_options</span> <span class='op'>=</span> <span class='const'>OpenStruct</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_to_h'>to_h</span><span class='period'>.</span><span class='id identifier rubyid_merge!'>merge!</span><span class='lparen'>(</span><span class='id identifier rubyid_yaml_file'>yaml_file</span><span class='rparen'>)</span><span class='rparen'>)</span>
   <span class='kw'>else</span>
-    <span class='id identifier rubyid_default'>default</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>projects</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span>
-      <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Googletest</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>url</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>https://github.com/google/googletest</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>version</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>1.0.0</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> \
-                        <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>build_tool</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>msbuild</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>project_file</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>googletest-distribution</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
-                        <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>output_dir</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>googlemock/gtest</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>outputs</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>gtest.lib</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>gtest_main.lib</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='rbrace'>}</span><span class='comma'>,</span> \
-      <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Dummy</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>url</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>https://github.com/google/googletest</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>version</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>1.0.0</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
-                   <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>build_tool</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>msbuild</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>project_file</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>googletest-distribution</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
-                   <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>output_dir</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>googlemock/gtest</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>outputs</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>gtest.lib</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='rbrace'>}</span><span class='comma'>,</span> \
-      <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Dummy2</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>url</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>https://github.com/google/googletest</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>version</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>1.0.0</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
-                    <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>build_tool</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>msbuild</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>project_file</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>googletest-distribution</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
-                    <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>output_dir</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>googlemock/gtest</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>outputs</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>gtest_main.lib</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
-    <span class='rbrace'>}</span> <span class='rbrace'>}</span>
-    <span class='gvar'>$build_options</span> <span class='op'>=</span> <span class='const'>OpenStruct</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_to_h'>to_h</span><span class='period'>.</span><span class='id identifier rubyid_merge!'>merge!</span><span class='lparen'>(</span><span class='id identifier rubyid_default'>default</span><span class='rparen'>)</span><span class='rparen'>)</span>
+    <span class='id identifier rubyid_load_default'>load_default</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
   <span class='kw'>end</span>
+<span class='kw'>end</span></pre>
+    </td>
+  </tr>
+</table>
+</div>
+    
+      <div class="method_details ">
+  <h3 class="signature " id="load_default-class_method">
+  
+    .<strong>load_default</strong>(args)  &#x21d2; <tt>Object</tt> 
+  
+
+  
+
+  
+</h3><table class="source_code">
+  <tr>
+    <td>
+      <pre class="lines">
+
+
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56</pre>
+    </td>
+    <td>
+      <pre class="code"><span class="info file"># File 'lib/canuby/config.rb', line 43</span>
+
+<span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_load_default'>load_default</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='rparen'>)</span>
+  <span class='id identifier rubyid_default'>default</span> <span class='op'>=</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>projects</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span>
+    <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Googletest</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>url</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>https://github.com/google/googletest</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>version</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>1.0.0</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> \
+                      <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>build_tool</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>msbuild</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>project_file</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>googletest-distribution</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+                      <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>output_dir</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>googlemock/gtest</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>outputs</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>gtest.lib</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>gtest_main.lib</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='rbrace'>}</span><span class='comma'>,</span> \
+    <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Dummy</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>url</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>https://github.com/google/googletest</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>version</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>1.0.0</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+                 <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>build_tool</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>msbuild</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>project_file</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>googletest-distribution</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+                 <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>output_dir</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>googlemock/gtest</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>outputs</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>gtest.lib</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='rbrace'>}</span><span class='comma'>,</span> \
+    <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>Dummy2</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='lbrace'>{</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>url</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>https://github.com/google/googletest</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>version</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>1.0.0</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+                  <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>build_tool</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>msbuild</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>project_file</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>googletest-distribution</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span>
+                  <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>output_dir</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>googlemock/gtest</span><span class='tstring_end'>&#39;</span></span><span class='comma'>,</span> <span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>outputs</span><span class='tstring_end'>&#39;</span></span> <span class='op'>=&gt;</span> <span class='lbracket'>[</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>gtest_main.lib</span><span class='tstring_end'>&#39;</span></span><span class='rbracket'>]</span> <span class='rbrace'>}</span>
+  <span class='rbrace'>}</span> <span class='rbrace'>}</span>
+  <span class='gvar'>$build_options</span> <span class='op'>=</span> <span class='const'>OpenStruct</span><span class='period'>.</span><span class='id identifier rubyid_new'>new</span><span class='lparen'>(</span><span class='id identifier rubyid_args'>args</span><span class='period'>.</span><span class='id identifier rubyid_to_h'>to_h</span><span class='period'>.</span><span class='id identifier rubyid_merge!'>merge!</span><span class='lparen'>(</span><span class='id identifier rubyid_default'>default</span><span class='rparen'>)</span><span class='rparen'>)</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -412,17 +464,33 @@ project_file, output_dir, outputs</p>
       <pre class="lines">
 
 
-69
-70
-71
-72</pre>
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/canuby/config.rb', line 69</span>
+      <pre class="code"><span class="info file"># File 'lib/canuby/config.rb', line 73</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_migrate'>migrate</span><span class='lparen'>(</span><span class='id identifier rubyid_from_version'>from_version</span><span class='comma'>,</span> <span class='id identifier rubyid_to_version'>to_version</span><span class='rparen'>)</span>
+  <span class='kw'>return</span> <span class='kw'>unless</span> <span class='id identifier rubyid_from_version'>from_version</span> <span class='op'>!=</span> <span class='id identifier rubyid_to_version'>to_version</span>
+  <span class='id identifier rubyid_logger'><span class='object_link'><a href="top-level-namespace.html#logger-instance_method" title="#logger (method)">logger</a></span></span><span class='period'>.</span><span class='id identifier rubyid_info'>info</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Migrating from </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_from_version'>from_version</span><span class='embexpr_end'>}</span><span class='tstring_content'> to </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_to_version'>to_version</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+  <span class='kw'>case</span> <span class='id identifier rubyid_from_version'>from_version</span>
+  <span class='kw'>when</span> <span class='int'>0</span>
+    <span class='id identifier rubyid_logger'><span class='object_link'><a href="top-level-namespace.html#logger-instance_method" title="#logger (method)">logger</a></span></span><span class='period'>.</span><span class='id identifier rubyid_warn'>warn</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>No compatibility gurantied!</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
   <span class='comment'># TODO
-</span>  <span class='id identifier rubyid_logger'><span class='object_link'><a href="top-level-namespace.html#logger-instance_method" title="#logger (method)">logger</a></span></span><span class='period'>.</span><span class='id identifier rubyid_info'>info</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&quot;</span><span class='tstring_content'>Migrating from </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_from_version'>from_version</span><span class='embexpr_end'>}</span><span class='tstring_content'> to </span><span class='embexpr_beg'>#{</span><span class='id identifier rubyid_to_version'>to_version</span><span class='embexpr_end'>}</span><span class='tstring_end'>&quot;</span></span><span class='rparen'>)</span>
+</span>  <span class='kw'>when</span> <span class='int'>1</span>
+    <span class='id identifier rubyid_logger'><span class='object_link'><a href="top-level-namespace.html#logger-instance_method" title="#logger (method)">logger</a></span></span><span class='period'>.</span><span class='id identifier rubyid_error'>error</span><span class='lparen'>(</span><span class='tstring'><span class='tstring_beg'>&#39;</span><span class='tstring_content'>TODO</span><span class='tstring_end'>&#39;</span></span><span class='rparen'>)</span>
+    <span class='comment'># TODO
+</span>  <span class='kw'>end</span>
 <span class='kw'>end</span></pre>
     </td>
   </tr>
@@ -444,17 +512,17 @@ project_file, output_dir, outputs</p>
       <pre class="lines">
 
 
-74
-75
-76
-77
-78
-79
-80
-81</pre>
+86
+87
+88
+89
+90
+91
+92
+93</pre>
     </td>
     <td>
-      <pre class="code"><span class="info file"># File 'lib/canuby/config.rb', line 74</span>
+      <pre class="code"><span class="info file"># File 'lib/canuby/config.rb', line 86</span>
 
 <span class='kw'>def</span> <span class='kw'>self</span><span class='period'>.</span><span class='id identifier rubyid_write'>write</span>
   <span class='id identifier rubyid_write_config'>write_config</span> <span class='op'>=</span> <span class='gvar'>$build_options</span><span class='period'>.</span><span class='id identifier rubyid_to_h'>to_h</span>
@@ -474,7 +542,7 @@ project_file, output_dir, outputs</p>
 </div>
 
       <div id="footer">
-  Generated on Wed Jul 11 16:29:38 2018 by
+  Generated on Wed Jul 11 16:57:56 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.14 (ruby-2.5.1).
 </div>
