@@ -20,11 +20,11 @@ include FileUtils # rubocop:disable Style/MixinUsage
 
 # Folder and files related methods
 module Paths
-  if $options.nil?
-    @base_dir = 'testing'
-  else
-    @base_dir = $options.base_dir.to_s
-  end
+  @base_dir = if !defined? $options
+                'testing'
+              else
+                $options.base_dir.to_s
+              end
 
   def self.base_dir=(var)
     @base_dir = var

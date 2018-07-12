@@ -42,7 +42,7 @@ require 'canuby/util'
 module Canuby
   def self.main
     $options = ArgParser.parse(ARGV)
-    logger.info("===== #{'Welcome to Canuby!'.green} =====".green)
+    logger.info('===== Welcome to Canuby! =====')
     logger.debug('Running in debug mode.')
     logger.debug($options)
 
@@ -70,6 +70,6 @@ module Canuby
       Config.write
     end
 
-    logger.info("===========  #{'Done'.green}  ===========".green)
+    logger.info('===========  Done  ===========')
   end
 end

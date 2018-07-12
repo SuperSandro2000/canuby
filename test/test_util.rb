@@ -18,21 +18,26 @@
 # along with Canuby.  If not, see <http://www.gnu.org/licenses/>.
 require 'test_helper'
 
+# require "canuby/argparser"
+# require "canuby/util"
+
 class CanubyTest < Minitest::Test
   def test_version
     refute_nil ::Canuby::VERSION
   end
 
   def test_logger
-    # CI has a lower log level to not spam the console
-    if ENV['Testing'] == 'true'
-      assert_output('') { logger.debug('This is an debug log.') }
-      assert_output('') { logger.info('This is an info log.') }
-    else
-      assert_output(/\[#{timestamp_regex('white')}\] DEBUG \(\):debug log.\n/) { logger.debug('debug log.') } if $options.debug
-      assert_output(/#{timestamp_regex('magenta')} \e\[0;33;49mINFO\e\[0m  \(\): info log./) { logger.info('info log.') }
-    end
+    # $options = ArgParser.parse(ARGV)
+
+    assert_output('') { logger.debug('This is an debug log.') }
+    assert_output('') { logger.info('This is an info log.') }
     assert_output(/#{timestamp_regex('magenta')} \e\[0;31;49mWARN\e\[0m  \(\): warn log./) { logger.warn('warn log.') }
     assert_output(/#{timestamp_regex('red')}\e\[0;31;49m ERROR \(\): error log.\e\[0m/) { logger.error('error log.') }
+
+    logger.level = Logger::DEBUG
+    assert_output(/#{timestamp_regex('magenta')} \e\[0;36;49mDEBUG\e\[0m \(\): debug log./) { logger.debug('debug log.') }
+    logger.level = Logger::INFO
+    assert_output(/#{timestamp_regex('magenta')} \e\[0;33;49mINFO\e\[0m  \(\): \e\[0;32;49minfo log.\e\[0m/) { logger.info('info log.') }
+    logger.level = Logger::WARN
   end
 end

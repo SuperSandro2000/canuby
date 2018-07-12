@@ -19,6 +19,8 @@
 require 'colorize'
 require 'logger'
 
+require 'canuby/argparser'
+
 ## build tools config
 # TODO make changeable
 ENV['vcvars'] = '"C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\Common7\Tools\VsDevCmd.bat"'
@@ -40,33 +42,37 @@ def add_desc(task, comment)
 end
 
 # Canuby's Logger
+#
+# Usage: logger.debug('message')
+# To change log level on runtime: logger.level = Logger::DEBUG
 module Logging
+  $options = ArgParser.parse(ARGV)
+
+  @logger = Logger.new($stdout)
+  @logger.level = if ENV['CI'] == 'true' || ENV['Testing'] == 'true'
+                    Logger::WARN
+                  elsif $options.debug
+                    Logger::DEBUG
+                  else
+                    Logger::INFO
+                  end
+
   def self.log(severity, datetime, progname, msg)
     date_format = "[#{datetime.strftime('%d-%m-%Y %H:%M:%S,%L')}]".magenta
     # color needs to be set before \n or it will leak into the console
     case severity
     when 'DEBUG'
-      "#{date_format} #{severity} (#{progname}): #{msg}".cyan + "\n"
+      puts "#{date_format} #{severity.cyan} (#{progname}): #{msg}" + "\n"
     when 'INFO'
-      "#{date_format} #{severity.yellow}  (#{progname}): #{msg}" + "\n"
+      puts "#{date_format} #{severity.yellow}  (#{progname}): #{msg.green}" + "\n"
     when 'WARN'
-      "#{date_format} #{severity.red}  (#{progname}): #{msg}" + "\n"
+      puts "#{date_format} #{severity.red}  (#{progname}): #{msg}" + "\n"
     when 'ERROR'
-      "#{date_format} #{severity} (#{progname}): #{msg}".red + "\n"
+      puts "#{date_format} #{severity} (#{progname}): #{msg}".red + "\n"
     end
   end
 
   def self.logger
-    @logger = Logger.new($stdout)
-
-    @logger.level = if ENV['CI'] == 'true' || ENV['Testing'] == 'true'
-                      Logger::WARN
-                    elsif $options.debug
-                      Logger::DEBUG
-                    else
-                      Logger::INFO
-                    end
-
     @logger.formatter = proc do |severity, datetime, progname, msg|
       log(severity, datetime, progname, msg)
     end
