@@ -90,8 +90,7 @@ module ArgParser
     begin
       parser.parse!(args)
     rescue OptionParser::InvalidOption => e
-      puts __FILE__
-      if File.basename(__FILE__) == 'Rakefile' || e.to_s.split(': ')[1] == '--profile'
+      if File.basename(__FILE__) == 'Rakefile' || File.basename($0)== 'rake_test_loader.rb'|| e.to_s.split(': ')[1] == '--profile'
         return
       else
         logger.error('Canuby does not understand that argument. We just assume it belongs to ruby.')
@@ -101,6 +100,7 @@ module ArgParser
     options
   end
 
+  # Parse minimal arguments. Usefull if you just need the all build tasks.
   def self.min(_args)
     options = OpenStruct.new
     options.config_version = Canuby::CONFIG_VERSION

@@ -27,6 +27,7 @@ require 'canuby/util'
 # projects => name =>
 # url, version, build_tool, project_file, output_dir, outputs
 module Config
+  # Load config from file or default if no file exists.
   def self.load
     # skip if run trough rake or bundler
     args = ArgParser.min(ARGV)
@@ -40,6 +41,7 @@ module Config
     end
   end
 
+  # Default config file. Mostly used for testing.
   def self.load_default(args)
     default = { 'projects' => {
       'Googletest' => { 'url' => 'https://github.com/google/googletest', 'version' => '1.0.0', \
@@ -55,6 +57,7 @@ module Config
     $options = OpenStruct.new(args.to_h.merge!(default))
   end
 
+  # Checks if the config structure is valid. Does not check if the actual content is working.
   def self.check(quiet = false)
     invalid('Missing projects key') unless $options.respond_to? :projects
     invalid('Missing project value') unless $options.projects.key?($options.projects.keys[0])
@@ -70,6 +73,7 @@ module Config
     raise StandardError, "#{option}. Canuby can't continue"
   end
 
+  # Migrate the config to a newer version. Not used until Canuby hits a more stable state.
   def self.migrate(from_version, to_version)
     return unless from_version != to_version
     logger.info("Migrating from #{from_version} to #{to_version}")
@@ -83,6 +87,7 @@ module Config
     end
   end
 
+  # Write config to file
   def self.write
     write_config = $options.to_h
     [:target, :yml_file].each do |key|

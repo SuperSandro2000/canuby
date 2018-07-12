@@ -2,6 +2,7 @@
 /.yardoc/
 /3rdparty/
 /coverage/
+/doc/
 /docs/
 /testing/
 /tmp/

@@ -20,12 +20,12 @@ include FileUtils # rubocop:disable Style/MixinUsage
 
 # Folder and files related methods
 module Paths
-  require 'canuby/argparser'
-  $options = ArgParser.parse(ARGV)
-  
-  # defaults to 3rdparty
-  @base_dir = $options.base_dir.to_s
-  # @base_dir = 'testing'
+  if $options.nil?
+    @base_dir = 'testing'
+  else
+    @base_dir = $options.base_dir.to_s
+  end
+
   def self.base_dir=(var)
     @base_dir = var
   end
