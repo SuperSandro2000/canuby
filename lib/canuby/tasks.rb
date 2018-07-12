@@ -23,7 +23,7 @@ require 'yaml'
 require 'canuby/argparser'
 require 'canuby/build'
 require 'canuby/config'
-require "canuby/git"
+require 'canuby/git'
 require 'canuby/outputs'
 require 'canuby/paths'
 require 'canuby/project'

@@ -24,7 +24,7 @@ Style/Documentation:
     - 'test/**/*'
 
 Style/GlobalVars:
-  AllowedVariables: [$project, $build_options]
+  AllowedVariables: [$project, $options]
 
 Style/SymbolArray:
   EnforcedStyle: brackets

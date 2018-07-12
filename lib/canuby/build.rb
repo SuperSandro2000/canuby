@@ -16,8 +16,8 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Canuby.  If not, see <http://www.gnu.org/licenses/>.
-require "canuby/build/cmake"
-require "canuby/build/msbuild"
+require 'canuby/build/cmake'
+require 'canuby/build/msbuild'
 
 def build(project)
   if const_get(project).build_tool == 'msbuild'

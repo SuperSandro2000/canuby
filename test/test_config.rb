@@ -24,7 +24,7 @@ require 'canuby/util'
 class CanubyTest < Minitest::Test
   # require 'canuby/argparser'
   # $options = ArgParser.parse()
-  $options = OpenStruct.new('base_dir' => "testing")
+  $options = OpenStruct.new('base_dir' => 'testing')
 
   $options.ignore_config_file = true
 
