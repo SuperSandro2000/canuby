@@ -55,6 +55,7 @@ def timestamp_regex(color = 'white')
   end
 end
 
+# source: http://www.virtuouscode.com/2011/08/25/temporarily-disabling-warnings-in-ruby/
 def silent_warnings
   old_stderr = $stderr
   $stderr = StringIO.new

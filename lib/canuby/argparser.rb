@@ -24,11 +24,13 @@ require 'canuby/version'
 # Parses command line arguments
 module ArgParser
   def self.parse(args)
-    options = OpenStruct.new
-    options.config_version = Canuby::CONFIG_VERSION
-    options.base_dir = '3rdparty'
-    options.target = 'thirdparty'
-    options.yml_file = 'canuby.yml'
+    # options = OpenStruct.new
+    # options.config_version = Canuby::CONFIG_VERSION
+    # options.base_dir = '3rdparty'
+    # options.target = 'thirdparty'
+    # options.yml_file = 'canuby.yml'
+    default_options = {'config_version' => Canuby::CONFIG_VERSION, 'base_dir' => '3rdparty','target' => 'thirdparty','yml_file' => 'canuby.yml'}
+    options = OpenStruct.new(default_options)
 
     parser = OptionParser.new do |opts|
       opts.banner = "\n"
@@ -57,6 +59,10 @@ module ArgParser
 
       opts.on('--check-config', 'Checks only if the config is valid.') do
         options.only_check_config = true
+      end
+
+      opts.on('--debug', 'Show debug information in console') do
+        options.debug = true
       end
 
       opts.on('--ignore-config-file', 'Ignore the config file.') do
@@ -89,7 +95,7 @@ module ArgParser
     begin
       parser.parse!(args)
     rescue OptionParser::InvalidOption => e
-      if File.basename(__FILE__) == 'Rakefile' || File.basename($PROGRAM_NAME) == 'rake_test_loader.rb' || e.to_s.split(': ')[1] == '--profile'
+      if File.basename(__FILE__) == 'Rakefile' || File.basename($0)== 'rake_test_loader.rb'|| e.to_s.split(': ')[1] == '--profile'
         puts 'hi'
         # return
       else
