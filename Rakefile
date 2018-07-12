@@ -24,8 +24,9 @@ require 'yard'
 ENV['Testing'] = 'true'
 
 Rake::TestTask.new do |t|
-  t.options = '--profile'
-  t.libs << "lib"
+  # breaks all tests. until we know why we inject minitest-profile in test_helper.rb
+  # t.options = '--profile'
+  t.libs << 'lib'
   t.libs << 'test'
 end
 

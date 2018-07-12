@@ -19,7 +19,6 @@
 require 'ostruct'
 require 'optparse'
 
-require 'canuby/util'
 require 'canuby/version'
 
 # Parses command line arguments
@@ -90,11 +89,12 @@ module ArgParser
     begin
       parser.parse!(args)
     rescue OptionParser::InvalidOption => e
-      if File.basename(__FILE__) == 'Rakefile' || File.basename($0)== 'rake_test_loader.rb'|| e.to_s.split(': ')[1] == '--profile'
-        return
+      if File.basename(__FILE__) == 'Rakefile' || File.basename($PROGRAM_NAME) == 'rake_test_loader.rb' || e.to_s.split(': ')[1] == '--profile'
+        puts 'hi'
+        # return
       else
-        logger.error('Canuby does not understand that argument. We just assume it belongs to ruby.')
-        logger.error(e)
+        puts('Canuby does not understand that argument. We just assume it belongs to ruby.')
+        puts(e)
       end
     end
     options

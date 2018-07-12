@@ -29,14 +29,8 @@ end
 
 require 'minitest/autorun'
 require 'minitest/filesystem'
-require 'minitest/profile'
 require 'minitest/rg'
-
-# require 'canuby/argparser'
-# $options = ArgParser.parse(ARGV)
-# puts 'options paths'
-# puts $options
-# puts ENV['Testing']
+require 'stringio'
 
 require 'canuby/paths'
 require 'canuby/project'
@@ -58,5 +52,22 @@ def timestamp_regex(color = 'white')
     '\e\[0;35;49m\[[0-9]{2}-[0-9]{2}-[0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2},[0-9]{3}\]\e\[0m'
   when 'red'
     '\e\[0;31;49m\[[0-9]{2}-[0-9]{2}-[0-9]{4} [0-9]{2}:[0-9]{2}:[0-9]{2},[0-9]{3}\]\e\[0m'
+  end
+end
+
+def silent_warnings
+  old_stderr = $stderr
+  $stderr = StringIO.new
+  yield
+ensure
+  $stderr = old_stderr
+end
+
+# minitest profile is special. we need to do some funky stuff to get it to work.
+module Minitest
+  silent_warnings do
+    def self.plugin_profile_init(options)
+      reporter << ProfileReporter.new(options)
+    end
   end
 end
