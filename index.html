@@ -97,6 +97,9 @@ href="https://awesomecode.io/projects/b8fed95d-1b9c-47a3-96b1-437a2a6ef5ea/statu
 <p><code>canuby</code></p>
 </li></ul>
 
+<p>To get a full list of all arguments invoke canuby with the
+<code>--help</code> flag.</p>
+
 <h3 id="label-Note">Note</h3>
 
 <p>Some rake tasks have longer descriptions and are only complettly readable
@@ -113,63 +116,31 @@ on <a href="https://semver.org">semver.org</a>/ version scheme.</p>
 
 <h2 id="label-How+to+run+from+source">How to run from source</h2>
 
-<p>To use canuby from source run these command inside your cloned repository.
-On Windows it may be necessary to use an elevated command prompt to install
-all gems correctly. * <code>gem install bundler</code> * <code>ruby
-bin/setup</code> * <code>ruby exe/canuby</code> or <code>rake -f
-exe\canuby</code> or <code>rake thirdparty</code></p>
+<p>To install all required gems including bundler and setup your repository
+run those commands. On Windows it may be necessary to use an elevated
+command prompt to install all gems correctly. * <code>gem install
+bundler</code> * <code>ruby bin/setup</code></p>
 
-<p>To get a full list of all arguments invoke canuby with the
-<code>--help</code> flag.</p>
+<p>To use canuby from source run one of those commands inside your cloned
+repository. * <code>bundler exec canuby</code> or <code>ruby
+exe/canuby</code></p>
 
-<p>Environment variables Canuby makes use of: * <code>CI=true</code> force CI
-environment * <code>DEBUG=true</code> show debug information *
-<code>linux=true</code> force linux environment</p>
+<p>To install the gem from source run <code>rake install</code>.</p>
+
+<p>Some Environment variables Canuby makes use of that are usefull for
+debuging: * <code>CI=true</code> force CI environment *
+<code>DEBUG=true</code> show debug information * <code>linux=true</code>
+force linux environment</p>
 
 <p>Exampleto force linux environment: <code>ruby exe/canuby linux=true</code></p>
 
 <h2 id="label-Contributing">Contributing</h2>
 
-<h3 id="label-Code+Style">Code Style</h3>
-<ul><li>
-<p>This project uses rubocop. Get it with <code>gem install rubocop</code> and
-then run <code>rubocop --auto-correct</code> inside the git repo to fix all
-formating problems automatically. More sever code style violations may need
-some manual attention. PR&#39;s without rubocop applied are not being
-merged.</p>
-</li></ul>
-
-<p>Rubocop Style Reference: <a
-href="https://rubocop.readthedocs.io/en/latest/cops_style">rubocop.readthedocs.io/en/latest/cops_style</a>/</p>
-<ul><li>
-<p>Fasterer is a tool that will suggest speed improvements for your ruby code.
-It is highly recommended to use on bigger changes to keep the Canuby code
-fast. Get it with <code>gem install fasterer</code> and then run
-<code>fasterer</code> inside the git repo to get the code flash fast.
-<strong>Note</strong> Currently not working correctly for unknown reasons.</p>
-</li></ul>
-
-<h3 id="label-Testing">Testing</h3>
-
-<p>To run the Canuby tests use <code>rake test</code> in the root directory.</p>
-
-<h3 id="label-Documenting">Documenting</h3>
-
-<p>Canuby uses yardoc to generate the docs. They are available here <a
-href="https://github.com/SuperSandro2000/canuby/releases"><img
-src="https://img.shields.io/badge/Canuby-doc-brightgreen.svg?logo=github&maxAge=1200"></a>.
-To update the documentation manually run <code>rake yard</code>. Travis
-updates the online documentation automatically.</p>
-
-<h3 id="label-Usefull+Links">Usefull Links</h3>
-<ul><li>
-<p>Ruby regular expression editor: <a
-href="http://rubular.com">rubular.com</a>/</p>
-</li></ul>
+<p>See <a href="CONTRIBUTING.md">CONTRIBUTING.md</a>.</p>
 </div></div>
 
       <div id="footer">
-  Generated on Wed Jul 11 17:45:47 2018 by
+  Generated on Thu Jul 12 08:09:03 2018 by
   <a href="http://yardoc.org" title="Yay! A Ruby Documentation Tool" target="_parent">yard</a>
   0.9.14 (ruby-2.5.1).
 </div>
