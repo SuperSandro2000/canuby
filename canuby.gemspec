@@ -21,8 +21,8 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'canuby/version'
 
 Gem::Specification.new do |spec|
-  spec.name = 'canuby'
-  spec.version = Canuby::VERSION
+  spec.name           = 'canuby'
+  spec.version        = Canuby::VERSION
   spec.authors        = ["Sandro J\xC3\xA4ckel"]
   spec.email          = ['sandro.jaeckel@gmail.com']
 
