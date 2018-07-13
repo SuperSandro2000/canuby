@@ -12,9 +12,12 @@ Metrics/LineLength:
   Max: 150
 
 Metrics/MethodLength:
-  Max: 20
+  Max: 25
   Exclude:
     - 'lib/canuby/argparser.rb'
+
+Metrics/PerceivedComplexity:
+  Max: 10
 
 Style/AsciiComments:
   AllowedChars: [ä]

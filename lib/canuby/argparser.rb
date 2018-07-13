@@ -16,8 +16,8 @@
 #
 # You should have received a copy of the GNU General Public License
 # along with Canuby.  If not, see <http://www.gnu.org/licenses/>.
-require 'ostruct'
 require 'optparse'
+require 'ostruct'
 
 require 'canuby/version'
 
@@ -29,7 +29,7 @@ module ArgParser
     # options.base_dir = '3rdparty'
     # options.target = 'thirdparty'
     # options.yml_file = 'canuby.yml'
-    default_options = {'config_version' => Canuby::CONFIG_VERSION, 'base_dir' => '3rdparty','target' => 'thirdparty','yml_file' => 'canuby.yml'}
+    default_options = { 'config_version' => Canuby::CONFIG_VERSION, 'base_dir' => '3rdparty', 'target' => 'thirdparty', 'yml_file' => 'canuby.yml' }
     options = OpenStruct.new(default_options)
 
     parser = OptionParser.new do |opts|
@@ -95,7 +95,7 @@ module ArgParser
     begin
       parser.parse!(args)
     rescue OptionParser::InvalidOption => e
-      if File.basename(__FILE__) == 'Rakefile' || File.basename($0)== 'rake_test_loader.rb'|| e.to_s.split(': ')[1] == '--profile'
+      if File.basename(__FILE__) == 'Rakefile' || File.basename($PROGRAM_NAME) == 'rake_test_loader.rb' || e.to_s.split(': ')[1] == '--profile'
         puts 'hi'
         # return
       else
