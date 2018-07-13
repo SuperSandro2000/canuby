@@ -24,11 +24,6 @@ require 'canuby/version'
 # Parses command line arguments
 module ArgParser
   def self.parse(args)
-    # options = OpenStruct.new
-    # options.config_version = Canuby::CONFIG_VERSION
-    # options.base_dir = '3rdparty'
-    # options.target = 'thirdparty'
-    # options.yml_file = 'canuby.yml'
     default_options = { 'config_version' => Canuby::CONFIG_VERSION, 'base_dir' => '3rdparty', 'target' => 'thirdparty', 'yml_file' => 'canuby.yml' }
     options = OpenStruct.new(default_options)
 
