@@ -46,7 +46,7 @@ Gem::Specification.new do |spec|
   spec.require_paths  = ['lib']
 
   spec.required_ruby_version = '~> 2.5'
-  spec.required_rubygems_version = '~> 2.7.3'
+  spec.required_rubygems_version = '~> 3.0.2'
 
   spec.add_dependency 'colorize', '~> 0.8.1'
   spec.add_dependency 'rake', '~> 12.3'
