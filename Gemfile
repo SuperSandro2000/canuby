@@ -6,7 +6,7 @@ gemspec
 
 # only needed on older windowses actually
 install_if -> { RUBY_PLATFORM =~ /mingw32/ } do
-  gem 'win32console', '~> 1.3'
+  gem 'win32console', '>= 1.3'
 end
 
 if ENV['CI'] == 'true'
