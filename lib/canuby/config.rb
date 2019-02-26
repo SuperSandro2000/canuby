@@ -76,6 +76,7 @@ module Config
   # Migrate the config to a newer version. Not used until Canuby hits a more stable state.
   def self.migrate(from_version, to_version)
     return unless from_version != to_version
+
     logger.info("Migrating from #{from_version} to #{to_version}")
     case from_version
     when 0
